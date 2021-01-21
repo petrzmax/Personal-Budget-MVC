@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block title %}Rejestracja - Budżet osobisty{% endblock %}
 
 {% block footer %}
     <script src="/js/app.js"></script>
@@ -46,7 +47,52 @@
         </ul>
     {% endif %}
 
+    <header>
+        <h1 class="text-center">Rejestracja</h1>
+    </header>
 
+    <main>
+        <article>
+            <form name="form" action="/signup/create" method="post" id="formSignup">
+                <div class="d-grid gap-1">
+                    <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
+                    <!--
+                    <?php
+                        if(isset($_SESSION['e_username'])) {
+                            echo $_SESSION['e_username'];
+                            unset($_SESSION['e_username']);
+                        }
+                    ?>
+                    -->
+                    
+                    <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" value="{{ user.email }}" required>
+                    <!--
+                    <?php
+                        if(isset($_SESSION['e_email'])) {
+                            echo $_SESSION['e_email'];
+                            unset($_SESSION['e_email']);
+                        }
+                    ?>
+                    -->
+            
+                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" aria-label="Hasło" required>
+                    <!--
+                    <?php
+                        if(isset($_SESSION['e_password'])) {
+                            echo $_SESSION['e_password'];
+                            unset($_SESSION['e_password']);
+                        }
+                    ?>
+                    -->
+                
+                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="secondPassword" aria-label="Powtórz Hasło" required>
+                
+                    <input type="submit" class="btn btn-lg btn-success btn-block mt-4" value="Zarejestruj">
+                </div>
+            </form>
 
+            <h5 class="text-center">Masz już konto? Zaloguj się <a href="/">tutaj</a></h5>
+        </article>
+    </main>
 
 {% endblock %}
