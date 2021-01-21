@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign up{% endblock %}
 
 {% block footer %}
-    <script src="/js/hideShowPassword.min.js"></script>
     <script src="/js/app.js"></script>
 
     <script>
@@ -32,23 +30,12 @@
                     }
                 }
             });
-
-
-            /**
-              * Show password toggle button
-              */
-            $('#inputPassword').hideShowPassword({
-                show: false,
-                innerToggle: 'focus'
-            });
         });
     </script>
 
 {% endblock %}
 
 {% block body %}
-
-    <h1>Sign up</h1>
 
     {% if user.errors is not empty %}
         <p>Errors:</p>
@@ -59,23 +46,7 @@
         </ul>
     {% endif %}
 
-    <form method="post" action="/signup/create" id="formSignup">
 
-        <div>
-            <label for="inputName">Name</label>
-            <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required />
-        </div>
-        <div>
-            <label for="inputEmail">Email address</label>
-            <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email" />
-        </div>
-        <div>
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required />
-        </div>
 
-        <button type="submit">Sign up</button>
-
-    </form>
 
 {% endblock %}
