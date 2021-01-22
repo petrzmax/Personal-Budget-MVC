@@ -84,7 +84,7 @@ class Auth
      */
     public static function getReturnToPage()
     {
-        return $_SESSION['return_to'] ?? '/';
+        return $_SESSION['return_to'] ?? '/home';
     }
 
     /**
