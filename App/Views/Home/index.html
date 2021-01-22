@@ -1,34 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Logowanie - Budżet osobisty{% endblock %}
+{% block title %}Menu główne - Budżet osobisty{% endblock %}
 
 {% block body %}
-
 <header>
-    <h1 class="text-center">Budżet osobisty</h1>
+    <h1 class="text-center">Menu główne</h1>
 </header>
 
 <main>
     <article>
-        <form name="form" action="/login/create" method="post">
-            <div class="d-grid gap-1">
-                <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" required>
-            
-                <input type="password" class="form-control inputBox" id="firstPassword" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" aria-label="Hasło" required>
-            
-                <input type="submit" class="btn btn-lg btn-success mt-3" value="Zaloguj">
-            </div>
-        </form>
-<!--
-        <?php
-            if(isset($_SESSION['e_logging_in'])) {
-                echo $_SESSION['e_logging_in'];
-                unset($_SESSION['e_logging_in']);
-            }
-        ?>
-!-->
-        <h5 class="text-center">Nie masz jeszcze konta? Zarejestruj się <a href="/signup/new">tutaj</a></h5>
+        <div class="d-grid gap-2">
+            <a href="/income" class="btn btn-success">Dodaj przychód</a>
+            <a href="/expense" class="btn btn-success">Dodaj wydatek</a>
+            <a href="/balance?activeTimePeriod=currentMonth" class="btn btn-success">Przeglądaj bilans</a>
+            <a href="/settings" class="btn btn-success">Ustawienia</a>
+
+            <a href="/logout" class="btn btn-danger mt-4 h2">Wyloguj</a>
+        </div>
     </article>
 </main>
-
 {% endblock %}
