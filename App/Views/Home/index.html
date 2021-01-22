@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu główne - Budżet osobisty{% endblock %}
+
+{% block body %}
+<header>
+    <h1 class="text-center">Menu główne</h1>
+</header>
+
+<main>
+    <article>
+        <div class="d-grid gap-2">
+            <a href="/income" class="btn btn-success">Dodaj przychód</a>
+            <a href="/expense" class="btn btn-success">Dodaj wydatek</a>
+            <a href="/balance?activeTimePeriod=currentMonth" class="btn btn-success">Przeglądaj bilans</a>
+            <a href="/settings" class="btn btn-success">Ustawienia</a>
+
+            <a href="/logout" class="btn btn-danger mt-4 h2">Wyloguj</a>
+        </div>
+    </article>
+</main>
+{% endblock %}
