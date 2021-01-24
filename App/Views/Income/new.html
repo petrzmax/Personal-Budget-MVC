@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Dodaj przychód{% endblock %}
+
+{% block body %}
+
+<header>
+    <h1 class="text-center">Dodaj przychód</h1>
+        <!--
+        <?php
+            if(isset($_SESSION['incomeMessage'])) {
+                echo '<h2 class="text-center mb-4 pb-3">Przychód dodany pomyślnie!</h2>';
+                unset($_SESSION['incomeMessage']);
+            }
+        ?>
+        -->
+</header>
+
+<main>
+    <article>
+        <form id="income" action="/add-income/create" method="post">	
+            <div class="row mb-1">
+                <label class="col-sm-4 col-form-label" for="valueInput">Kwota</label>
+                <div class="col-sm input-group">
+                    <input type="number" class="form-control inputBox" id="valueInput" name="valueInput" min="0" step="0.01" placeholder="Podaj kwotę" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj kwotę'" aria-label="Podaj kwotę" aria-describedby="valueLabel" required/>
+                    <div class="input-group-append">
+                        <span class="input-group-text inputBox" style="margin-left: -2px;" id="valueLabel">zł</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <label class="col-sm-4 col-form-label" for="dateInput" id="dateLabel">Data</label>
+                <div class="col-sm">
+                    <input type="date" class="form-control inputBox" id="dateInput" name="dateInput" aria-label="Data" aria-describedby="dateLabel"/>
+                </div>
+            </div>
+            
+            <fieldset class="form-group" aria-label="Kategoria">
+                <legend class="col-form-label"><h2>Kategoria</h2></legend>
+               
+                {% for category in categories %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="{{ category.id }}" name="categoryId" id="c{{ category.id }}" aria-describedby="c{{ category.id }}Label" required>
+                        <label class="form-check-label" id="c{{ category.id }}Label" for="c{{ category.id }}">{{ category.name|capitalize }}</label>
+                    </div>                    
+                {% endfor %}
+            </fieldset>
+            
+            <div class="form-group">
+                <h2>
+                    <label class="col-12 mt-3 text-center" for="comment" id="commentLabel">Komentarz (opcjonalnie)</label>
+                </h2>
+                <textarea class="form-control comment" id="comment" name="comment" placeholder="Napisz coś miłego :)" onfocus="this.placeholder=''" onblur="this.placeholder='Napisz coś miłego :)'" rows="4" maxlength="100" aria-label="Komentarz (opcjonalnie)" aria-describedby="commentLabel"></textarea>
+            </div>
+        </form>
+        
+        <div class="row gap-2 mx-0 mb-2 mt-3">
+            <input type="submit" class="btn btn-success col-sm" form="income" value="Dodaj"/>
+            <a href="/balance" class="btn btn-success col-sm">Bilans</a>
+            <a href="/home" class="btn btn-danger col-sm">Anuluj</a>
+        </div>	
+    </article>
+</main>	
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function() {
+            document.getElementById("dateInput").valueAsDate = new Date();
+        });
+    </script>
+{% endblock %}
