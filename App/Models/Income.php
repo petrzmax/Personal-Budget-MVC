@@ -13,6 +13,13 @@ class Income extends \Core\Model
 {
 
     /**
+     * Error messages
+     *
+     * @var array
+     */
+    public $errors = [];
+
+    /**
      * Class constructor
      *
      * @param array $data  Initial property values (optional)
