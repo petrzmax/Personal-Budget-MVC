@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Flash;
 use \App\Models\Income;
 
 /**
@@ -33,7 +34,17 @@ class AddIncome extends Authenticated
     public function createAction()
     {
         $income = new Income($_POST);
+        if($income->save()) {
+            Flash::addMessage('Przychód dodany pomyślnie');
+            $this->redirect('/add-income');
+            
+        } else {
+            //Show errors
+            View::renderTemplate('Income/new.html', [
+                'income' => $income
+            ]);
+        }
+       
 
-        $income->save();
     }
 }
