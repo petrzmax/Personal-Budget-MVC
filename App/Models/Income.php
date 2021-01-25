@@ -54,27 +54,36 @@ class Income extends \Core\Model
 
         return $stmt->fetchAll();
     } 
-    
+
     /**
-     * Save the income model with the current property values
+     * Get all the income categories id's
      *
-     * @return boolean  True if the income was saved, false otherwise
+     * @return mixed id array if found, false otherwise
      */
-    public function save()
+    private function getCategoriesIds()
     {
-        //validate()
+        $sql = 'SELECT id
+                FROM incomes_category_assigned_to_users 
+                WHERE user_id = :user_id';
+
         $db = static::getDB();
-        $sql = 'INSERT INTO incomes
-                VALUES (NULL, :user_id, :income_category_assigned_to_user_id, :incomeValue, :incomeDate, :comment)';
         $stmt = $db->prepare($sql);
-        
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':income_category_assigned_to_user_id', $this->categoryId, PDO::PARAM_INT);
-        $stmt->bindValue(':incomeValue', $this->valueInput, PDO::PARAM_STR);
-        $stmt->bindValue(':incomeDate', $this->dateInput, PDO::PARAM_STR);
-        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+
         $stmt->execute();
 
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 'id');
+    } 
+    
+    /**
+     * Validate given date
+     *
+     * @return boolean  True if the date is correct, false otherwise
+     */
+    private function validateDate($date, $format = 'Y-m-d')
+    {
+        $d = \DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) === $date;
     }
 
     /**
@@ -85,40 +94,41 @@ class Income extends \Core\Model
     public function validate()
     {
 
-        //Validate income value
-        if(!is_numeric($this->valueInput)) {
+        //Check if value is set
+        if($this->valueInput == '') {
+            $this->errors[] = "Kwota musi być podana"; 
+            
+            //Check if value is numeric
+        } else if(!is_numeric($this->valueInput)) {
             $this->errors[] = "Kwota musi być wartością numeryczną"; 
+
+            //Check if value is greater than 0
+        } else  if($this->valueInput <= 0) {
+            $this->errors[] = "Kwota musi być większa od 0";
         }
 
-        //Validate category
-        if(!isset($this->categoryId)) {
+        //Check if category is set
+        if(isset($this->categoryId)) {
+            //Check if given cattegory is associated with current user
+            if(!in_array($this->categoryId, static::getCategoriesIds())) {
+                $this->errors[] = "Wybierz prawidłową kategorię"; 
+            }
+        } else {
             $this->errors[] = "Kategoria musi być wybrana"; 
         }
 
-        //Validate comment length
-        if(isset($this->comment)) {
+        //If comment exist
+        if($this->comment != '') {
+            //Validate comment length
             if(strlen($this->comment) > 100) {
                 $this->errors[] = "Komentarz może mieć maksymalnie 100 znaków";
             }
         }
 
         //Validate date
-
-        // Password
-        if (isset($this->password)) {
-
-            if (strlen($this->password) < 6) {
-                $this->errors[] = 'Please enter at least 6 characters for the password';
-            }
-
-            if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one letter';
-            }
-
-            if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one number';
-            }
-
+        if(!$this->validateDate($this->dateInput)) {
+            $this->errors[] = "Podana data jest nieprawidłowa";
         }
+
     }
 }
