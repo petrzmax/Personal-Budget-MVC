@@ -4,6 +4,15 @@
 
 {% block body %}
 
+{% if income.errors is not empty %}
+<p>Errors:</p>
+<ul>
+    {% for error in income.errors %}
+        <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <header>
     <h1 class="text-center">Dodaj przychód</h1>
 </header>
