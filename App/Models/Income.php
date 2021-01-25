@@ -36,7 +36,7 @@ class Income extends \Core\Model
     /**
      * Get all the income categories
      *
-     * @return mixed Incomes object if found, false otherwise
+     * @return mixed Income object if found, false otherwise
      */
     public static function getCategories()
     {
