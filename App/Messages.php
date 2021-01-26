@@ -23,5 +23,6 @@ class Messages
     const EXPENSE_ADD_FAIL = 'Dodawanie wydatku nieudane, spróbuj ponownie';
     const CHANGES_SAVED = 'Zmiany zapisane';
     const BALANCE_BAD_DATA = 'Podano nieprawidłowe dane';
+    const ACCESS_RESTRICTED = 'Zaloguj się, aby uzyskać dostęp do tej strony';
 
 }
