@@ -43,6 +43,7 @@ class AddIncome extends Authenticated
             //Show errors
             Flash::addMessage(Messages::INCOME_ADD_FAIL, Flash::WARNING);
             View::renderTemplate('Income/new.html', [
+                'categories' => Income::getCategories(),
                 'income' => $income
             ]);
         }
