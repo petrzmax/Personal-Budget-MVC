@@ -47,16 +47,51 @@ class Config
     const SECRET_KEY = 'your-secret-key';
 
     /**
-     * Mailgun API key
+     * Mail host
      *
      * @var string
      */
-    const MAILGUN_API_KEY = 'your-mailgun-api-key';
+    const MAIL_HOST = 'your-mail-host';
 
     /**
-     * Mailgun domain
+     * Mail host authentication
+     *
+     * @var boolean
+     */
+    const MAIL_HOST_AUTHENTICATION = true;
+
+    /**
+     * Mail username
      *
      * @var string
      */
-    const MAILGUN_DOMAIN = 'your-mailgun-domain';
+    const MAIL_USERNAME = 'your-mail-username';
+
+    /**
+     * Mail password
+     *
+     * @var string
+     */
+    const MAIL_PASSWORD = 'your-mail-password';
+
+    /**
+     * Mail smtp secure type
+     *
+     * @var string
+     */
+    const MAIL_SMTP_SECURE_TYPE = 'tls';
+
+    /**
+     * Mail smtp port
+     *
+     * @var int
+     */
+    const MAIL_SMTP_PORT = 'your-mail-smtp-port';
+
+    /**
+     * Mail sender name
+     *
+     * @var string
+     */
+    const MAIL_SENDER_NAME = 'your-mail-sender-name';    
 }
