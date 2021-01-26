@@ -29,7 +29,7 @@ class Mail
     {
         // Instantiation and passing `true` enables exceptions
         $mail = new PHPMailer(true);
-
+        
         //Server settings
         $mail->isSMTP();
         $mail->Host = Config::MAIL_HOST;
@@ -39,9 +39,7 @@ class Mail
         $mail->SMTPSecure = Config::MAIL_SMTP_SECURE_TYPE;
         $mail->Port = Config::MAIL_SMTP_PORT;
 
-        $domain = Config::MAILGUN_DOMAIN;
-
-        $mail->setFrom(Config::MAIL_USERNAME, 'Mailer');
+        $mail->setFrom(Config::MAIL_USERNAME, Config::MAIL_SENDER_NAME);
         $mail->addAddress($to);
         $mail->Subject = $subject;
         $mail->Body = $html;
