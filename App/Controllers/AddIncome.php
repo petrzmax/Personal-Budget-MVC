@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Income;
-use App\Messages;
+use \App\Messages;
 
 /**
  * Income controller

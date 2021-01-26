@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
-use App\Messages;
+use \App\Messages;
 
 /**
  * Profile controller

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Balance;
-use App\Messages;
+use \App\Messages;
 
 /**
  * ViewBalance controller
