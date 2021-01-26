@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Przeglądaj bilans{% endblock %}
+
+{% block body %}
+<header>
+    <h1 class="text-center">Przeglądaj bilans</h1>
+</header>
+
+<main>
+    <article>
+        <div class="d-grid justify-content-end mb-4">
+            <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" id="timePeriodDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Przedział czasu
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
+                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentMonth' %}active{% endif %}" href='?activeTimePeriod=currentMonth'>Bieżący miesiąc</a></li>
+                    <li><a class="dropdown-item {% if activeTimePeriod == 'lastMonth' %}active{% endif %}" href='?activeTimePeriod=lastMonth'>Poprzedni miesiąc</a></li>
+                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentYear' %}active{% endif %}" href='?activeTimePeriod=currentYear'>Bieżący rok</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a class="dropdown-item {% if activeTimePeriod == 'customPeriod' %}active{% endif %}" href='#' data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Przychody</h2>
+
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rodzaj</th>
+                            <th scope="col">Kwota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set incomeSum = 0 %}
+                        {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
+                            {% set incomeSum = incomeSum + sumOfIncomeInCategory.categorySum %}
+                            <tr>
+                                <td>{{ sumOfIncomeInCategory.name|capitalize }}</td>
+                                <td>{{ sumOfIncomeInCategory.categorySum|number_format(2, '.', ' ') }}</td>
+                            </tr> 
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td scope="col">Suma:</td>
+                            <td scope="col">{{ incomeSum|number_format(2, '.', ' ') }}</td>
+                        </tr>
+                    </tfoot>
+                </table>	
+            </div>
+            
+            <div class="col-md-6">
+                <h2 class="text-danger">Wydatki</h2>
+
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rodzaj</th>
+                            <th scope="col">Kwota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set expenseSum = 0 %}
+                        {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
+                            {% set expenseSum = expenseSum + sumOfExpenseInCategory.categorySum %}
+                            <tr>
+                                <td>{{ sumOfExpenseInCategory.name|capitalize }}</td>
+                                <td>{{ sumOfExpenseInCategory.categorySum|number_format(2, '.', ' ') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Suma:</td>
+                            <td>{{ expenseSum|number_format(2, '.', ' ') }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        {% set balance = incomeSum - expenseSum %}
+        <div class="row text-center mt-2" style="max-width: 800px;">
+            <h2>Twój balans z wybranego przedziału czasu:  {{ balance }} złotych</h2>
+            {% if balance < 0 %} 
+             <h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>
+            {% elseif balance > 0 %}
+                <h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>
+            {% endif %}
+
+            <div id="piechart"></div>
+        </div>
+
+        <div class="d-grid justify-content-end">
+            <a href="/home" class="btn btn-success">Powrót</a>
+        </div>
+
+    </article>
+</main>	
+
+{% endblock %}
+
+{% block footer %}
+<!-- Chose time period window -->
+<div class="modal fade" id="choseTimePeriod" tabindex="-1" aria-labelledby="choseTimePeriodLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="choseTimePeriodLabel">Wybierz zakres dat</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customDate" method="get">
+                    <input type="hidden" name="activeTimePeriod" value="customPeriod">
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label class="col-form-label" for="startDateInput" id="startDateLabel">Od</label>
+                            <div>
+                                <input type="date" class="form-control inputBox" id="startDateInput" name="startDate" aria-label="Do" aria-describedby="startDateLabel" required/>
+                            </div>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="col-form-label" for="endDateInput" id="endDateLabel">Do</label>
+                            <div>
+                                <input type="date" class="form-control inputBox" id="endDateInput" name="endDate" aria-label="Od" aria-describedby="endDateLabel" required/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                <button type="submit" form="customDate" class="btn btn-success">Zatwierdź</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Draw the chart and set the chart values
+    function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+    ['Kategoria', 'Kwota'],
+    {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
+        ['{{ sumOfIncomeInCategory.name|capitalize }}', {{ sumOfIncomeInCategory.categorySum}}],
+    {% endfor %}
+
+    {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
+        ['{{ sumOfExpenseInCategory.name|capitalize }}', {{ sumOfExpenseInCategory.categorySum}}],
+    {% endfor %}
+
+    ]);
+
+    var options = {
+        title: 'Bilans z wybranego okresu',
+        width: '100%',
+        height: '100%',
+            chartArea:{left:0,top:30,width:'100%',height:'100%'},
+            fontSize: 16,
+            fontName: 'Lato',
+            is3D: true,
+    };
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+    }
+
+    // Redraw chart when window is resized
+    $(window).resize(function(){
+    drawChart();
+    });
+</script>
+{% endblock %}
