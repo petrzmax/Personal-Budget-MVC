@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Config;
-use Mailgun\Mailgun;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 /**
  * Mail
@@ -25,13 +27,26 @@ class Mail
      */
     public static function send($to, $subject, $text, $html)
     {
-        $mg = new Mailgun(Config::MAILGUN_API_KEY);
+        // Instantiation and passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+
+        //Server settings
+        $mail->isSMTP();
+        $mail->Host = Config::MAIL_HOST;
+        $mail->SMTPAuth = Config::MAIL_HOST_AUTHENTICATION;
+        $mail->Username = Config::MAIL_USERNAME;
+        $mail->Password = Config::MAIL_PASSWORD;
+        $mail->SMTPSecure = Config::MAIL_SMTP_SECURE_TYPE;
+        $mail->Port = Config::MAIL_SMTP_PORT;
+
         $domain = Config::MAILGUN_DOMAIN;
 
-        $mg->sendMessage($domain, ['from'    => 'your-sender@your-domain.com',
-                                   'to'      => $to,
-                                   'subject' => $subject,
-                                   'text'    => $text,
-                                   'html'    => $html]);
+        $mail->setFrom(Config::MAIL_USERNAME, 'Mailer');
+        $mail->addAddress($to);
+        $mail->Subject = $subject;
+        $mail->Body = $html;
+        $mail->AltBody = $text;
+
+        $mail->send();
     }
 }
