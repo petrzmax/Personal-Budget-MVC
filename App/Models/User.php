@@ -6,6 +6,7 @@ use PDO;
 use \App\Token;
 use \App\Mail;
 use \Core\View;
+use \App\Messages;
 
 /**
  * User model
@@ -79,30 +80,30 @@ class User extends \Core\Model
     {
         // Name
         if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = Message::NAME_REQUIRED;
         }
 
         // email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = Message::EMAIL_INVALID;
         }
         if (static::emailExists($this->email, $this->id ?? null)) {
-            $this->errors[] = 'email already taken';
+            $this->errors[] = Message::EMAIL_TAKEN;
         }
 
         // Password
         if (isset($this->password)) {
 
             if (strlen($this->password) < 6) {
-                $this->errors[] = 'Please enter at least 6 characters for the password';
+                $this->errors[] = Messages::PASSWORD_LENGTH;
             }
 
             if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one letter';
+                $this->errors[] = Message::PASSWORD_NEED_LETTER;
             }
 
             if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one number';
+                $this->errors[] = Message::PASSWORD_NEED_DIGIT;
             }
 
         }
