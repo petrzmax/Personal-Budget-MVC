@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\User;
 use \App\Auth;
 use \App\Flash;
+use App\Messages;
 
 /**
  * Login controller
@@ -40,13 +41,13 @@ class Login extends \Core\Controller
 
             Auth::login($user, $remember_me);
 
-            Flash::addMessage('Login successful');
+            Flash::addMessage(Messages::LOGIN_SUCCESS);
 
             $this->redirect(Auth::getReturnToPage());
 
         } else {
 
-            Flash::addMessage('Login unsuccessful, please try again', Flash::WARNING);
+            Flash::addMessage(Messages::LOGIN_FAIL, Flash::WARNING);
 
             View::renderTemplate('Login/new.html', [
                 'email' => $_POST['email'],
@@ -76,7 +77,7 @@ class Login extends \Core\Controller
      */
     public function showLogoutMessageAction()
     {
-        Flash::addMessage('Logout successful');
+        Flash::addMessage(Messages::LOGOUT_SUCCESS);
 
         $this->redirect('/');
     }

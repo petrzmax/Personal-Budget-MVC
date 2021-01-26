@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Balance;
+use App\Messages;
 
 /**
  * ViewBalance controller
@@ -24,7 +25,7 @@ class ViewBalance extends Authenticated
         $balance = new Balance($_GET);
 
         if(!$balance->prepare()) {
-            Flash::AddMessage('Podano nieprawidłowe dane', Flash::ERROR);
+            Flash::AddMessage(Messages::BALANCE_BAD_DATA, Flash::ERROR);
             $this->redirect('/view-balance');
         }
 

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Auth;
 use \App\Flash;
+use App\Messages;
 
 /**
  * Profile controller
@@ -59,7 +60,7 @@ class Profile extends Authenticated
     {
         if ($this->user->updateProfile($_POST)) {
 
-            Flash::addMessage('Changes saved');
+            Flash::addMessage(Messages::CHANGES_SAVED);
 
             $this->redirect('/profile/show');
 

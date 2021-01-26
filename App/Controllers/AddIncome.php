@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Income;
+use App\Messages;
 
 /**
  * Income controller
@@ -35,11 +36,12 @@ class AddIncome extends Authenticated
     {
         $income = new Income($_POST);
         if($income->save()) {
-            Flash::addMessage('Przychód dodany pomyślnie');
+            Flash::addMessage(Messages::INCOME_ADD_SUCCESS);
             $this->redirect('/add-income');
             
         } else {
             //Show errors
+            Flash::addMessage(Messages::INCOME_ADD_FAIL, Flash::WARNING);
             View::renderTemplate('Income/new.html', [
                 'income' => $income
             ]);
