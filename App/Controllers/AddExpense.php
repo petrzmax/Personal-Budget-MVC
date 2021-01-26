@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Expense;
+use App\Messages;
 
 /**
  * AddExpense controller
@@ -36,11 +37,12 @@ class AddExpense extends Authenticated
     {
         $expense = new Expense($_POST);
         if($expense->save()) {
-            Flash::addMessage('Wydatek dodany pomyślnie');
+            Flash::addMessage(Messages::EXPENSE_ADD_SUCCESS);
             $this->redirect('/add-expense');
             
         } else {
             //Show errors
+            Flash::addMessage(Messages::INCOME_ADD_FAIL, Flash::WARNING);
             View::renderTemplate('Expense/new.html', [
                 'categories' => Expense::getCategories(),
                 'methods' => Expense::getMethods(),
