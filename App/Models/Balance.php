@@ -24,12 +24,20 @@ class Balance extends \Core\Model
         foreach ($data as $key => $value) {
             $this->$key = $value;
         };
+    }
 
+    /**
+     * Set search period range depending on input data
+     *
+     * @return boolean true if no error occured, false otherwise
+     */
+    public function prepare() {
         //Active period selector
         if(!isset($this->activeTimePeriod)) {
             $this->activeTimePeriod = 'currentMonth';
         }
 
+        //Set proper startDate & endDate depending on input
         switch($this->activeTimePeriod) {
             default:
             case 'currentMonth':
@@ -50,13 +58,14 @@ class Balance extends \Core\Model
             case 'customPeriod':
                 $this->startDate = $_GET['startDate'];
                 $this->endDate =  $_GET['endDate'];
+
                 //Validate input date
                 if(!$this->validateDate($this->endDate) || !$this->validateDate($this->startDate)) {
-                    header('location: balance.php');
-                    exit();
+                    return false;
                 }
                 break;
         }
+        return true;
     }
 
     /**
