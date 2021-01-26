@@ -29,8 +29,10 @@ class Mail
     {
         // Instantiation and passing `true` enables exceptions
         $mail = new PHPMailer(true);
-        
+
         //Server settings
+        //$mail->SMTPDebug = 3;
+        //$mail->Debugoutput = 'html';
         $mail->isSMTP();
         $mail->Host = Config::MAIL_HOST;
         $mail->SMTPAuth = Config::MAIL_HOST_AUTHENTICATION;
