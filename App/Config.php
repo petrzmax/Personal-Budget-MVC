@@ -84,7 +84,7 @@ class Config
     /**
      * Mail smtp port
      *
-     * @var string
+     * @var int
      */
     const MAIL_SMTP_PORT = 'your-mail-smtp-port';
 
