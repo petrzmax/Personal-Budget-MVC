@@ -23,6 +23,11 @@ class ViewBalance extends Authenticated
     {
         $balance = new Balance($_GET);
 
+        if(!$balance->prepare()) {
+            Flash::AddMessage('Podano nieprawidłowe dane', Flash::ERROR);
+            $this->redirect('/view-balance');
+        }
+
         View::renderTemplate('ViewBalance/index.html', [
             'activeTimePeriod' => $balance->getActiveTimePeriod(),
             'sumOfIncomeInCategories' => $balance->getSumOfIncomeInCategories(),
