@@ -38,18 +38,18 @@
 
 {% block body %}
 
-    {% if user.errors is not empty %}
-        <p>Errors:</p>
-        <ul>
-            {% for error in user.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
     <header>
         <h1 class="text-center">Rejestracja</h1>
     </header>
+
+    {% if user.errors is not empty %}
+    <p>Błędy:</p>
+    <ul>
+        {% for error in user.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <main>
         <article>
