@@ -80,15 +80,15 @@ class User extends \Core\Model
     {
         // Name
         if ($this->name == '') {
-            $this->errors[] = Message::NAME_REQUIRED;
+            $this->errors[] = Messages::NAME_REQUIRED;
         }
 
         // email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = Message::EMAIL_INVALID;
+            $this->errors[] = Messages::EMAIL_INVALID;
         }
         if (static::emailExists($this->email, $this->id ?? null)) {
-            $this->errors[] = Message::EMAIL_TAKEN;
+            $this->errors[] = Messages::EMAIL_TAKEN;
         }
 
         // Password
@@ -99,11 +99,11 @@ class User extends \Core\Model
             }
 
             if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-                $this->errors[] = Message::PASSWORD_NEED_LETTER;
+                $this->errors[] = Messages::PASSWORD_NEED_LETTER;
             }
 
             if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-                $this->errors[] = Message::PASSWORD_NEED_DIGIT;
+                $this->errors[] = Messages::PASSWORD_NEED_DIGIT;
             }
 
         }
