@@ -6,6 +6,24 @@
     <script src="/js/app.js"></script>
 
     <script>
+        $.validator.setDefaults({
+            highlight: function(element) {
+                $(element).closest('.form-control').addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).closest('.form-control').removeClass('is-invalid').addClass('is-valid')
+            },
+            errorElement: 'div',
+            errorClass: 'invalid-feedback mt-0 mb-2',
+            errorPlacement: function(error, element) {
+                if(element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });        
+
         $(document).ready(function() {
 
             /**
@@ -13,21 +31,44 @@
              */
             $('#formSignup').validate({
                 rules: {
-                    name: 'required',
+                    name: {
+                        required: true,
+                        maxlength: 50
+                    },
                     email: {
                         required: true,
                         email: true,
-                        remote: '/account/validate-email'
+                        remote: '/account/validate-email',
+                        maxlength: 50
                     },
                     password: {
                         required: true,
                         minlength: 6,
                         validPassword: true
+                    },
+                    password_confirmation: {
+                        equalTo: '#password'
                     }
                 },
                 messages: {
+                    name: {
+                        required: 'Imię jest wymagane',
+                        maxlength: 'Imię jest za długie'
+                    },
                     email: {
-                        remote: 'email already taken'
+                        required: 'Email jest wymagany',
+                        email: 'Błędny adres email',
+                        remote: 'Email jest już używany',
+                        maxlength: 'Email jest za długi'
+                    },
+                    password: {
+                        required: 'Hasło jest wymagane',
+                        minlength: 'Wprowadź minimum 6 znaków',
+                        validPassword: 'Hasło musi zawierać znak oraz cyfrę'
+                    },
+                    password_confirmation: {
+                        required: 'Wprowadź hasło ponownie',
+                        equalTo: 'Hasła muszą być takie same'
                     }
                 }
             });
@@ -38,54 +79,30 @@
 
 {% block body %}
 
-    {% if user.errors is not empty %}
-        <p>Errors:</p>
-        <ul>
-            {% for error in user.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
     <header>
         <h1 class="text-center">Rejestracja</h1>
     </header>
+
+    {% if user.errors is not empty %}
+    <p>Błędy:</p>
+    <ul>
+        {% for error in user.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <main>
         <article>
             <form name="form" action="/signup/create" method="post" id="formSignup">
                 <div class="d-grid gap-1">
                     <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
-                    <!--
-                    <?php
-                        if(isset($_SESSION['e_username'])) {
-                            echo $_SESSION['e_username'];
-                            unset($_SESSION['e_username']);
-                        }
-                    ?>
-                    -->
                     
                     <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" value="{{ user.email }}" required>
-                    <!--
-                    <?php
-                        if(isset($_SESSION['e_email'])) {
-                            echo $_SESSION['e_email'];
-                            unset($_SESSION['e_email']);
-                        }
-                    ?>
-                    -->
             
-                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" aria-label="Hasło" required>
-                    <!--
-                    <?php
-                        if(isset($_SESSION['e_password'])) {
-                            echo $_SESSION['e_password'];
-                            unset($_SESSION['e_password']);
-                        }
-                    ?>
-                    -->
+                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" id="password" aria-label="Hasło" required>
                 
-                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="secondPassword" aria-label="Powtórz Hasło" required>
+                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="password_confirmation" aria-label="Powtórz Hasło" required>
                 
                     <input type="submit" class="btn btn-lg btn-success btn-block mt-4" value="Zarejestruj">
                 </div>

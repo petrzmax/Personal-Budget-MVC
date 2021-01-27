@@ -6,7 +6,7 @@ use \Core\View;
 use \App\Models\User;
 use \App\Auth;
 use \App\Flash;
-use App\Messages;
+use \App\Messages;
 
 /**
  * Login controller
