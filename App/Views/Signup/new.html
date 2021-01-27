@@ -13,21 +13,44 @@
              */
             $('#formSignup').validate({
                 rules: {
-                    name: 'required',
+                    name: {
+                        required: true,
+                        maxlength: 50
+                    },
                     email: {
                         required: true,
                         email: true,
-                        remote: '/account/validate-email'
+                        remote: '/account/validate-email',
+                        maxlength: 50
                     },
                     password: {
                         required: true,
                         minlength: 6,
                         validPassword: true
+                    },
+                    password_confirmation: {
+                        equalTo: '#password'
                     }
                 },
                 messages: {
+                    name: {
+                        required: 'Imię jest wymagane',
+                        maxlength: 'Imię jest za długie'
+                    },
                     email: {
-                        remote: 'email already taken'
+                        required: 'Email jest wymagany',
+                        email: 'Błędny adres email',
+                        remote: 'Email jest już używany',
+                        maxlength: 'Email jest za długi'
+                    },
+                    password: {
+                        required: 'Hasło jest wymagane',
+                        minlength: 'Wprowadź minimum 6 znaków',
+                        validPassword: 'Hasło musi zawierać znak oraz cyfrę'
+                    },
+                    password_confirmation: {
+                        required: 'Wprowadź hasło ponownie',
+                        equalTo: 'Hasła muszą być takie same'
                     }
                 }
             });
@@ -59,8 +82,9 @@
                     
                     <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" value="{{ user.email }}" required>
             
+                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" id="password" aria-label="Hasło" required>
                 
-                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="secondPassword" aria-label="Powtórz Hasło" required>
+                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="password_confirmation" aria-label="Powtórz Hasło" required>
                 
                     <input type="submit" class="btn btn-lg btn-success btn-block mt-4" value="Zarejestruj">
                 </div>
