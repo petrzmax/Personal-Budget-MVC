@@ -6,6 +6,24 @@
     <script src="/js/app.js"></script>
 
     <script>
+        $.validator.setDefaults({
+            highlight: function(element) {
+                $(element).closest('.form-control').addClass('is-invalid');
+            },
+            unhighlight: function(element) {
+                $(element).closest('.form-control').removeClass('is-invalid').addClass('is-valid')
+            },
+            errorElement: 'div',
+            errorClass: 'invalid-feedback mt-0 mb-2',
+            errorPlacement: function(error, element) {
+                if(element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });        
+
         $(document).ready(function() {
 
             /**
