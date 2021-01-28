@@ -93,7 +93,8 @@
                 <h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>
             {% endif %}
 
-            <div id="piechart"></div>
+            <div id="incomePiechart"></div>
+            <div id="expensePiechart" class="mt-3"></div>
         </div>
 
         <div class="d-grid justify-content-end">
@@ -145,24 +146,23 @@
 <script>
     // Load google charts
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawIncomeChart);
+    google.charts.setOnLoadCallback(drawExpenseChart);
 
     // Draw the chart and set the chart values
-    function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-    ['Kategoria', 'Kwota'],
+    function drawIncomeChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Kategoria');
+    data.addColumn('number', 'Kwota');
+    data.addRows([
     {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
         ['{{ sumOfIncomeInCategory.name|capitalize }}', {{ sumOfIncomeInCategory.categorySum}}],
-    {% endfor %}
-
-    {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
-        ['{{ sumOfExpenseInCategory.name|capitalize }}', {{ sumOfExpenseInCategory.categorySum}}],
     {% endfor %}
 
     ]);
 
     var options = {
-        title: 'Bilans z wybranego okresu',
+        title: 'Przychody z wybranego okresu',
         width: '100%',
         height: '100%',
             chartArea:{left:0,top:30,width:'100%',height:'100%'},
@@ -171,14 +171,42 @@
             is3D: true,
     };
 
-    // Display the chart inside the <div> element with id="piechart"
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    // Display the chart inside the <div> element with id="incomePiechart"
+    var chart = new google.visualization.PieChart(document.getElementById('incomePiechart'));
+    chart.draw(data, options);
+    }
+
+    // Draw the chart and set the chart values
+    function drawExpenseChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Kategoria');
+    data.addColumn('number', 'Kwota');
+    data.addRows([
+    {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
+        ['{{ sumOfExpenseInCategory.name|capitalize }}', {{ sumOfExpenseInCategory.categorySum}}],
+    {% endfor %}
+
+    ]);
+
+    var options = {
+        title: 'Wydatki z wybranego okresu',
+        width: '100%',
+        height: '100%',
+            chartArea:{left:0,top:30,width:'100%',height:'100%'},
+            fontSize: 16,
+            fontName: 'Lato',
+            is3D: true,
+    };
+
+    // Display the chart inside the <div> element with id="incomePiechart"
+    var chart = new google.visualization.PieChart(document.getElementById('expensePiechart'));
     chart.draw(data, options);
     }
 
     // Redraw chart when window is resized
     $(window).resize(function(){
-    drawChart();
+    drawIncomeChart();
+    drawExpenseChart();
     });
 </script>
 {% endblock %}
