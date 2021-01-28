@@ -86,7 +86,7 @@
         </div>
         {% set balance = incomeSum - expenseSum %}
         <div class="row text-center mt-2" style="max-width: 800px;">
-            <h2>Twój balans z wybranego przedziału czasu:  {{ balance }} złotych</h2>
+            <h2>Twój bilans z wybranego przedziału czasu:  {{ balance }} złotych</h2>
             {% if balance < 0 %} 
              <h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>
             {% elseif balance > 0 %}
