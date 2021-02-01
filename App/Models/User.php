@@ -65,10 +65,75 @@ class User extends \Core\Model
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             $stmt->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
 
-            return $stmt->execute();
+            //Copy default categories if user was saved successfully
+            if($stmt->execute()) {
+                return $this->copyDefaultCategories();
+            }             
         }
 
         return false;
+    }
+
+    /**
+     * Copie's data from default's tables into assigned to users tables
+     *
+     * @return true if categories were copied, false otherwise
+     */
+    private function copyDefaultCategories() {
+
+        if($registeredUserId = $this->getCurrentUserId()) {
+
+            $db = static::getDB();
+
+            //Copy payment methods
+            $sql = 'INSERT INTO payment_methods_assigned_to_users
+                    SELECT NULL, :registeredUserId, name
+                    FROM payment_methods_default';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':registeredUserId', $registeredUserId, PDO::PARAM_INT);
+            
+            //If copy successful copy next category
+            if($stmt->execute()) {
+
+                //Copy expenses category
+                $sql = 'INSERT INTO expenses_category_assigned_to_users
+                        SELECT NULL, :registeredUserId, name
+                        FROM expenses_category_default';
+                $stmt = $db->prepare($sql);
+                $stmt->bindValue(':registeredUserId', $registeredUserId, PDO::PARAM_INT);
+                
+                //If copy successful copy next category
+                if($stmt->execute()) {
+
+                    //Copy incomes category
+                    $sql = 'INSERT INTO incomes_category_assigned_to_users
+                            SELECT NULL, :registeredUserId, name
+                            FROM incomes_category_default';
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindValue(':registeredUserId', $registeredUserId, PDO::PARAM_INT);
+                    
+                    return $stmt->execute();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return's a current user id searched by current email address
+     *
+     * @return mixed int if found, false otherwise
+     */
+    private function getCurrentUserId() {
+        $sql = 'SELECT id FROM users WHERE email = :email';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
     }
 
     /**
