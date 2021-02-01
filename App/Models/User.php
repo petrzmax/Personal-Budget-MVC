@@ -65,7 +65,14 @@ class User extends \Core\Model
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             $stmt->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
 
-            return $stmt->execute();
+            //Copy default categories if user was saved successfully
+            if($stmt->execute()) {
+                return $this->copyDefaultCategories();
+            }             
+        }
+
+        return false;
+    }
 
     /**
      * Copie's data from default's tables into assigned to users tables
