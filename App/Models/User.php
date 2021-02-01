@@ -72,6 +72,22 @@ class User extends \Core\Model
     }
 
     /**
+     * Return's a current user id searched by current email address
+     *
+     * @return mixed int if found, false otherwise
+     */
+    private function getCurrentUserId() {
+        $sql = 'SELECT id FROM users WHERE email = :email';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
      * Validate current property values, adding valiation error messages to the errors array property
      *
      * @return void
