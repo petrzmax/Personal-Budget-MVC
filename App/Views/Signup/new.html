@@ -1,92 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Rejestracja - Budżet osobisty{% endblock %}
-
-{% block footer %}
-    <script src="/js/app.js"></script>
-
-    <script>
-        $.validator.setDefaults({
-            highlight: function(element) {
-                $(element).closest('.form-control').addClass('is-invalid');
-            },
-            unhighlight: function(element) {
-                $(element).closest('.form-control').removeClass('is-invalid').addClass('is-valid')
-            },
-            errorElement: 'div',
-            errorClass: 'invalid-feedback mt-0 mb-2',
-            errorPlacement: function(error, element) {
-                if(element.parent('.input-group').length) {
-                    error.insertAfter(element.parent());
-                } else {
-                    error.insertAfter(element);
-                }
-            }
-        });        
-
-        $(document).ready(function() {
-
-            /**
-             * Validate the form
-             */
-            $('#formSignup').validate({
-                rules: {
-                    name: {
-                        required: true,
-                        maxlength: 50,
-                        noSpecialChars: true,
-                        noSpaces: true
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                        remote: '/account/validate-email',
-                        maxlength: 50
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6,
-                        validPassword: true
-                    },
-                    password_confirmation: {
-                        equalTo: '#password'
-                    }
-                },
-                messages: {
-                    name: {
-                        required: 'Imię jest wymagane',
-                        maxlength: 'Imię jest za długie',
-                        noSpecialChars: 'Usuń znaki spacjalne oraz cyfry',
-                        noSpaces: 'Imię nie może zawierać spacji'
-                    },
-                    email: {
-                        required: 'Email jest wymagany',
-                        email: 'Błędny adres email',
-                        remote: 'Email jest już używany',
-                        maxlength: 'Email jest za długi'
-                    },
-                    password: {
-                        required: 'Hasło jest wymagane',
-                        minlength: 'Wprowadź minimum 6 znaków',
-                        validPassword: 'Hasło musi zawierać znak oraz cyfrę'
-                    },
-                    password_confirmation: {
-                        required: 'Wprowadź hasło ponownie',
-                        equalTo: 'Hasła muszą być takie same'
-                    }
-                }
-            });
-        });
-    </script>
-
-{% endblock %}
+{% block title %}Rejestracja{% endblock %}
 
 {% block body %}
-
-    <header>
-        <h1 class="text-center">Rejestracja</h1>
-    </header>
-
     {% if user.errors is not empty %}
     <p>Błędy:</p>
     <ul>
@@ -115,5 +31,8 @@
             <h5 class="text-center">Masz już konto? Zaloguj się <a href="/">tutaj</a></h5>
         </article>
     </main>
+{% endblock %}
 
+{% block footer %}
+    <script src="/js/validation.js"></script>
 {% endblock %}

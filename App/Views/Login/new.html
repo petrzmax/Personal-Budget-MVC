@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Logowanie - Budżet osobisty{% endblock %}
+{% block title %}Logowanie{% endblock %}
 
 {% block body %}
-
-<header>
-    <h1 class="text-center">Budżet osobisty</h1>
-</header>
-
 <main>
     <article>
         <form name="form" action="/login/create" method="post">
@@ -19,14 +14,6 @@
                 <input type="submit" class="btn btn-lg btn-success mt-3" value="Zaloguj">
             </div>
         </form>
-<!--
-        <?php
-            if(isset($_SESSION['e_logging_in'])) {
-                echo $_SESSION['e_logging_in'];
-                unset($_SESSION['e_logging_in']);
-            }
-        ?>
-!-->
         <h5 class="text-center">Nie masz jeszcze konta? Zarejestruj się <a href="/signup/new">tutaj</a></h5>
     </article>
 </main>
