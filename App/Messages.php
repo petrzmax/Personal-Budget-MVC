@@ -32,11 +32,25 @@ class Messages
     const NAME_REQUIRED = 'Imię jest wymagane';
     const NAME_TOO_LONG = 'Imię jest za długie';
     const NAME_HAS_SPACE = 'Imię zawiera spację';
-    const NAME_HAS_SPECIAL_CHAR = "Imię zawiera znaki specjalne lub cyfry";
+    const NAME_HAS_SPECIAL_CHAR = 'Imię zawiera znaki specjalne lub cyfry';
     const EMAIL_INVALID = 'Błędny adres email';
     const EMAIL_TAKEN = 'Email jest już używany';
     const PASSWORD_LENGTH = 'Hasło musi składać się z przynajmniej sześciu znaków';
     const PASSWORD_NEED_LETTER = 'Hasło musi zawierać przynajmniej jedną literę';
     const PASSWORD_NEED_DIGIT = 'Hasło musi zawierać przynajmniej jedną cyfrę';
+
+    /**
+     * Add Expense & Income validation messages
+     * @var string
+     */
+    const VALUE_REQUIRED = 'Kwota musi być podana';
+    const VALUE_MUST_BE_NUMERIC = 'Kwota musi być wartością numeryczną';
+    const VALUE_MUST_BE_GREATER_THAN_0 = 'Kwota musi być większa od 0';
+    const METHOD_INVALID = 'Wybierz prawidłową metodę';
+    const METHOD_REQUIRED = 'Metoda płatności musi być wybrana';
+    const CATEGORY_INVALID = 'Wybierz prawidłową kategorię';
+    const CATEGORY_REQUIRED = 'Kategoria musi być wybrana';
+    const COMMENT_TOO_LONG = 'Komentarz może mieć maksymalnie 100 znaków';
+    const DATE_INVALID = 'Podana data jest nieprawidłowa';
 
 }
