@@ -20,4 +20,33 @@ $.validator.addMethod('validPassword',
     'Password must contain at least one letter and number'
 );
 
+
+/*
+ * Add jQuery Validation plugin method for a valid name
+ *
+ * Valid name has no special characters
+ */
+$.validator.addMethod('noSpecialChars',
+    function(value, element, param) {
+        if (value.match(/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i)) {
+            return false;
+        }
+        return true;
+    },
+    'Value contains special characters'
+);
+
+/*
+ * Add jQuery Validation plugin method for a valid name
+ *
+ * Valid name has no white characters
+ */
+$.validator.addMethod('noSpaces',
+    function(value, element, param) {
+        if (value.match(/\s/)) {
+            return false;
+        }
+        return true;
+    },
+    'Value contains spaces'
 );
