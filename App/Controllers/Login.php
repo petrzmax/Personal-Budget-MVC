@@ -23,7 +23,12 @@ class Login extends \Core\Controller
      */
     public function newAction()
     {
-        View::renderTemplate('Login/new.html');
+        // if user is logged in
+        if(isset($_SESSION['user_id'])) {
+            $this->redirect('/home');
+        } else {
+            View::renderTemplate('Login/new.html');
+        }
     }
 
     /**
