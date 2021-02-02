@@ -33,7 +33,9 @@
                 rules: {
                     name: {
                         required: true,
-                        maxlength: 50
+                        maxlength: 50,
+                        noSpecialChars: true,
+                        noSpaces: true
                     },
                     email: {
                         required: true,
@@ -53,7 +55,9 @@
                 messages: {
                     name: {
                         required: 'Imię jest wymagane',
-                        maxlength: 'Imię jest za długie'
+                        maxlength: 'Imię jest za długie',
+                        noSpecialChars: 'Usuń znaki spacjalne oraz cyfry',
+                        noSpaces: 'Imię nie może zawierać spacji'
                     },
                     email: {
                         required: 'Email jest wymagany',

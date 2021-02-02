@@ -30,6 +30,9 @@ class Messages
      * @var string
      */
     const NAME_REQUIRED = 'Imię jest wymagane';
+    const NAME_TOO_LONG = 'Imię jest za długie';
+    const NAME_HAS_SPACE = 'Imię zawiera spację';
+    const NAME_HAS_SPECIAL_CHAR = "Imię zawiera znaki specjalne lub cyfry";
     const EMAIL_INVALID = 'Błędny adres email';
     const EMAIL_TAKEN = 'Email jest już używany';
     const PASSWORD_LENGTH = 'Hasło musi składać się z przynajmniej sześciu znaków';

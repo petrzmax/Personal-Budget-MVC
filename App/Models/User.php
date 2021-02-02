@@ -60,7 +60,7 @@ class User extends \Core\Model
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
-            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':name', htmlspecialchars($this->name), PDO::PARAM_STR);
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
             $stmt->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
@@ -146,6 +146,18 @@ class User extends \Core\Model
         // Name
         if ($this->name == '') {
             $this->errors[] = Messages::NAME_REQUIRED;
+        }
+
+        if (strlen($this->name) > 50) {
+            $this->errors[] = Messages::NAME_TOO_LONG;
+        }
+
+        if (preg_match('/\s/', $this->name)) {
+            $this->errors[] = Messages::NAME_HAS_SPACE;
+        }
+
+        if(preg_match('/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i', $this->name)) {
+            $this->errors[] = Messages::NAME_HAS_SPECIAL_CHAR;
         }
 
         // email address
