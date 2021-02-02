@@ -2,6 +2,38 @@
 
 {% block title %}Rejestracja{% endblock %}
 
+{% block body %}
+    {% if user.errors is not empty %}
+    <p>Błędy:</p>
+    <ul>
+        {% for error in user.errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <main>
+        <article>
+            <form name="form" action="/signup/create" method="post" id="formSignup">
+                <div class="d-grid gap-1">
+                    <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
+                    
+                    <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" value="{{ user.email }}" required>
+            
+                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" id="password" aria-label="Hasło" required>
+                
+                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="password_confirmation" aria-label="Powtórz Hasło" required>
+                
+                    <input type="submit" class="btn btn-lg btn-success btn-block mt-4" value="Zarejestruj">
+                </div>
+            </form>
+
+            <h5 class="text-center">Masz już konto? Zaloguj się <a href="/">tutaj</a></h5>
+        </article>
+    </main>
+
+{% endblock %}
+
 {% block footer %}
     <script src="/js/app.js"></script>
 
@@ -78,37 +110,5 @@
             });
         });
     </script>
-
-{% endblock %}
-
-{% block body %}
-    {% if user.errors is not empty %}
-    <p>Błędy:</p>
-    <ul>
-        {% for error in user.errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <main>
-        <article>
-            <form name="form" action="/signup/create" method="post" id="formSignup">
-                <div class="d-grid gap-1">
-                    <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
-                    
-                    <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" value="{{ user.email }}" required>
-            
-                    <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" id="password" aria-label="Hasło" required>
-                
-                    <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="password_confirmation" aria-label="Powtórz Hasło" required>
-                
-                    <input type="submit" class="btn btn-lg btn-success btn-block mt-4" value="Zarejestruj">
-                </div>
-            </form>
-
-            <h5 class="text-center">Masz już konto? Zaloguj się <a href="/">tutaj</a></h5>
-        </article>
-    </main>
 
 {% endblock %}
