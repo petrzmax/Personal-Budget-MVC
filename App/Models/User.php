@@ -148,6 +148,18 @@ class User extends \Core\Model
             $this->errors[] = Messages::NAME_REQUIRED;
         }
 
+        if (strlen($this->name) > 50) {
+            $this->errors[] = Messages::NAME_TOO_LONG;
+        }
+
+        if (preg_match('/\s/', $this->name)) {
+            $this->errors[] = Messages::NAME_HAS_SPACE;
+        }
+
+        if(preg_match('/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i', $this->name)) {
+            $this->errors[] = Messages::NAME_HAS_SPECIAL_CHAR;
+        }
+
         // email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
             $this->errors[] = Messages::EMAIL_INVALID;
