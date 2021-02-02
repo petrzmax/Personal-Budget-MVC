@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use \App\Messages;
 
 /**
  * Expense model
@@ -167,48 +168,48 @@ class Expense extends \Core\Model
 
         //Check if value is set
         if($this->valueInput == '') {
-            $this->errors[] = "Kwota musi być podana"; 
+            $this->errors[] = Messages::VALUE_REQUIRED; 
             
             //Check if value is numeric
         } else if(!is_numeric($this->valueInput)) {
-            $this->errors[] = "Kwota musi być wartością numeryczną"; 
+            $this->errors[] = Messages::VALUE_IS_NOT_NUMERIC; 
 
             //Check if value is greater than 0
         } else  if($this->valueInput <= 0) {
-            $this->errors[] = "Kwota musi być większa od 0";
+            $this->errors[] = Messages::VALUE_MUST_BE_GREATER_THAN_0;
         }
 
         //Check if payment method is set
         if(isset($this->methodId)) {
             //Check if given payment method is associated with current user
             if(!in_array($this->methodId, static::getMethodsIds())) {
-                $this->errors[] = "Wybierz prawidłową metodę"; 
+                $this->errors[] = Messages::METHOD_INVALID; 
             }
         } else {
-            $this->errors[] = "Metoda płatności musi być wybrana"; 
+            $this->errors[] = Messages::METHOD_REQUIRED; 
         }
 
         //Check if category is set
         if(isset($this->categoryId)) {
             //Check if given category is associated with current user
             if(!in_array($this->categoryId, static::getCategoriesIds())) {
-                $this->errors[] = "Wybierz prawidłową kategorię"; 
+                $this->errors[] = Messages::CATEGORY_INVALID; 
             }
         } else {
-            $this->errors[] = "Kategoria musi być wybrana"; 
+            $this->errors[] = Messages::CATEGORY_REQUIRED; 
         }
 
         //If comment exist
         if($this->comment != '') {
             //Validate comment length
             if(strlen($this->comment) > 100) {
-                $this->errors[] = "Komentarz może mieć maksymalnie 100 znaków";
+                $this->errors[] = Messages::COMMENT_TOO_LONG;
             }
         }
 
         //Validate date
         if(!$this->validateDate($this->dateInput)) {
-            $this->errors[] = "Podana data jest nieprawidłowa";
+            $this->errors[] = Messages::DATE_INVALID;
         }
 
     }
