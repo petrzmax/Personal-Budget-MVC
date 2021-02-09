@@ -41,4 +41,41 @@ class Settings extends Authenticated
         ]);
     }
 
+    /**
+     * AJAX - get category name
+     *
+     * @return void
+     */
+    public function getLimitAction() {
+        
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
+        }
+
+        if(isset($_POST['postCategoryId'])) {
+            $categoryType = $_POST['postCategoryType'];
+        }
+
+        switch($categoryType) {
+            case 'income':
+                $result = Income::getCategoryById($categoryId);
+                break;
+
+            case 'expense':
+                
+                break;
+
+            case 'paymentMethod':
+
+                break;
+
+            default:
+
+                break;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
 }
