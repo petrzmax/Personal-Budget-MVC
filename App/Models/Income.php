@@ -57,6 +57,28 @@ class Income extends \Core\Model
     } 
 
     /**
+     * Get income data by id
+     *
+     * @return mixed Income object if found, false otherwise
+     */
+    public static function getCategoryById($id)
+    {
+        $sql = 'SELECT id, name
+                FROM incomes_category_assigned_to_users 
+                WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    } 
+
+    /**
      * Get all the income categories id's
      *
      * @return mixed id array if found, false otherwise
