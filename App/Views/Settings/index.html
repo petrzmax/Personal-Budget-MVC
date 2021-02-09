@@ -17,20 +17,26 @@
                 <div class="accordion-body">
                   
                     {% for incomeCategory in incomeCategories %}
-                        <div class="row" id="incomeCategoryId{{ incomeCategory.id }}">
+                        <div class="row">
                           <div class="col">
                             <li>{{ incomeCategory.name|capitalize }}</li>
                           </div>
-                          <div class="col-auto">
-                            <button class="btn btn-sm btn-primary p-0"><i class="icon-pencil"></i></button>
-                            
-                            <button class="btn btn-sm btn-danger p-0 " type="button" value="{{ incomeCategory.id }}" name="incomeCategoryId" id="c{{ incomeCategory.id }}" required>
-                              <i class="icon-trash-empty"></i>
+                          <div class="col-auto" categoryId="{{ incomeCategory.id }}" categoryType="income">
+                            <button class="btn btn-sm btn-primary p-0 editBtn" id="edit">
+                              <i class="icon-pencil"></i>
                             </button>
                             
+                            <button class="btn btn-sm btn-danger p-0 deleteBtn" >
+                              <i class="icon-trash-empty"></i>
+                            </button>
                           </div>
+
                         </div>  
                     {% endfor %}
+
+                    <div class="row gap-2 mt-3 mx-3">
+                        <button class="btn btn-success">Doda nową kategorię</button>
+                    </div>
 
                 </div>
               </div>
@@ -77,6 +83,7 @@
                 </h2>
                 <div id="accountCollapse" class="accordion-collapse collapse" aria-labelledby="account" data-bs-parent="#mainSettingsAccordion">
                   <div class="accordion-body">
+
                     <div class="row">
                       <div class="col">
                         Imię: {{ user.name }}  
@@ -94,6 +101,8 @@
                         Usuń konto
                       </div> 
                     </div>
+
+
 
                   </div>
                 </div>
