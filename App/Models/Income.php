@@ -79,6 +79,24 @@ class Income extends \Core\Model
     } 
 
     /**
+     * Delete income category by id
+     *
+     * @return boolean true if category deleted, false otherwise
+     */
+    public static function deleteCategoryById($id)
+    {
+        $sql = 'DELETE
+                FROM incomes_category_assigned_to_users 
+                WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
+
+        return $stmt->execute();
+    } 
+
+    /**
      * Get all the income categories id's
      *
      * @return mixed id array if found, false otherwise
