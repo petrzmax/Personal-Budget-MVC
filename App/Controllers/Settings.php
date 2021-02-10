@@ -80,13 +80,43 @@ class Settings extends Authenticated
         }
     }
 
-            default:
-
-                break;
+    /**
+     * AJAX - delete category
+     *
+     * @return void
+     */
+    public function deleteCategoryAction() {
+        
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
         }
 
-        header('Content-Type: application/json');
-        echo json_encode($result);
-    }
+        if(isset($_POST['postCategoryId'])) {
+            $categoryType = $_POST['postCategoryType'];
+        }
 
+        if($categoryId && $categoryType) {
+            switch($categoryType) {
+                case 'income':
+                   // $result = Income::deleteCategoryById($categoryId);
+                   $result = true;
+                    break;
+    
+                case 'expense':
+                    $result = Expense::deleteCategoryById($categoryId);
+                    break;
+    
+                case 'paymentMethod':
+                    $result = Expense::deleteMethodById($categoryId);
+                    break;
+    
+                default:
+                    $result = false;
+                    break;
+            }
+    
+            header('Content-Type: application/json');
+            echo json_encode($result);
+        }
+    }
 }
