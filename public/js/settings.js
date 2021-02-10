@@ -1,8 +1,15 @@
+var deleteModalText = "Czy na pewno chcesz usunąć kategorię ";
+var categoryId;
+var categoryType;
+var buttonType;
+
 //Edit button handler
 $(document).on('click', '.editBtn', function () {
 
-    var categoryId = $(this).parent().attr('categoryId');
-    var categoryType = $(this).parent().attr('categoryType');
+    //Get data from button
+    categoryId = $(this).parent().attr('categoryId');
+    categoryType = $(this).parent().attr('categoryType');
+    buttonType = $(this).attr('buttonType');
 
     $.ajax({
         type: 'POST',
