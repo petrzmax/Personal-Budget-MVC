@@ -34,5 +34,14 @@ $(document).on('click', '.editBtn', function () {
         }
     });
 
-    $('#editModal').modal('show');
+    //Show proper modal
+    if(buttonType == 'edit') {
+        $('#editModal').modal('show');
+    }
+
+    if(buttonType == 'delete') {
+        $('#deleteModal').modal('show');
+    }
+    
 });
+
