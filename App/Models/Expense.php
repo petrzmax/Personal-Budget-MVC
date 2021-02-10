@@ -97,6 +97,28 @@ class Expense extends \Core\Model
 
         return $stmt->fetchAll();
     } 
+
+    /**
+     * Get expense data by id
+     *
+     * @return mixed Expense object if found, false otherwise
+     */
+    public static function getCategoryById($id)
+    {
+        $sql = 'SELECT id, name, expense_limit
+                FROM expenses_category_assigned_to_users 
+                WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    } 
     
     /**
      * Get all the expense categories id's
