@@ -23,6 +23,10 @@ $(document).on('click', '.editBtn', function () {
         success: function(result) {
             
             $('#categoryName').val(result.name);
+
+            var label_text = $('#deleteModalText').text(); //Get the text
+            $('#deleteModalText').text(deleteModalText + result.name + "?"); //Replace and set the text back
+            
         },
 
         error: function(data){
