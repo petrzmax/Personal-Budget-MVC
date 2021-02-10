@@ -46,7 +46,7 @@ class Settings extends Authenticated
      *
      * @return void
      */
-    public function getLimitAction() {
+    public function getCategoryDataAction() {
         
         if(isset($_POST['postCategoryId'])) {
             $categoryId = $_POST['postCategoryId'];
