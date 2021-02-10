@@ -59,7 +59,7 @@ function deleteCategory() {
         success: function(result) {
             $('#deleteModal').modal('hide');
             var currentCategoryRow = $("div").find(`[categoryId='${categoryId}'][categoryType='${categoryType}']`).parent();
-            currentCategoryRow.hide('slow', function() {currentCategoryRow.remove();});
+            currentCategoryRow.slideUp('medium', function() {currentCategoryRow.remove();});
         },
 
         error: function(data){
