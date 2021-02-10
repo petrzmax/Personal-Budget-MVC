@@ -56,18 +56,29 @@ class Settings extends Authenticated
             $categoryType = $_POST['postCategoryType'];
         }
 
-        switch($categoryType) {
-            case 'income':
-                $result = Income::getCategoryById($categoryId);
-                break;
-
-            case 'expense':
-                
-                break;
-
-            case 'paymentMethod':
-
-                break;
+        if($categoryId && $categoryType) {
+            switch($categoryType) {
+                case 'income':
+                    $result = Income::getCategoryById($categoryId);
+                    break;
+    
+                case 'expense':
+                    $result = Expense::getCategoryById($categoryId);
+                    break;
+    
+                case 'paymentMethod':
+                    $result = Expense::getMethodById($categoryId);
+                    break;
+    
+                default:
+                    $result = false;
+                    break;
+            }
+    
+            header('Content-Type: application/json');
+            echo json_encode($result);
+        }
+    }
 
             default:
 
