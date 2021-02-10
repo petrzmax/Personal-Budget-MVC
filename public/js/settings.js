@@ -13,7 +13,7 @@ $(document).on('click', '.editBtn', function () {
 
     $.ajax({
         type: 'POST',
-        url: '/settings/get-limit',
+        url: '/settings/getCategoryData',
         dataType: 'json',
         data: {
             postCategoryId: categoryId,
