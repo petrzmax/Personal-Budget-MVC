@@ -45,3 +45,25 @@ $(document).on('click', '.editBtn', function () {
     
 });
 
+//Delete selected category - activated by button on delete modal
+function deleteCategory() {
+    $.ajax({
+        type: 'POST',
+        url: '/settings/deleteCategory',
+        dataType: 'json',
+        data: {
+            postCategoryId: categoryId,
+            postCategoryType: categoryType
+        },
+
+        success: function(result) {
+            $('#deleteModal').modal('hide');
+            var currentCategoryRow = $("div").find(`[categoryId='${categoryId}'][categoryType='${categoryType}']`).parent();
+            currentCategoryRow.hide('slow', function() {currentCategoryRow.remove();});
+        },
+
+        error: function(data){
+            alert('fail');
+        }
+    });
+}
