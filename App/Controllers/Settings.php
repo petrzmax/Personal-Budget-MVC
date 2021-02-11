@@ -137,8 +137,8 @@ class Settings extends Authenticated
         if($categoryId && $categoryType) {
             switch($categoryType) {
                 case 'income':
-                   // $result = Income::deleteCategoryById($categoryId);
-                   $result = true;
+                    $result = Income::deleteCategoryById($categoryId);
+                   
                     break;
     
                 case 'expense':
@@ -155,7 +155,7 @@ class Settings extends Authenticated
             }
     
             header('Content-Type: application/json');
-            echo json_encode($result);
+            echo $result;
         }
     }
 }
