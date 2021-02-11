@@ -15,7 +15,7 @@
               </h2>
               <div id="incomeCategoriesCollapse" class="accordion-collapse collapse show" aria-labelledby="incomeCategories" data-bs-parent="#mainSettingsAccordion">
                 <div class="accordion-body">
-                  
+                  <div id="incomeCategoriesBody">
                     {% for incomeCategory in incomeCategories %}
                         <div class="row">
                           <div class="col">
@@ -33,6 +33,7 @@
 
                         </div>  
                     {% endfor %}
+                  </div>
 
                     <div class="row gap-2 mt-3 mx-3">
                         <button class="btn btn-success">Doda nową kategorię</button>
