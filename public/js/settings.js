@@ -1,5 +1,7 @@
 const deleteModalText = "Czy na pewno chcesz usunąć kategorię \"";
 const addCategoryModalTitle = "Dodaj nową kategorię";
+const editCategoryModalTitle = "Edytuj kategorię";
+
 var categoryId;
 var categoryName;
 var categoryType;
@@ -41,11 +43,23 @@ $(document).on('click', '.editBtn', function () {
         },
 
         success: function(result) {
-            
-            $('#categoryName').val(result.name);
 
-            var label_text = $('#deleteModalText').text(); //Get the text
-            $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
+            //Show proper modal
+            switch (buttonType) {
+                case 'edit':
+
+                    //Set proper modal title
+                    $('#editModalLabel').text(editCategoryModalTitle);
+                    
+                    $('#categoryName').val(result.name);
+                    $('#editModal').modal('show');
+                    break;
+                case 'delete':
+
+                    $('#deleteModal').modal('show');
+                    $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
+                    break;
+            }
             
         },
 
@@ -53,15 +67,6 @@ $(document).on('click', '.editBtn', function () {
             alert('fail');
         }
     });
-
-    //Show proper modal
-    if(buttonType == 'edit') {
-        $('#editModal').modal('show');
-    }
-
-    if(buttonType == 'delete') {
-        $('#deleteModal').modal('show');
-    }
     
 });
 
@@ -88,7 +93,7 @@ function deleteCategory() {
     });
 }
 
-//Add new category - activated by button on edit modal
+//Add new category to db - activated by button on edit modal
 function addCategory() {
 
     categoryName = $('#categoryName').val();
@@ -103,34 +108,38 @@ function addCategory() {
 
         success: function(result) {
             $('#editModal').modal('hide');
-
-            $('#incomeCategoriesBody').append([
-                { newCategoryName: categoryName, newCategoryId: 69, newCategoryType: categoryType }
-              ].map(categoryTemplate).join('')); 
+            var returnedCategoryId = result;
             
-            //PROTOTYPE
-            var currentCategoryRow = $("div").find(`[categoryId='69'][categoryType='${categoryType}']`).parent();
+            //Append new category to proper div
+            var currentCategoryRow = $([
+                { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
+            ].map(categoryTemplate).join('')).appendTo('#incomeCategoriesBody');
+
             currentCategoryRow.slideDown('slow');
         },
 
-        error: function(data){
-            alert('fail');
+        error: function(xhr){
+            alert(xhr.status);
         }
     });
-
-
-    
-
 }
 
 //Add button handler
 $(document).on('click', '.addBtn', function () {
     categoryType = $(this).attr('categoryType');
-    $('#editModalLabel').text(addCategoryModalTitle); //Set proper modal title
+    
 
-    //Show limit form
+    //Set proper modal title
+    $('#editModalLabel').text(addCategoryModalTitle);
+    //Reset category name input
+    $('#categoryName').val('');
+
+    //Show limit form only for expense categories
     if(categoryType == 'expense') {
         $('#limitForm').show();
+    }
+    else {
+        $('#limitForm').hide();
     }
 
     $('#editModal').modal('show');
