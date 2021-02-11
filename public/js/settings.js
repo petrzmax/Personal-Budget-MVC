@@ -43,7 +43,7 @@ $(document).on('click', '.editBtn', function () {
             $('#categoryName').val(result.name);
 
             var label_text = $('#deleteModalText').text(); //Get the text
-            $('#deleteModalText').text(deleteModalText + result.name + "?"); //Replace and set the text back
+            $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
             
         },
 
