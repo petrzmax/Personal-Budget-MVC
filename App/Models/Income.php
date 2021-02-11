@@ -82,20 +82,27 @@ class Income extends \Core\Model
     /**
      * Add income category
      *
-     * @return boolean true if category added, false otherwise
+     * @return mixed inserted row id if category added, false otherwise
      */
     public static function addCategory($name)
     {
-        //To-do Validation
-        $sql = 'INSERT INTO incomes_category_assigned_to_users (name, user_id) 
-                VALUES (:name, :user_id)';
+        //Validate name
+        if(true) {
 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':name', $name, PDO::PARAM_STR);     
-        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $sql = 'INSERT INTO incomes_category_assigned_to_users (name, user_id) 
+                    VALUES (:name, :user_id)';
 
-        return $stmt->execute();
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
+            $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $db->lastInsertId();
+            }
+            
+        }
+        return false;
     } 
 
     /**
