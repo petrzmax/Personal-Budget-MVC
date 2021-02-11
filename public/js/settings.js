@@ -87,3 +87,52 @@ function deleteCategory() {
         }
     });
 }
+
+//Add new category - activated by button on edit modal
+function addCategory() {
+
+    categoryName = $('#categoryName').val();
+    $.ajax({
+        type: 'POST',
+        url: '/settings/addCategory',
+        dataType: 'json',
+        data: {
+            postCategoryType: categoryType,
+            postCategoryName: categoryName
+        },
+
+        success: function(result) {
+            $('#editModal').modal('hide');
+
+            $('#incomeCategoriesBody').append([
+                { newCategoryName: categoryName, newCategoryId: 69, newCategoryType: categoryType }
+              ].map(categoryTemplate).join('')); 
+            
+            //PROTOTYPE
+            var currentCategoryRow = $("div").find(`[categoryId='69'][categoryType='${categoryType}']`).parent();
+            currentCategoryRow.slideDown('slow');
+        },
+
+        error: function(data){
+            alert('fail');
+        }
+    });
+
+
+    
+
+}
+
+//Add button handler
+$(document).on('click', '.addBtn', function () {
+    categoryType = $(this).attr('categoryType');
+    $('#editModalLabel').text(addCategoryModalTitle); //Set proper modal title
+
+    //Show limit form
+    if(categoryType == 'expense') {
+        $('#limitForm').show();
+    }
+
+    $('#editModal').modal('show');
+
+});
