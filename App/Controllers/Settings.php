@@ -81,6 +81,45 @@ class Settings extends Authenticated
     }
 
     /**
+     * AJAX - Add category
+     *
+     * @return void
+     */
+    public function addCategoryAction() {
+        
+        if(isset($_POST['postCategoryType'])) {
+            $categoryType = $_POST['postCategoryType'];
+        }
+
+        if(isset($_POST['postCategoryName'])) {
+            $categoryName = $_POST['postCategoryName'];
+        }
+
+        if($categoryType && $categoryName) {
+            switch($categoryType) {
+                case 'income':
+                    $result = Income::addCategory($categoryName);
+                    break;
+    
+                case 'expense':
+                    $result = Expense::addCategory($categoryId);
+                    break;
+    
+                case 'paymentMethod':
+                    $result = Expense::addMethod($categoryId);
+                    break;
+    
+                default:
+                    $result = false;
+                    break;
+            }
+    
+            header('Content-Type: application/json');
+            echo $result;
+        }
+    }
+
+    /**
      * AJAX - delete category
      *
      * @return void
