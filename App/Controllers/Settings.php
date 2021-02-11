@@ -113,9 +113,10 @@ class Settings extends Authenticated
                     $result = false;
                     break;
             }
-    
+
             header('Content-Type: application/json');
             echo $result;
+            
         }
     }
 
@@ -138,7 +139,6 @@ class Settings extends Authenticated
             switch($categoryType) {
                 case 'income':
                     $result = Income::deleteCategoryById($categoryId);
-                   
                     break;
     
                 case 'expense':
