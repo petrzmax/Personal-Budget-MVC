@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}Ustawienia{% endblock %}
+
+{% block body %}
+<main>
+    <article>
+
+        <div class="accordion" style="min-width: 300px;" id="mainSettingsAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="incomeCategories">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#incomeCategoriesCollapse" aria-expanded="true" aria-controls="incomeCategoriesCollapse">
+                    Kategorie przychodów
+                </button>
+              </h2>
+              <div id="incomeCategoriesCollapse" class="accordion-collapse collapse show" aria-labelledby="incomeCategories" data-bs-parent="#mainSettingsAccordion">
+                <div class="accordion-body">
+                  <div id="incomeCategoriesBody">
+                    {% for incomeCategory in incomeCategories %}
+                        <div class="row">
+                          <div class="col">
+                            <li>{{ incomeCategory.name|capitalize }}</li>
+                          </div>
+                          <div class="col-auto" categoryId="{{ incomeCategory.id }}" categoryType="income">
+                            <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                              <i class="icon-pencil"></i>
+                            </button>
+                            
+                            <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                              <i class="icon-trash-empty"></i>
+                            </button>
+                          </div>
+
+                        </div>  
+                    {% endfor %}
+                  </div>
+
+                    <div class="row gap-2 mt-3 mx-3">
+                        <button class="btn btn-success addBtn" categoryType="income">Doda nową kategorię</button>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="expenseCategories">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expenseCategoriesCollapse" aria-expanded="false" aria-controls="expenseCategoriesCollapse">
+                    Kategorie wydatków
+                </button>
+              </h2>
+              <div id="expenseCategoriesCollapse" class="accordion-collapse collapse" aria-labelledby="expenseCategories" data-bs-parent="#mainSettingsAccordion">
+                <div class="accordion-body">
+                    {% for expenseCategory in expenseCategories %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="{{ expenseCategory.id }}" name="expenseCategoryId" id="c{{ expenseCategory.id }}" aria-describedby="c{{ expenseCategory.id }}Label" required>
+                            <label class="form-check-label" id="c{{ expenseCategory.id }}Label" for="c{{ expenseCategory.id }}">{{ expenseCategory.name|capitalize }}</label>
+                        </div>  
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="paymentMethods">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#paymentMethodsCollapse" aria-expanded="false" aria-controls="paymentMethodsCollapse">
+                    Sposoby płatności
+                </button>
+              </h2>
+              <div id="paymentMethodsCollapse" class="accordion-collapse collapse" aria-labelledby="paymentMethods" data-bs-parent="#mainSettingsAccordion">
+                <div class="accordion-body">
+                    {% for paymentMethod in paymentMethods %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="{{ paymentMethod.id }}" name="paymentMethodId" id="c{{ paymentMethod.id }}" aria-describedby="c{{ paymentMethod.id }}Label" required>
+                            <label class="form-check-label" id="c{{ paymentMethod.id }}Label" for="c{{ paymentMethod.id }}">{{ paymentMethod.name|capitalize }}</label>
+                        </div>  
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="account">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="false" aria-controls="accountCollapse">
+                    Konto
+                  </button>
+                </h2>
+                <div id="accountCollapse" class="accordion-collapse collapse" aria-labelledby="account" data-bs-parent="#mainSettingsAccordion">
+                  <div class="accordion-body">
+
+                    <div class="row">
+                      <div class="col">
+                        Imię: {{ user.name }}  
+                      </div>     
+                      <div class="col">
+                        Zmień hasło
+                      </div>       
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        email:  {{ user.email }} 
+                      </div>     
+                      <div class="col">
+                        Usuń konto
+                      </div> 
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="d-grid gap-2">
+
+            <a href="/home" class="btn btn-success mt-4 h2">Powrót</a>
+        </div>
+    </article>
+</main>
+{% endblock %}
+
+{% block footer %}
+  <script src="/js/settings.js"></script>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="editModalLabel">Edytuj kategorię</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+
+          <label id="cattegoryNameLabel" for="categoryName">
+            Nazwa kategorii
+          </label>
+          <input class="form-control inputBox" type="text" id="categoryName" name="categoryName" aria-label="Nazwa kategorii" aria-describedby="cattegoryNameLabel" required>
+
+          <div id="limitForm" style="display: none;">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="limitCheck">
+              <label class="form-check-label" for="limitCheck">
+                Limit
+              </label>
+            </div>
+          
+            <label id="limitLabel" for="limit">
+              Miesięczny limit dla kategorii
+            </label>
+            <input class="form-control inputBox" type="number" id="limit" name="valueLimit" min="0" step="0.01" aria-label="Kwota limitu" aria-describedby="limitLabel" required>
+        </div>
+          
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-success" onclick="addCategory()">Zatwierdź</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="deleteModalLabel">Usuwanie kategorii</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label id="deleteModalText">Czy na pewno chcesz usunąć kategorię (categoryName)?</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-success" onclick="deleteCategory()">Zatwierdź</button>
+      </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

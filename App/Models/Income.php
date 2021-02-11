@@ -57,6 +57,74 @@ class Income extends \Core\Model
     } 
 
     /**
+     * Get income data by id
+     *
+     * @return mixed Income object if found, false otherwise
+     */
+    public static function getCategoryById($id)
+    {
+        $sql = 'SELECT id, name
+                FROM incomes_category_assigned_to_users 
+                WHERE id = :id AND user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+    } 
+
+    /**
+     * Add income category
+     *
+     * @return mixed inserted row id if category added, false otherwise
+     */
+    public static function addCategory($name)
+    {
+        //Validate name
+        if(true) {
+
+            $sql = 'INSERT INTO incomes_category_assigned_to_users (name, user_id) 
+                    VALUES (:name, :user_id)';
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
+            $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+            if($stmt->execute()) {
+                return $db->lastInsertId();
+            }
+            
+        }
+        return false;
+    } 
+
+    /**
+     * Delete income category by id
+     *
+     * @return boolean true if category deleted, false otherwise
+     */
+    public static function deleteCategoryById($id)
+    {
+        $sql = 'DELETE
+                FROM incomes_category_assigned_to_users 
+                WHERE id = :id AND user_id = :user_id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } 
+
+    /**
      * Get all the income categories id's
      *
      * @return mixed id array if found, false otherwise
@@ -158,6 +226,38 @@ class Income extends \Core\Model
         if(!$this->validateDate($this->dateInput)) {
             $this->errors[] = Messages::DATE_INVALID;
         }
+
+    }
+
+    /**
+     * Validate provided name adding valiation error messages to the errors array property
+     *
+     * # PROTOTYPE -
+     * 
+     * @return boolean True if the name is correct, false otherwise
+     */
+    public function validateName($name) {
+        //Check if name exist
+        if($name == '') {
+            //$this->errors[] = Messages::CATEGORY_NAME_REQUIRED;
+            return false;
+        }
+
+        //Validate category name length
+        if(strlen($name) > 50) {
+            //$this->errors[] = Messages::CATEGORY_NAME_TOO_LONG;
+            return false;
+        }
+
+        //Check name for special characters
+        if(preg_match('/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i', $name)) {
+            //$this->errors[] = Messages::CATEGORY_NAME_HAS_SPECIAL_CHAR;
+            return false;
+        }
+
+        //Check if category already exists in Db
+
+        return true;
 
     }
 }

@@ -51,6 +51,9 @@ class Messages
     const CATEGORY_INVALID = 'Wybierz prawidłową kategorię';
     const CATEGORY_REQUIRED = 'Kategoria musi być wybrana';
     const COMMENT_TOO_LONG = 'Komentarz może mieć maksymalnie 100 znaków';
+    const CATEGORY_NAME_TOO_LONG = 'Nazwa kategorii może mieć maksymalnie 50 znaków';
+    const CATEGORY_NAME_REQUIRED = 'Nazwa kategorii musi być podana';
+    const CATEGORY_NAME_HAS_SPECIAL_CHAR = 'Nazwa kategorii zawiera znaki specjalne lub cyfry';
     const DATE_INVALID = 'Podana data jest nieprawidłowa';
 
 }
