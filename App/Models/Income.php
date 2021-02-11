@@ -221,4 +221,36 @@ class Income extends \Core\Model
         }
 
     }
+
+    /**
+     * Validate provided name adding valiation error messages to the errors array property
+     *
+     * # PROTOTYPE -
+     * 
+     * @return boolean True if the name is correct, false otherwise
+     */
+    public function validateName($name) {
+        //Check if name exist
+        if($name == '') {
+            //$this->errors[] = Messages::CATEGORY_NAME_REQUIRED;
+            return false;
+        }
+
+        //Validate category name length
+        if(strlen($name) > 50) {
+            //$this->errors[] = Messages::CATEGORY_NAME_TOO_LONG;
+            return false;
+        }
+
+        //Check name for special characters
+        if(preg_match('/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i', $name)) {
+            //$this->errors[] = Messages::CATEGORY_NAME_HAS_SPECIAL_CHAR;
+            return false;
+        }
+
+        //Check if category already exists in Db
+
+        return true;
+
+    }
 }
