@@ -3,6 +3,24 @@ var categoryId;
 var categoryType;
 var buttonType;
 
+const categoryTemplate = ({ newCategoryName, newCategoryId, newCategoryType }) => `
+    <div class="row" style="display: none;">
+        <div class="col">
+            <li>${newCategoryName}</li>
+        </div>
+        <div class="col-auto" categoryId="${newCategoryId}" categoryType="${newCategoryType}">
+        <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+            <i class="icon-pencil"></i>
+        </button>
+        
+        <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+            <i class="icon-trash-empty"></i>
+        </button>
+        </div>
+    </div> 
+`;
+
+
 //Edit button handler
 $(document).on('click', '.editBtn', function () {
 
