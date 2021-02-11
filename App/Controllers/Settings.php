@@ -52,7 +52,7 @@ class Settings extends Authenticated
             $categoryId = $_POST['postCategoryId'];
         }
 
-        if(isset($_POST['postCategoryId'])) {
+        if(isset($_POST['postCategoryType'])) {
             $categoryType = $_POST['postCategoryType'];
         }
 
@@ -91,7 +91,7 @@ class Settings extends Authenticated
             $categoryId = $_POST['postCategoryId'];
         }
 
-        if(isset($_POST['postCategoryId'])) {
+        if(isset($_POST['postCategoryType'])) {
             $categoryType = $_POST['postCategoryType'];
         }
 
