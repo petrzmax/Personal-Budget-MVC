@@ -1,5 +1,7 @@
-var deleteModalText = "Czy na pewno chcesz usunąć kategorię ";
+const deleteModalText = "Czy na pewno chcesz usunąć kategorię \"";
+const addCategoryModalTitle = "Dodaj nową kategorię";
 var categoryId;
+var categoryName;
 var categoryType;
 var buttonType;
 
