@@ -79,6 +79,25 @@ class Income extends \Core\Model
     } 
 
     /**
+     * Add income category
+     *
+     * @return boolean true if category added, false otherwise
+     */
+    public static function addCategory($name)
+    {
+        //To-do Validation
+        $sql = 'INSERT INTO incomes_category_assigned_to_users (name, user_id) 
+                VALUES (:name, :user_id)';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);     
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } 
+
+    /**
      * Delete income category by id
      *
      * @return boolean true if category deleted, false otherwise
