@@ -13,12 +13,12 @@ use \App\Messages;
 abstract class Finance extends \Core\Model
 {
     /**
-     * Class config -You need to override it in child class!
+     * Class config - You need to override it in child class!
      *
      * @var string
      */
-    protected $financeCategoryAsignedToUserTableName;
-    protected $financeTableName;
+    static protected $financeCategoryAsignedToUserTableName;
+    protected $financeTableName; 
 
     /**
      * Error messages
@@ -48,14 +48,13 @@ abstract class Finance extends \Core\Model
      */
     public static function getCategories()
     {
-        $sql = 'SELECT id, name
-                FROM :table_name 
-                WHERE user_id = :user_id';
+        $sql = "SELECT id, name
+                FROM ".static::$financeCategoryAsignedToUserTableName.
+               " WHERE user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':table_name', $financeCategoryAsignedToUserTableName, PDO::PARAM_STR);
 
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
@@ -71,14 +70,13 @@ abstract class Finance extends \Core\Model
      */
     public static function getCategoryById($id)
     {
-        $sql = 'SELECT id, name
-                FROM :table_name 
-                WHERE id = :id AND user_id = :user_id';
+        $sql = "SELECT id, name
+                FROM ".static::$financeCategoryAsignedToUserTableName.
+               " WHERE id = :id AND user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->bindValue(':table_name', $financeCategoryAsignedToUserTableName, PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
@@ -98,12 +96,11 @@ abstract class Finance extends \Core\Model
         //Validate name
         if(true) {
 
-            $sql = 'INSERT INTO :table_name (name, user_id) 
-                    VALUES (:name, :user_id)';
+            $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
+                   " (name, user_id) VALUES (:name, :user_id)";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':table_name', $financeCategoryAsignedToUserTableName, PDO::PARAM_STR);
             $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
@@ -121,13 +118,11 @@ abstract class Finance extends \Core\Model
      */
     public static function deleteCategoryById($id)
     {
-        $sql = 'DELETE
-                FROM :table_name 
-                WHERE id = :id AND user_id = :user_id';
+        $sql = "DELETE FROM ".static::$financeCategoryAsignedToUserTableName.
+               " WHERE id = :id AND user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':table_name', $financeCategoryAsignedToUserTableName, PDO::PARAM_STR);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
@@ -141,13 +136,12 @@ abstract class Finance extends \Core\Model
      */
     private function getCategoriesIds()
     {
-        $sql = 'SELECT id
-                FROM :table_name 
-                WHERE user_id = :user_id';
+        $sql = "SELECT id
+                FROM ".static::$financeCategoryAsignedToUserTableName.
+               " WHERE user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':table_name', $financeCategoryAsignedToUserTableName, PDO::PARAM_STR);
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         $stmt->execute();
@@ -167,11 +161,10 @@ abstract class Finance extends \Core\Model
         if(empty($this->errors)) {
 
             $db = static::getDB();
-            $sql = 'INSERT INTO :table_name
-                    VALUES (NULL, :user_id, :finance_category_assigned_to_user_id, :financeValue, :financeDate, :comment)';
+            $sql = "INSERT INTO ".$this->financeTableName.
+                   " VALUES (NULL, :user_id, :finance_category_assigned_to_user_id, :financeValue, :financeDate, :comment)";
             $stmt = $db->prepare($sql);
             
-            $stmt->bindValue(':table_name', $financeTableName, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
             $stmt->bindValue(':finance_category_assigned_to_user_id', $this->categoryId, PDO::PARAM_INT);
             $stmt->bindValue(':financeValue', $this->valueInput, PDO::PARAM_STR);
