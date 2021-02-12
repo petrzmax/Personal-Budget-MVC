@@ -113,7 +113,7 @@ function addCategory() {
             //Append new category to proper div
             var currentCategoryRow = $([
                 { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
-            ].map(categoryTemplate).join('')).appendTo('#incomeCategoriesBody');
+            ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
 
             currentCategoryRow.slideDown('slow');
         },
