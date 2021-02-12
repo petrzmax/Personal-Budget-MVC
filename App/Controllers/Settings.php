@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Auth;
 use \App\Models\Income;
 use \App\Models\Expense;
+use \App\Models\Payment;
 
 /**
  * Settings controller
@@ -36,7 +37,7 @@ class Settings extends Authenticated
         View::renderTemplate('Settings/index.html', [
             'incomeCategories' => Income::getCategories(),
             'expenseCategories' => Expense::getCategories(),
-            'paymentMethods' => Expense::getMethods(),
+            'paymentMethods' => Payment::getCategories(),
             'user' => $this->user
         ]);
     }
