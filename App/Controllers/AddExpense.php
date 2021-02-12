@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Flash;
 use \App\Models\Expense;
+use \App\Models\Payment;
 use \App\Messages;
 
 /**
@@ -24,7 +25,7 @@ class AddExpense extends Authenticated
     {
         View::renderTemplate('Expense/new.html', [
             'categories' => Expense::getCategories(),
-            'methods' => Expense::getMethods()
+            'methods' => Payment::getCategories()
         ]);
     }
 
@@ -45,7 +46,7 @@ class AddExpense extends Authenticated
             Flash::addMessage(Messages::INCOME_ADD_FAIL, Flash::WARNING);
             View::renderTemplate('Expense/new.html', [
                 'categories' => Expense::getCategories(),
-                'methods' => Expense::getMethods(),
+                'methods' => Payment::getCategories(),
                 'expense' => $expense
             ]);
         }
