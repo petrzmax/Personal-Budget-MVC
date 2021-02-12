@@ -50,12 +50,29 @@
               </h2>
               <div id="expenseCategoriesCollapse" class="accordion-collapse collapse" aria-labelledby="expenseCategories" data-bs-parent="#mainSettingsAccordion">
                 <div class="accordion-body">
+                  <div id="expenseCategoriesBody">
                     {% for expenseCategory in expenseCategories %}
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="{{ expenseCategory.id }}" name="expenseCategoryId" id="c{{ expenseCategory.id }}" aria-describedby="c{{ expenseCategory.id }}Label" required>
-                            <label class="form-check-label" id="c{{ expenseCategory.id }}Label" for="c{{ expenseCategory.id }}">{{ expenseCategory.name|capitalize }}</label>
-                        </div>  
+                      <div class="row">
+                        <div class="col">
+                          <li>{{ expenseCategory.name|capitalize }}</li>
+                        </div>
+                        <div class="col-auto" categoryId="{{ expenseCategory.id }}" categoryType="expense">
+                          <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                            <i class="icon-pencil"></i>
+                          </button>
+                          
+                          <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                            <i class="icon-trash-empty"></i>
+                          </button>
+                        </div>
+
+                      </div>  
                     {% endfor %}
+                  </div>
+
+                    <div class="row gap-2 mt-3 mx-3">
+                      <button class="btn btn-success addBtn" categoryType="expense">Doda nową kategorię</button>
+                    </div>
                 </div>
               </div>
             </div>
@@ -67,12 +84,29 @@
               </h2>
               <div id="paymentMethodsCollapse" class="accordion-collapse collapse" aria-labelledby="paymentMethods" data-bs-parent="#mainSettingsAccordion">
                 <div class="accordion-body">
-                    {% for paymentMethod in paymentMethods %}
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="{{ paymentMethod.id }}" name="paymentMethodId" id="c{{ paymentMethod.id }}" aria-describedby="c{{ paymentMethod.id }}Label" required>
-                            <label class="form-check-label" id="c{{ paymentMethod.id }}Label" for="c{{ paymentMethod.id }}">{{ paymentMethod.name|capitalize }}</label>
-                        </div>  
+                  <div id="paymentCategoriesBody">
+                    {% for paymentCategory in paymentCategories %}
+                      <div class="row">
+                        <div class="col">
+                          <li>{{ paymentCategory.name|capitalize }}</li>
+                        </div>
+                        <div class="col-auto" categoryId="{{ paymentCategory.id }}" categoryType="payment">
+                          <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                            <i class="icon-pencil"></i>
+                          </button>
+                          
+                          <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                            <i class="icon-trash-empty"></i>
+                          </button>
+                        </div>
+
+                      </div>  
                     {% endfor %}
+                  </div>
+
+                    <div class="row gap-2 mt-3 mx-3">
+                      <button class="btn btn-success addBtn" categoryType="payment">Dodaj nowy sposób płatności</button>
+                    </div>
                 </div>
               </div>
             </div>
