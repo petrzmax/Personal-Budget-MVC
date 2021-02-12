@@ -37,7 +37,7 @@ class Settings extends Authenticated
         View::renderTemplate('Settings/index.html', [
             'incomeCategories' => Income::getCategories(),
             'expenseCategories' => Expense::getCategories(),
-            'paymentMethods' => Payment::getCategories(),
+            'paymentCategories' => Payment::getCategories(),
             'user' => $this->user
         ]);
     }
@@ -67,8 +67,8 @@ class Settings extends Authenticated
                     $result = Expense::getCategoryById($categoryId);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::getMethodById($categoryId);
+                case 'payment':
+                    $result = Payment::getCategoryById($categoryId);
                     break;
     
                 default:
@@ -103,11 +103,11 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::addCategory($categoryId);
+                    $result = Expense::addCategory($categoryName);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::addMethod($categoryId);
+                case 'payment':
+                    $result = Payment::addCategory($categoryName);
                     break;
     
                 default:
@@ -146,8 +146,8 @@ class Settings extends Authenticated
                     $result = Expense::deleteCategoryById($categoryId);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::deleteMethodById($categoryId);
+                case 'payment':
+                    $result = Payment::deleteCategoryById($categoryId);
                     break;
     
                 default:
