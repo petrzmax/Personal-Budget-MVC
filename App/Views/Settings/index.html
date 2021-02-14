@@ -7,13 +7,47 @@
     <article>
 
         <div class="accordion" style="min-width: 360px;" id="mainSettingsAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="account">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="true" aria-controls="accountCollapse">
+                Konto
+              </button>
+            </h2>
+            <div id="accountCollapse" class="accordion-collapse show" aria-labelledby="account" data-bs-parent="#mainSettingsAccordion">
+              <div class="accordion-body">
+
+                <div class="row">
+                  <div class="col">
+                    Imię: {{ user.name }}  
+                  </div>     
+                  <div class="col">
+                    Zmień hasło
+                  </div>       
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    email:  {{ user.email }} 
+                  </div>     
+                  <div class="col">
+                    Usuń konto
+                  </div> 
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
             <div class="accordion-item">
               <h2 class="accordion-header" id="incomeCategories">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#incomeCategoriesCollapse" aria-expanded="true" aria-controls="incomeCategoriesCollapse">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#incomeCategoriesCollapse" aria-expanded="false" aria-controls="incomeCategoriesCollapse">
                     Kategorie przychodów
                 </button>
               </h2>
-              <div id="incomeCategoriesCollapse" class="accordion-collapse collapse show" aria-labelledby="incomeCategories" data-bs-parent="#mainSettingsAccordion">
+              <div id="incomeCategoriesCollapse" class="accordion-collapse collapse" aria-labelledby="incomeCategories" data-bs-parent="#mainSettingsAccordion">
+                
                 <div class="accordion-body">
                   <div id="incomeCategoriesBody">
                     {% for incomeCategory in incomeCategories %}
@@ -110,38 +144,6 @@
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="account">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accountCollapse" aria-expanded="false" aria-controls="accountCollapse">
-                    Konto
-                  </button>
-                </h2>
-                <div id="accountCollapse" class="accordion-collapse collapse" aria-labelledby="account" data-bs-parent="#mainSettingsAccordion">
-                  <div class="accordion-body">
-
-                    <div class="row">
-                      <div class="col">
-                        Imię: {{ user.name }}  
-                      </div>     
-                      <div class="col">
-                        Zmień hasło
-                      </div>       
-                    </div>
-
-                    <div class="row">
-                      <div class="col">
-                        email:  {{ user.email }} 
-                      </div>     
-                      <div class="col">
-                        Usuń konto
-                      </div> 
-                    </div>
-
-
-
-                  </div>
-                </div>
-              </div>
           </div>
           <div class="d-grid gap-2">
 
