@@ -51,16 +51,16 @@
                 <div class="accordion-body">
                   <div id="incomeCategoriesBody">
                     {% for incomeCategory in incomeCategories %}
-                        <div class="row">
+                        <div class="row" id="income{{ incomeCategory.id }}">
                           <div class="col">
                             <li>{{ incomeCategory.name|capitalize }}</li>
                           </div>
-                          <div class="col-auto" categoryId="{{ incomeCategory.id }}" categoryType="income">
-                            <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                          <div class="col-auto">
+                            <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'income', {{ incomeCategory.id }})">
                               <i class="icon-pencil"></i>
                             </button>
                             
-                            <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                            <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'income', {{ incomeCategory.id }})">
                               <i class="icon-trash-empty"></i>
                             </button>
                           </div>
@@ -70,7 +70,7 @@
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
-                        <button class="btn btn-success addBtn" categoryType="income">Doda nową kategorię</button>
+                        <button class="btn btn-success" onclick="addCategoryHandler('income')">Doda nową kategorię</button>
                     </div>
 
                 </div>
@@ -86,16 +86,16 @@
                 <div class="accordion-body">
                   <div id="expenseCategoriesBody">
                     {% for expenseCategory in expenseCategories %}
-                      <div class="row">
+                      <div class="row" id="expense{{ expenseCategory.id }}">
                         <div class="col">
                           <li>{{ expenseCategory.name|capitalize }}</li>
                         </div>
-                        <div class="col-auto" categoryId="{{ expenseCategory.id }}" categoryType="expense">
-                          <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                        <div class="col-auto">
+                          <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'expense', {{ expenseCategory.id }})">
                             <i class="icon-pencil"></i>
                           </button>
                           
-                          <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                          <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'expense', {{ expenseCategory.id }})">
                             <i class="icon-trash-empty"></i>
                           </button>
                         </div>
@@ -105,7 +105,7 @@
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
-                      <button class="btn btn-success addBtn" categoryType="expense">Doda nową kategorię</button>
+                      <button class="btn btn-success" onclick="addCategoryHandler('expense')">Doda nową kategorię</button>
                     </div>
                 </div>
               </div>
@@ -120,16 +120,16 @@
                 <div class="accordion-body">
                   <div id="paymentCategoriesBody">
                     {% for paymentCategory in paymentCategories %}
-                      <div class="row">
+                      <div class="row" id="payment{{ paymentCategory.id }}">
                         <div class="col">
                           <li>{{ paymentCategory.name|capitalize }}</li>
                         </div>
-                        <div class="col-auto" categoryId="{{ paymentCategory.id }}" categoryType="payment">
-                          <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+                        <div class="col-auto">
+                          <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'payment', {{ paymentCategory.id }})">
                             <i class="icon-pencil"></i>
                           </button>
                           
-                          <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+                          <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'payment', {{ paymentCategory.id }})">
                             <i class="icon-trash-empty"></i>
                           </button>
                         </div>
@@ -139,7 +139,7 @@
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
-                      <button class="btn btn-success addBtn" categoryType="payment">Dodaj nowy sposób płatności</button>
+                      <button class="btn btn-success addBtn" onclick="addCategoryHandler('payment')">Dodaj nowy sposób płatności</button>
                     </div>
                 </div>
               </div>

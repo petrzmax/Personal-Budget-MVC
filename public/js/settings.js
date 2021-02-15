@@ -3,44 +3,29 @@ const addCategoryModalTitle = "Dodaj nową kategorię";
 const editCategoryModalTitle = "Edytuj kategorię";
 
 var categoryId;
-var categoryName;
 var categoryType;
 var buttonType;
 
 const categoryTemplate = ({ newCategoryName, newCategoryId, newCategoryType }) => `
-    <div class="row" style="display: none;">
+    <div class="row" style="display: none;" id="${newCategoryType}${newCategoryId}">
         <div class="col">
             <li>${newCategoryName}</li>
         </div>
-        <div class="col-auto" categoryId="${newCategoryId}" categoryType="${newCategoryType}">
-        <button class="btn btn-sm btn-primary p-0 editBtn" buttonType="edit">
+        <div class="col-auto">
+        <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', \'${newCategoryType}\', ${newCategoryId})">
             <i class="icon-pencil"></i>
         </button>
         
-        <button class="btn btn-sm btn-danger p-0 editBtn" buttonType="delete">
+        <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', \'${newCategoryType}\', ${newCategoryId})">
             <i class="icon-trash-empty"></i>
         </button>
         </div>
     </div> 
 `;
 
-
-//Edit button handler
-$(document).on('click', '.editBtn', function () {
-
-    //Get data from button
-    categoryId = $(this).parent().attr('categoryId');
-    categoryType = $(this).parent().attr('categoryType');
-    buttonType = $(this).attr('buttonType');
-
-    getCategoryData();
-    
-});
-
 //Add button handler
-$(document).on('click', '.addBtn', function () {
-    categoryType = $(this).attr('categoryType');
-    
+function addCategoryHandler(newCategoryType) {
+    categoryType = newCategoryType;
 
     //Set proper modal title
     $('#editModalLabel').text(addCategoryModalTitle);
@@ -50,8 +35,7 @@ $(document).on('click', '.addBtn', function () {
     switchLimitForm(categoryType);
 
     $('#editModal').modal('show');
-
-});
+}
 
 //Show limit form only for expense categories
 function switchLimitForm(displayedCategoryType) {
@@ -85,13 +69,11 @@ function showProperModal(result) {
 //Remove deleted category row from proper div & hide modal
 function removeCategoryRow() {
     $('#deleteModal').modal('hide');
-    var currentCategoryRow = $("div").find(`[categoryId='${categoryId}'][categoryType='${categoryType}']`).parent();
-    
-    currentCategoryRow.slideUp('medium', function() {currentCategoryRow.remove();});
+    $('#' + categoryType + categoryId).slideUp('medium', function() {this.remove();});
 }
 
 //Append new category row to proper div & hide modal
-function addCategoryRow(returnedCategoryId) {
+function addCategoryRow(categoryName, returnedCategoryId) {
     $('#editModal').modal('hide');
     
     var currentCategoryRow = $([
@@ -104,7 +86,12 @@ function addCategoryRow(returnedCategoryId) {
 //AJAX
 
 //Get category data from db
-function getCategoryData() {
+function getCategoryData(clickedButtonType, clickedCategoryType, clickedCategoryId) {
+
+    buttonType = clickedButtonType;
+    categoryId = clickedCategoryId;
+    categoryType = clickedCategoryType;
+
     $.ajax({
         type: 'POST',
         url: '/settings/getCategoryData',
@@ -157,7 +144,7 @@ function addCategory() {
         },
 
         success: function(result) {
-            addCategoryRow(result);
+            addCategoryRow(categoryName, result);
         },
 
         error: function(xhr){
