@@ -134,14 +134,18 @@ $(document).on('click', '.addBtn', function () {
     //Reset category name input
     $('#categoryName').val('');
 
-    //Show limit form only for expense categories
-    if(categoryType == 'expense') {
+    switchLimitForm(categoryType);
+
+    $('#editModal').modal('show');
+
+});
+
+//Show limit form only for expense categories
+function switchLimitForm(displayedCategoryType) {
+    if(displayedCategoryType == 'expense') {
         $('#limitForm').show();
     }
     else {
         $('#limitForm').hide();
     }
-
-    $('#editModal').modal('show');
-
-});
+}
