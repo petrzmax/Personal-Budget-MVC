@@ -34,14 +34,14 @@ function addCategoryHandler(newCategoryType) {
     //Set proper button function
     $('#submitButton').attr('onclick', "addCategory()");
 
-    switchLimitForm(categoryType);
+    switchLimitForm();
 
     $('#editModal').modal('show');
 }
 
 //Show limit form only for expense categories
-function switchLimitForm(displayedCategoryType) {
-    if(displayedCategoryType == 'expense') {
+function switchLimitForm() {
+    if(categoryType == 'expense') {
         $('#limitForm').show();
     }
     else {
@@ -54,6 +54,7 @@ function showProperModal(result) {
     switch (buttonType) {
         case 'edit':
 
+            switchLimitForm();
             //Set proper modal title
             $('#editModalLabel').text(editCategoryModalTitle);
             //Set proper button function
@@ -92,6 +93,7 @@ function updateCategoryRow(categoryName) {
     $('#editModal').modal('hide');
     
     $('#' + categoryType + categoryId).slideUp('medium', function() {
+
         $("li", this).text(categoryName);
         $(this).slideDown('medium');
     });
@@ -100,7 +102,7 @@ function updateCategoryRow(categoryName) {
 }
 
 //AJAX
-
+// Also edit % delete button action handler
 //Get category data from db
 function getCategoryData(clickedButtonType, clickedCategoryType, clickedCategoryId) {
 
