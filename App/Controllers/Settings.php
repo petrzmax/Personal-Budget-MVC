@@ -159,4 +159,47 @@ class Settings extends Authenticated
             echo $result;
         }
     }
+
+    /**
+     * AJAX - update category
+     *
+     * @return void
+     */
+    public function updateCategoryAction() {
+        
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
+        }
+
+        if(isset($_POST['postCategoryType'])) {
+            $categoryType = $_POST['postCategoryType'];
+        }
+
+        if(isset($_POST['postCategoryName'])) {
+            $categoryName = $_POST['postCategoryName'];
+        }
+
+        if($categoryId && $categoryType && $categoryName) {
+            switch($categoryType) {
+                case 'income':
+                    $result = Income::updateCategoryById($categoryName, $categoryId);
+                    break;
+    
+                case 'expense':
+                    $result = Expense::updateCategoryById($categoryName, $categoryId);
+                    break;
+    
+                case 'payment':
+                    $result = Payment::updateCategoryById($categoryName, $categoryId);
+                    break;
+    
+                default:
+                    $result = false;
+                    break;
+            }
+    
+            header('Content-Type: application/json');
+            echo $result;
+        }
+    }
 }

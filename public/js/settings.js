@@ -31,6 +31,8 @@ function addCategoryHandler(newCategoryType) {
     $('#editModalLabel').text(addCategoryModalTitle);
     //Reset category name input
     $('#categoryName').val('');
+    //Set proper button function
+    $('#submitButton').attr('onclick', "addCategory()");
 
     switchLimitForm(categoryType);
 
@@ -54,6 +56,8 @@ function showProperModal(result) {
 
             //Set proper modal title
             $('#editModalLabel').text(editCategoryModalTitle);
+            //Set proper button function
+            $('#submitButton').attr('onclick', "updateCategory()");
             
             $('#categoryName').val(result.name);
             $('#editModal').modal('show');
@@ -81,6 +85,18 @@ function addCategoryRow(categoryName, returnedCategoryId) {
     ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
 
     currentCategoryRow.slideDown('slow');
+}
+
+//Update edited category row & hide modal
+function updateCategoryRow(categoryName) {
+    $('#editModal').modal('hide');
+    
+    $('#' + categoryType + categoryId).slideUp('medium', function() {
+        $("li", this).text(categoryName);
+        $(this).slideDown('medium');
+    });
+
+    
 }
 
 //AJAX
@@ -145,6 +161,30 @@ function addCategory() {
 
         success: function(result) {
             addCategoryRow(categoryName, result);
+        },
+
+        error: function(xhr){
+            alert(xhr.status);
+        }
+    });
+}
+
+//Update category in db
+function updateCategory() {
+
+    categoryName = $('#categoryName').val();
+    $.ajax({
+        type: 'POST',
+        url: '/settings/updateCategory',
+        dataType: 'json',
+        data: {
+            postCategoryId: categoryId,
+            postCategoryType: categoryType,
+            postCategoryName: categoryName
+        },
+
+        success: function() {
+            updateCategoryRow(categoryName);
         },
 
         error: function(xhr){

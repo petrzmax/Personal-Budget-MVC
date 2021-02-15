@@ -130,6 +130,26 @@ abstract class Finance extends \Core\Model
     } 
 
     /**
+     * Update finance category by id
+     *
+     * @return boolean true if category updated, false otherwise
+     */
+    public static function updateCategoryById($name, $id)
+    {
+        $sql = "UPDATE ".static::$financeCategoryAsignedToUserTableName.
+               " SET name = :name 
+                WHERE id = :id AND user_id = :user_id";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR); 
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } 
+
+    /**
      * Get all the finance categories id's
      *
      * @return mixed id array if found, false otherwise
