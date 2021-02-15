@@ -33,96 +33,9 @@ $(document).on('click', '.editBtn', function () {
     categoryType = $(this).parent().attr('categoryType');
     buttonType = $(this).attr('buttonType');
 
-    $.ajax({
-        type: 'POST',
-        url: '/settings/getCategoryData',
-        dataType: 'json',
-        data: {
-            postCategoryId: categoryId,
-            postCategoryType: categoryType
-        },
-
-        success: function(result) {
-
-            //Show proper modal
-            switch (buttonType) {
-                case 'edit':
-
-                    //Set proper modal title
-                    $('#editModalLabel').text(editCategoryModalTitle);
-                    
-                    $('#categoryName').val(result.name);
-                    $('#editModal').modal('show');
-                    break;
-                case 'delete':
-
-                    $('#deleteModal').modal('show');
-                    $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
-                    break;
-            }
-            
-        },
-
-        error: function(data){
-            alert('fail');
-        }
-    });
+    getCategoryData();
     
 });
-
-//Delete selected category - activated by button on delete modal
-function deleteCategory() {
-    $.ajax({
-        type: 'POST',
-        url: '/settings/deleteCategory',
-        dataType: 'json',
-        data: {
-            postCategoryId: categoryId,
-            postCategoryType: categoryType
-        },
-
-        success: function(result) {
-            $('#deleteModal').modal('hide');
-            var currentCategoryRow = $("div").find(`[categoryId='${categoryId}'][categoryType='${categoryType}']`).parent();
-            currentCategoryRow.slideUp('medium', function() {currentCategoryRow.remove();});
-        },
-
-        error: function(data){
-            alert('fail');
-        }
-    });
-}
-
-//Add new category to db - activated by button on edit modal
-function addCategory() {
-
-    categoryName = $('#categoryName').val();
-    $.ajax({
-        type: 'POST',
-        url: '/settings/addCategory',
-        dataType: 'json',
-        data: {
-            postCategoryType: categoryType,
-            postCategoryName: categoryName
-        },
-
-        success: function(result) {
-            $('#editModal').modal('hide');
-            var returnedCategoryId = result;
-            
-            //Append new category to proper div
-            var currentCategoryRow = $([
-                { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
-            ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
-
-            currentCategoryRow.slideDown('slow');
-        },
-
-        error: function(xhr){
-            alert(xhr.status);
-        }
-    });
-}
 
 //Add button handler
 $(document).on('click', '.addBtn', function () {
@@ -148,4 +61,107 @@ function switchLimitForm(displayedCategoryType) {
     else {
         $('#limitForm').hide();
     }
+}
+
+function showProperModal(result) {
+    //Show proper modal
+    switch (buttonType) {
+        case 'edit':
+
+            //Set proper modal title
+            $('#editModalLabel').text(editCategoryModalTitle);
+            
+            $('#categoryName').val(result.name);
+            $('#editModal').modal('show');
+            break;
+        case 'delete':
+
+            $('#deleteModal').modal('show');
+            $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
+            break;
+    }
+}
+
+//Remove deleted category row from proper div & hide modal
+function removeCategoryRow() {
+    $('#deleteModal').modal('hide');
+    var currentCategoryRow = $("div").find(`[categoryId='${categoryId}'][categoryType='${categoryType}']`).parent();
+    
+    currentCategoryRow.slideUp('medium', function() {currentCategoryRow.remove();});
+}
+
+//Append new category row to proper div & hide modal
+function addCategoryRow(returnedCategoryId) {
+    $('#editModal').modal('hide');
+    
+    var currentCategoryRow = $([
+        { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
+    ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
+
+    currentCategoryRow.slideDown('slow');
+}
+
+//AJAX
+
+//Get category data from db
+function getCategoryData() {
+    $.ajax({
+        type: 'POST',
+        url: '/settings/getCategoryData',
+        dataType: 'json',
+        data: {
+            postCategoryId: categoryId,
+            postCategoryType: categoryType
+        },
+
+        success: function(result) {
+            showProperModal(result);
+        },
+
+        error: function(data){
+            alert('fail');
+        }
+    });
+
+}
+
+//Delete selected category
+function deleteCategory() {
+    $.ajax({
+        type: 'POST',
+        url: '/settings/deleteCategory',
+        dataType: 'json',
+        data: {
+            postCategoryId: categoryId,
+            postCategoryType: categoryType
+        },
+        success: removeCategoryRow(),
+
+        error: function(data){
+            alert('fail');
+        }
+    });
+}
+
+//Add new category to db
+function addCategory() {
+
+    categoryName = $('#categoryName').val();
+    $.ajax({
+        type: 'POST',
+        url: '/settings/addCategory',
+        dataType: 'json',
+        data: {
+            postCategoryType: categoryType,
+            postCategoryName: categoryName
+        },
+
+        success: function(result) {
+            addCategoryRow(result);
+        },
+
+        error: function(xhr){
+            alert(xhr.status);
+        }
+    });
 }
