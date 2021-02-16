@@ -100,6 +100,11 @@ class Settings extends Authenticated
         if (isset($_POST['postCategoryLimit'])) {
             $categoryLimit = $_POST['postCategoryLimit'];
         }
+        
+        if (isset($_POST['postCategoryLimitState'])) {
+            $categoryLimitState = $_POST['postCategoryLimitState'];
+        }
+        
 
 
         if($categoryType && $categoryName) {
@@ -109,7 +114,7 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::addCategory($categoryName, $categoryLimit);
+                    $result = Expense::addCategory($categoryName, $categoryLimit, $categoryLimitState);
                     break;
     
                 case 'payment':

@@ -91,7 +91,7 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed inserted row id if category added, false otherwise
      */
-    public static function addCategory($name, $limit = 0)
+    public static function addCategory($name, $limit = 0, $categoryLimitState = false)
     {
         //Validate name
         if(true) {

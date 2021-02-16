@@ -32,6 +32,7 @@ function addCategoryHandler(newCategoryType) {
     //Reset category name & limit input
     $('#categoryName').val('');
     $('#limit').val(parseFloat(0).toFixed(2));
+    $('#limitCheck').prop( "checked", false );
     //Set proper button function
     $('#submitButton').attr('onclick', "addCategory()");
 
@@ -63,6 +64,8 @@ function showProperModal(result) {
             
             $('#categoryName').val(result.name);
             $('#limit').val(result.expense_limit);
+
+            $('#limitCheck').prop( "checked", result.limit_active == 1 ? true : false);
             $('#editModal').modal('show');
             break;
         case 'delete':
@@ -155,6 +158,7 @@ function addCategory() {
 
     categoryName = $('#categoryName').val();
     categoryLimit = $('#limit').val();
+    categoryLimitState = $('#limitCheck').is(':checked');
 
     $.ajax({
         type: 'POST',
@@ -163,6 +167,7 @@ function addCategory() {
         data: {
             postCategoryType: categoryType,
             postCategoryName: categoryName,
+            postCategoryLimitState: categoryLimitState,
             postCategoryLimit: categoryLimit
         },
 
