@@ -64,7 +64,7 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::getCategoryById($categoryId, true);
+                    $result = Expense::getCategoryById($categoryId);
                     break;
     
                 case 'payment':

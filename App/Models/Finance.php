@@ -68,19 +68,11 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed Finance object if found, false otherwise
      */
-    public static function getCategoryById($id, $expense = false)
+    public static function getCategoryById($id)
     {
-        if($expense) {
-            $sql = "SELECT id, name, expense_limit
-            FROM ".static::$financeCategoryAsignedToUserTableName.
-           " WHERE id = :id AND user_id = :user_id";
-
-        } else {
-            $sql = "SELECT id, name
-            FROM ".static::$financeCategoryAsignedToUserTableName.
-           " WHERE id = :id AND user_id = :user_id";
-        }
-
+        $sql = "SELECT id, name
+        FROM ".static::$financeCategoryAsignedToUserTableName.
+        " WHERE id = :id AND user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -99,27 +91,18 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed inserted row id if category added, false otherwise
      */
-    public static function addCategory($name, $expense_limit = 0)
+    public static function addCategory($name, $limit = 0)
     {
         //Validate name
         if(true) {
 
-            if($expense_limit) {
-                $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
-                   " (name, user_id, expense_limit) VALUES (:name, :user_id, :expense_limit)";
-            } else {
-                $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
-                " (name, user_id) VALUES (:name, :user_id)";
-            }
+            $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
+            " (name, user_id) VALUES (:name, :user_id)";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-            
-            if($expense_limit) {
-                $stmt->bindValue(':expense_limit', $expense_limit, PDO::PARAM_INT);
-            }
 
             if($stmt->execute()) {
                 return $db->lastInsertId();
