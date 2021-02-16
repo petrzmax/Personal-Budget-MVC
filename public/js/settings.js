@@ -29,8 +29,9 @@ function addCategoryHandler(newCategoryType) {
 
     //Set proper modal title
     $('#editModalLabel').text(addCategoryModalTitle);
-    //Reset category name input
+    //Reset category name & limit input
     $('#categoryName').val('');
+    $('#limit').val(parseFloat(0).toFixed(2));
     //Set proper button function
     $('#submitButton').attr('onclick', "addCategory()");
 
