@@ -102,7 +102,7 @@ function updateCategoryRow(categoryName) {
 }
 
 //AJAX
-// Also edit % delete button action handler
+// Also edit & delete button action handler
 //Get category data from db
 function getCategoryData(clickedButtonType, clickedCategoryType, clickedCategoryId) {
 
@@ -152,13 +152,16 @@ function deleteCategory() {
 function addCategory() {
 
     categoryName = $('#categoryName').val();
+    categoryLimit = $('#limit').val();
+
     $.ajax({
         type: 'POST',
         url: '/settings/addCategory',
         dataType: 'json',
         data: {
             postCategoryType: categoryType,
-            postCategoryName: categoryName
+            postCategoryName: categoryName,
+            postCategoryLimit: categoryLimit
         },
 
         success: function(result) {
