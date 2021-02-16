@@ -64,15 +64,23 @@ abstract class Finance extends \Core\Model
     } 
 
     /**
-     * Get finance data by id
+     * Get finance data by id, if expense == true get also limit value
      *
      * @return mixed Finance object if found, false otherwise
      */
-    public static function getCategoryById($id)
+    public static function getCategoryById($id, $expense = false)
     {
-        $sql = "SELECT id, name
-                FROM ".static::$financeCategoryAsignedToUserTableName.
-               " WHERE id = :id AND user_id = :user_id";
+        if($expense) {
+            $sql = "SELECT id, name, expense_limit
+            FROM ".static::$financeCategoryAsignedToUserTableName.
+           " WHERE id = :id AND user_id = :user_id";
+
+        } else {
+            $sql = "SELECT id, name
+            FROM ".static::$financeCategoryAsignedToUserTableName.
+           " WHERE id = :id AND user_id = :user_id";
+        }
+
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

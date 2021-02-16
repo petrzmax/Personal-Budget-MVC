@@ -64,7 +64,7 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::getCategoryById($categoryId);
+                    $result = Expense::getCategoryById($categoryId, true);
                     break;
     
                 case 'payment':
@@ -88,13 +88,19 @@ class Settings extends Authenticated
      */
     public function addCategoryAction() {
         
-        if(isset($_POST['postCategoryType'])) {
+        if (isset($_POST['postCategoryType'])) {
             $categoryType = $_POST['postCategoryType'];
         }
 
-        if(isset($_POST['postCategoryName'])) {
+        if (isset($_POST['postCategoryName'])) {
             $categoryName = $_POST['postCategoryName'];
         }
+
+        $categoryLimit = 0;
+        if (isset($_POST['postCategoryLimit'])) {
+            $categoryLimit = $_POST['postCategoryLimit'];
+        }
+
 
         if($categoryType && $categoryName) {
             switch($categoryType) {
@@ -103,7 +109,7 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::addCategory($categoryName);
+                    $result = Expense::addCategory($categoryName, $categoryLimit);
                     break;
     
                 case 'payment':
