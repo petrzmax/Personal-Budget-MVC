@@ -62,6 +62,7 @@ function showProperModal(result) {
             $('#submitButton').attr('onclick', "updateCategory()");
             
             $('#categoryName').val(result.name);
+            $('#limit').val(result.expense_limit);
             $('#editModal').modal('show');
             break;
         case 'delete':
