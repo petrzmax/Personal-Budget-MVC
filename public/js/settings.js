@@ -34,7 +34,7 @@ function addCategoryHandler(newCategoryType) {
     $('#limit').val(parseFloat(0).toFixed(2));
     $('#limitCheck').prop( "checked", false );
     //Set proper button function
-    $('#submitButton').attr('onclick', "addCategory()");
+    $('#editForm').attr('action', "javascript:addCategory()");
 
     switchLimitForm();
 
@@ -60,7 +60,7 @@ function showProperModal(result) {
             //Set proper modal title
             $('#editModalLabel').text(editCategoryModalTitle);
             //Set proper button function
-            $('#submitButton').attr('onclick', "updateCategory()");
+            $('#editForm').attr('action', "javascript:updateCategory()");
             
             $('#categoryName').val(result.name);
             $('#limit').val(result.expense_limit);

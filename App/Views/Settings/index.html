@@ -166,35 +166,36 @@
         </div>
         <div class="modal-body">
           
-
-          <label id="cattegoryNameLabel" for="categoryName">
-            Nazwa kategorii
-          </label>
-          <input class="form-control inputBox" type="text" id="categoryName" name="categoryName" aria-label="Nazwa kategorii" aria-describedby="cattegoryNameLabel" required>
-
-          <div id="limitForm" style="display: none;">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="limitCheck">
-              <label class="form-check-label" for="limitCheck">
-                Limit
-              </label>
-            </div>
-          
-            <label id="limitLabel" for="limit">
-              Miesięczny limit dla kategorii
+          <form id="editForm" action="javascript:addCategory()">
+            <label id="cattegoryNameLabel" for="categoryName">
+              Nazwa kategorii
             </label>
-            <div class="input-group">
-              <input class="form-control inputBox" type="number" id="limit" name="valueLimit" min="0" step="0.01" value='0.00' aria-label="Kwota limitu" aria-describedby="limitLabel" required>
-              <div class="input-group-append">
-                <span class="input-group-text inputBox" style="margin-left: -2px;" id="valueLabel">zł</span>
+            <input class="form-control inputBox" type="text" id="categoryName" name="categoryName" aria-label="Nazwa kategorii" aria-describedby="cattegoryNameLabel" required>
+
+            <div id="limitForm" style="display: none;">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="limitCheck">
+                <label class="form-check-label" for="limitCheck">
+                  Limit
+                </label>
+              </div>
+            
+              <label id="limitLabel" for="limit">
+                Miesięczny limit dla kategorii
+              </label>
+              <div class="input-group">
+                <input class="form-control inputBox" type="number" id="limit" name="valueLimit" min="0" step="0.01" value='0.00' aria-label="Kwota limitu" aria-describedby="limitLabel" required>
+                <div class="input-group-append">
+                  <span class="input-group-text inputBox" style="margin-left: -2px;" id="valueLabel">zł</span>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-          <button type="button" class="btn btn-success" id="submitButton" onclick="addCategory()">Zatwierdź</button>
+          <button type="submit" form="editForm" class="btn btn-success">Zatwierdź</button>
       </div>
       </div>
     </div>
