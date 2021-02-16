@@ -134,7 +134,7 @@ abstract class Finance extends \Core\Model
      *
      * @return boolean true if category updated, false otherwise
      */
-    public static function updateCategoryById($name, $id)
+    public static function updateCategoryById($name, $id, $limit = 0, $categoryLimitState = false)
     {
         $sql = "UPDATE ".static::$financeCategoryAsignedToUserTableName.
                " SET name = :name 

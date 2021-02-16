@@ -65,6 +65,27 @@ class Expense extends Finance
         return false;
     } 
 
+    /**
+     * Update Expense category by id
+     *
+     * @return boolean true if category updated, false otherwise
+     */
+    public static function updateCategoryById($name, $id, $limit = 0, $categoryLimitState = false)
+    {
+        $sql = "UPDATE ".static::$financeCategoryAsignedToUserTableName.
+               " SET name = :name, expense_limit = :expense_limit, limit_active = :limit_active
+                WHERE id = :id AND user_id = :user_id";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR); 
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':expense_limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':limit_active', $categoryLimitState, PDO::PARAM_BOOL);
+
+        return $stmt->execute();
+    } 
 
     /**
      * Save the expense model with the current property values

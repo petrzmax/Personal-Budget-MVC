@@ -185,6 +185,10 @@ function addCategory() {
 function updateCategory() {
 
     categoryName = $('#categoryName').val();
+
+    categoryLimit = $('#limit').val();
+    categoryLimitState = $('#limitCheck').is(':checked');
+
     $.ajax({
         type: 'POST',
         url: '/settings/updateCategory',
@@ -192,7 +196,9 @@ function updateCategory() {
         data: {
             postCategoryId: categoryId,
             postCategoryType: categoryType,
-            postCategoryName: categoryName
+            postCategoryName: categoryName,
+            postCategoryLimitState: categoryLimitState,
+            postCategoryLimit: categoryLimit
         },
 
         success: function() {

@@ -190,6 +190,15 @@ class Settings extends Authenticated
             $categoryName = $_POST['postCategoryName'];
         }
 
+        $categoryLimit = 0;
+        if (isset($_POST['postCategoryLimit'])) {
+            $categoryLimit = $_POST['postCategoryLimit'];
+        }
+        
+        if (isset($_POST['postCategoryLimitState'])) {
+            $categoryLimitState = $_POST['postCategoryLimitState'];
+        }
+
         if($categoryId && $categoryType && $categoryName) {
             switch($categoryType) {
                 case 'income':
@@ -197,7 +206,7 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::updateCategoryById($categoryName, $categoryId);
+                    $result = Expense::updateCategoryById($categoryName, $categoryId, $categoryLimit, $categoryLimitState);
                     break;
     
                 case 'payment':
