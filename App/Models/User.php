@@ -530,4 +530,22 @@ class User extends \Core\Model
 
         return false;
     }
+
+    /**
+     * Delete user account 
+     *
+     * @return boolean  True if account was deleted, false otherwise
+     */
+    public static function deleteAccount()
+    {
+        $sql = 'DELETE FROM users
+               WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
 }

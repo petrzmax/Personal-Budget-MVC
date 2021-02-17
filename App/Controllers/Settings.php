@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Flash;
+use \App\Messages;
 use \App\Auth;
+use \App\Models\User;
 use \App\Models\Income;
 use \App\Models\Expense;
 use \App\Models\Payment;
@@ -220,6 +223,23 @@ class Settings extends Authenticated
     
             header('Content-Type: application/json');
             echo $result;
+        }
+    }
+
+    /**
+     * AJAX - delete account
+     *
+     * @return void
+     */
+    public function deleteAccountAction() {
+        
+        if(User::deleteAccount()) {
+            Auth::logout();
+            $this->redirect('/');
+        }
+        else {
+            Flash::AddMessage(Messages::DELETE_ACCOUNT_FAILED, Flash::ERROR);
+            $this->redirect('/settings');
         }
     }
 }
