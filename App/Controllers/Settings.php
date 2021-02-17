@@ -227,7 +227,7 @@ class Settings extends Authenticated
     }
 
     /**
-     * AJAX - delete account
+     * Delete account
      *
      * @return void
      */
@@ -235,7 +235,7 @@ class Settings extends Authenticated
         
         if(User::deleteAccount()) {
             Auth::logout();
-            $this->redirect('/');
+            $this->redirect('/account/delete-success');
         }
         else {
             Flash::AddMessage(Messages::DELETE_ACCOUNT_FAILED, Flash::ERROR);
