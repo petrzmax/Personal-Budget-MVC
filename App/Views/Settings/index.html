@@ -195,7 +195,7 @@
     </div>
   </div>
 
-  <!-- Delete Modal -->
+  <!-- Delete Category Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -213,4 +213,31 @@
       </div>
     </div>
   </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="deleteAccountModalLabel">Usuwanie konta</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <figure class="text-center h2 mb-5" style="color: red">UWAGA!</br>
+            Ta operacja jest <strong>nieodwracalna!</strong>
+          </figure>
+          <figure class="h5 text-center mt-3">
+            Twoje dane zostaną <strong>bezpowrotnie</strong> usunięte!
+            Czy jesteś pewny, że chcesz kontynuować?
+          </figure>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-danger" onclick="#">Tak</button>
+      </div>
+      </div>
+    </div>
+    </div>
 {% endblock %}
