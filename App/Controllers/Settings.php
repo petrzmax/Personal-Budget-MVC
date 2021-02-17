@@ -244,12 +244,37 @@ class Settings extends Authenticated
     }
 
     /**
-     * Edit account
+     * Show the form for editing the account
      *
      * @return void
      */
     public function editAction() {
         
-        View::renderTemplate('settings/edit.html');
+        View::renderTemplate('settings/edit.html', [
+            'user' => $this->user
+        ]);
     }
+
+    /**
+     * Update the account data
+     *
+     * @return void
+     */
+    public function updateAction()
+    {
+        if ($this->user->updateProfile($_POST)) {
+
+            Flash::addMessage(Messages::CHANGES_SAVED);
+
+            $this->redirect('/settings');
+
+        } else {
+
+            View::renderTemplate('settings/edit.html', [
+                'user' => $this->user
+            ]);
+
+        }
+    }
+
 }
