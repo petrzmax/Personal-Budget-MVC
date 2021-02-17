@@ -15,26 +15,20 @@
             </h2>
             <div id="accountCollapse" class="accordion-collapse show" aria-labelledby="account" data-bs-parent="#mainSettingsAccordion">
               <div class="accordion-body">
-
                 <div class="row">
                   <div class="col">
                     Imię: {{ user.name }}  
                   </div>     
                   <div class="col">
-                    Zmień hasło
+                    
+                    email:  {{ user.email }} 
                   </div>       
                 </div>
 
-                <div class="row">
-                  <div class="col">
-                    email:  {{ user.email }} 
-                  </div>     
-                  <div class="col">
-                    Usuń konto
-                  </div> 
+                <div class="row gap-2 mt-3">
+                    <button class="btn btn-success col-sm" type="button">Zmień hasło</button>
+                    <button class="btn btn-danger col-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteAccount">Usuń konto</button>
                 </div>
-
-
 
               </div>
             </div>
