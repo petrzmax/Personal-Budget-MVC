@@ -96,8 +96,8 @@ class User extends \Core\Model
             if($stmt->execute()) {
 
                 //Copy expenses category
-                $sql = 'INSERT INTO expenses_category_assigned_to_users
-                        SELECT NULL, :registeredUserId, name
+                $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, name)
+                        SELECT :registeredUserId, name
                         FROM expenses_category_default';
                 $stmt = $db->prepare($sql);
                 $stmt->bindValue(':registeredUserId', $registeredUserId, PDO::PARAM_INT);
