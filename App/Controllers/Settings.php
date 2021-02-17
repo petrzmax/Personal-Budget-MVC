@@ -242,4 +242,14 @@ class Settings extends Authenticated
             $this->redirect('/settings');
         }
     }
+
+    /**
+     * Edit account
+     *
+     * @return void
+     */
+    public function editAction() {
+        
+        View::renderTemplate('settings/edit.html');
+    }
 }
