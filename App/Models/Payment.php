@@ -35,6 +35,20 @@ class Payment extends Finance
 
         return false;
     }
+
+    /**
+     * Get method id
+     *
+     * @return mixed payment method id if it is set, false otherwise
+     */
+    public function getMethodId() {
+
+        if(isset($payment->methodId)) {
+            return $payment->methodId;
         }
+        
+        return false;
     }
+
+    
 }
