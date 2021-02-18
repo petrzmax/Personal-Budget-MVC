@@ -37,17 +37,20 @@ class AddExpense extends Authenticated
     public function createAction()
     {
         $expense = new Expense($_POST);
-        if($expense->save()) {
+        $payment = new Payment($_POST);
+
+        if($expense->save() && $payment->validate()) {
             Flash::addMessage(Messages::EXPENSE_ADD_SUCCESS);
             $this->redirect('/add-expense');
             
         } else {
             //Show errors
-            Flash::addMessage(Messages::INCOME_ADD_FAIL, Flash::WARNING);
+            Flash::addMessage(Messages::EXPENSE_ADD_FAIL, Flash::WARNING);
             View::renderTemplate('Expense/new.html', [
                 'categories' => Expense::getCategories(),
                 'methods' => Payment::getCategories(),
-                'expense' => $expense
+                'expense' => $expense,
+                'payment' => $payment
             ]);
         }
     }
