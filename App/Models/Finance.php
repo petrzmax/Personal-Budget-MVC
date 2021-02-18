@@ -154,7 +154,7 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed id array if found, false otherwise
      */
-    private function getCategoriesIds()
+    protected function getCategoriesIds()
     {
         $sql = "SELECT id
                 FROM ".static::$financeCategoryAsignedToUserTableName.
@@ -172,9 +172,11 @@ abstract class Finance extends \Core\Model
     /**
      * Save the finance model with the current property values
      *
+     * @param $paymentMethodId payment method id to save (optional)
+     * 
      * @return boolean True if the finance was saved, false otherwise
      */
-    public function save()
+    public function save($paymentMethodId = null)
     {
         $this->validate();
 
@@ -182,11 +184,25 @@ abstract class Finance extends \Core\Model
 
             $db = static::getDB();
             $sql = "INSERT INTO ".$this->financeTableName.
-                   " VALUES (NULL, :user_id, :finance_category_assigned_to_user_id, :financeValue, :financeDate, :comment)";
+                   " VALUES (NULL, :user_id, :finance_category_assigned_to_user_id";
+
+            //Add payment method category id if available
+            if($paymentMethodId) {
+                $sql .= ', :payment_method_assigned_to_user_id';
+            }
+
+            $sql .= ', :financeValue, :financeDate, :comment)';
+
             $stmt = $db->prepare($sql);
             
             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
             $stmt->bindValue(':finance_category_assigned_to_user_id', $this->categoryId, PDO::PARAM_INT);
+
+            //Bind payment method category id if available
+            if($paymentMethodId) {
+                $stmt->bindValue(':payment_method_assigned_to_user_id', $paymentMethodId, PDO::PARAM_INT);
+            }
+
             $stmt->bindValue(':financeValue', $this->valueInput, PDO::PARAM_STR);
             $stmt->bindValue(':financeDate', $this->dateInput, PDO::PARAM_STR);
             $stmt->bindValue(':comment', htmlspecialchars($this->comment), PDO::PARAM_STR);
