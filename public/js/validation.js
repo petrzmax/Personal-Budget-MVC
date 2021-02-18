@@ -74,7 +74,7 @@ $.validator.setDefaults({
 });        
 
 /**
- * Run validation when page was fully loaded
+ * Run signup form validation when page was fully loaded
  */
 $(document).ready(function() {
 
@@ -116,6 +116,52 @@ $(document).ready(function() {
                 email: 'Błędny adres email',
                 remote: 'Email jest już używany',
                 maxlength: 'Email jest za długi'
+            },
+            password: {
+                required: 'Hasło jest wymagane',
+                minlength: 'Wprowadź minimum 6 znaków',
+                validPassword: 'Hasło musi zawierać znak oraz cyfrę'
+            },
+            password_confirmation: {
+                required: 'Wprowadź hasło ponownie',
+                equalTo: 'Hasła muszą być takie same'
+            }
+        }
+    });
+});
+
+
+/**
+ * Run edit account validation when page was fully loaded
+ */
+$(document).ready(function() {
+
+    /**
+     * Validate the form
+     */
+    $('#formEdit').validate({
+        rules: {
+            name: {
+                required: true,
+                maxlength: 50,
+                noSpecialChars: true,
+                noSpaces: true
+            },
+            password: {
+                required: false,
+                minlength: 6,
+                validPassword: true
+            },
+            password_confirmation: {
+                equalTo: '#password'
+            }
+        },
+        messages: {
+            name: {
+                required: 'Imię jest wymagane',
+                maxlength: 'Imię jest za długie',
+                noSpecialChars: 'Usuń znaki spacjalne oraz cyfry',
+                noSpaces: 'Imię nie może zawierać spacji'
             },
             password: {
                 required: 'Hasło jest wymagane',

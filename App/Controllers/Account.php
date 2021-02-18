@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use \Core\View;
 use \App\Models\User;
 
 /**
@@ -25,5 +26,15 @@ class Account extends \Core\Controller
         
         header('Content-Type: application/json');
         echo json_encode($is_valid);
+    }
+
+    /**
+     * Show the delete account success page
+     *
+     * @return void
+     */
+    public function deleteSuccessAction()
+    {
+        View::renderTemplate('account/delete-success.html');
     }
 }

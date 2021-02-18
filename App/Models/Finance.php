@@ -64,15 +64,15 @@ abstract class Finance extends \Core\Model
     } 
 
     /**
-     * Get finance data by id
+     * Get finance data by id, if expense == true get also limit value
      *
      * @return mixed Finance object if found, false otherwise
      */
     public static function getCategoryById($id)
     {
         $sql = "SELECT id, name
-                FROM ".static::$financeCategoryAsignedToUserTableName.
-               " WHERE id = :id AND user_id = :user_id";
+        FROM ".static::$financeCategoryAsignedToUserTableName.
+        " WHERE id = :id AND user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -91,13 +91,13 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed inserted row id if category added, false otherwise
      */
-    public static function addCategory($name)
+    public static function addCategory($name, $limit = 0, $categoryLimitState = false)
     {
         //Validate name
         if(true) {
 
             $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
-                   " (name, user_id) VALUES (:name, :user_id)";
+            " (name, user_id) VALUES (:name, :user_id)";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -123,6 +123,26 @@ abstract class Finance extends \Core\Model
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
+        $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } 
+
+    /**
+     * Update finance category by id
+     *
+     * @return boolean true if category updated, false otherwise
+     */
+    public static function updateCategoryById($name, $id, $limit = 0, $categoryLimitState = false)
+    {
+        $sql = "UPDATE ".static::$financeCategoryAsignedToUserTableName.
+               " SET name = :name 
+                WHERE id = :id AND user_id = :user_id";
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR); 
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
 

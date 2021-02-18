@@ -38,6 +38,7 @@ class Messages
     const PASSWORD_LENGTH = 'Hasło musi składać się z przynajmniej sześciu znaków';
     const PASSWORD_NEED_LETTER = 'Hasło musi zawierać przynajmniej jedną literę';
     const PASSWORD_NEED_DIGIT = 'Hasło musi zawierać przynajmniej jedną cyfrę';
+    const DELETE_ACCOUNT_FAILED = "Podczas usuwania konta wystąpił błąd";
 
     /**
      * Add Expense & Income validation messages

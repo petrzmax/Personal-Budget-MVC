@@ -96,8 +96,8 @@ class User extends \Core\Model
             if($stmt->execute()) {
 
                 //Copy expenses category
-                $sql = 'INSERT INTO expenses_category_assigned_to_users
-                        SELECT NULL, :registeredUserId, name
+                $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, name)
+                        SELECT :registeredUserId, name
                         FROM expenses_category_default';
                 $stmt = $db->prepare($sql);
                 $stmt->bindValue(':registeredUserId', $registeredUserId, PDO::PARAM_INT);
@@ -487,7 +487,6 @@ class User extends \Core\Model
     public function updateProfile($data)
     {
         $this->name = $data['name'];
-        $this->email = $data['email'];
 
         // Only validate and update the password if a value provided
         if ($data['password'] != '') {
@@ -499,8 +498,7 @@ class User extends \Core\Model
         if (empty($this->errors)) {
 
             $sql = 'UPDATE users
-                    SET name = :name,
-                        email = :email';
+                    SET name = :name';
 
             // Add password if it's set
             if (isset($this->password)) {
@@ -514,7 +512,6 @@ class User extends \Core\Model
             $stmt = $db->prepare($sql);
 
             $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
-            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
 
             // Add password if it's set
@@ -529,5 +526,23 @@ class User extends \Core\Model
         }
 
         return false;
+    }
+
+    /**
+     * Delete user account 
+     *
+     * @return boolean  True if account was deleted, false otherwise
+     */
+    public static function deleteAccount()
+    {
+        $sql = 'DELETE FROM users
+               WHERE id = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Flash;
+use \App\Messages;
 use \App\Auth;
+use \App\Models\User;
 use \App\Models\Income;
 use \App\Models\Expense;
 use \App\Models\Payment;
@@ -37,7 +40,7 @@ class Settings extends Authenticated
         View::renderTemplate('Settings/index.html', [
             'incomeCategories' => Income::getCategories(),
             'expenseCategories' => Expense::getCategories(),
-            'paymentMethods' => Payment::getCategories(),
+            'paymentCategories' => Payment::getCategories(),
             'user' => $this->user
         ]);
     }
@@ -67,8 +70,8 @@ class Settings extends Authenticated
                     $result = Expense::getCategoryById($categoryId);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::getMethodById($categoryId);
+                case 'payment':
+                    $result = Payment::getCategoryById($categoryId);
                     break;
     
                 default:
@@ -88,13 +91,24 @@ class Settings extends Authenticated
      */
     public function addCategoryAction() {
         
-        if(isset($_POST['postCategoryType'])) {
+        if (isset($_POST['postCategoryType'])) {
             $categoryType = $_POST['postCategoryType'];
         }
 
-        if(isset($_POST['postCategoryName'])) {
+        if (isset($_POST['postCategoryName'])) {
             $categoryName = $_POST['postCategoryName'];
         }
+
+        $categoryLimit = 0;
+        if (isset($_POST['postCategoryLimit'])) {
+            $categoryLimit = $_POST['postCategoryLimit'];
+        }
+        
+        if (isset($_POST['postCategoryLimitState'])) {
+            $categoryLimitState = $_POST['postCategoryLimitState'];
+        }
+        
+
 
         if($categoryType && $categoryName) {
             switch($categoryType) {
@@ -103,11 +117,11 @@ class Settings extends Authenticated
                     break;
     
                 case 'expense':
-                    $result = Expense::addCategory($categoryId);
+                    $result = Expense::addCategory($categoryName, $categoryLimit, $categoryLimitState);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::addMethod($categoryId);
+                case 'payment':
+                    $result = Payment::addCategory($categoryName);
                     break;
     
                 default:
@@ -146,8 +160,8 @@ class Settings extends Authenticated
                     $result = Expense::deleteCategoryById($categoryId);
                     break;
     
-                case 'paymentMethod':
-                    $result = Expense::deleteMethodById($categoryId);
+                case 'payment':
+                    $result = Payment::deleteCategoryById($categoryId);
                     break;
     
                 default:
@@ -159,4 +173,108 @@ class Settings extends Authenticated
             echo $result;
         }
     }
+
+    /**
+     * AJAX - update category
+     *
+     * @return void
+     */
+    public function updateCategoryAction() {
+        
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
+        }
+
+        if(isset($_POST['postCategoryType'])) {
+            $categoryType = $_POST['postCategoryType'];
+        }
+
+        if(isset($_POST['postCategoryName'])) {
+            $categoryName = $_POST['postCategoryName'];
+        }
+
+        $categoryLimit = 0;
+        if (isset($_POST['postCategoryLimit'])) {
+            $categoryLimit = $_POST['postCategoryLimit'];
+        }
+        
+        if (isset($_POST['postCategoryLimitState'])) {
+            $categoryLimitState = $_POST['postCategoryLimitState'];
+        }
+
+        if($categoryId && $categoryType && $categoryName) {
+            switch($categoryType) {
+                case 'income':
+                    $result = Income::updateCategoryById($categoryName, $categoryId);
+                    break;
+    
+                case 'expense':
+                    $result = Expense::updateCategoryById($categoryName, $categoryId, $categoryLimit, $categoryLimitState);
+                    break;
+    
+                case 'payment':
+                    $result = Payment::updateCategoryById($categoryName, $categoryId);
+                    break;
+    
+                default:
+                    $result = false;
+                    break;
+            }
+    
+            header('Content-Type: application/json');
+            echo $result;
+        }
+    }
+
+    /**
+     * Delete account
+     *
+     * @return void
+     */
+    public function deleteAccountAction() {
+        
+        if(User::deleteAccount()) {
+            Auth::logout();
+            $this->redirect('/account/delete-success');
+        }
+        else {
+            Flash::AddMessage(Messages::DELETE_ACCOUNT_FAILED, Flash::ERROR);
+            $this->redirect('/settings');
+        }
+    }
+
+    /**
+     * Show the form for editing the account
+     *
+     * @return void
+     */
+    public function editAction() {
+        
+        View::renderTemplate('settings/edit.html', [
+            'user' => $this->user
+        ]);
+    }
+
+    /**
+     * Update the account data
+     *
+     * @return void
+     */
+    public function updateAction()
+    {
+        if ($this->user->updateProfile($_POST)) {
+
+            Flash::addMessage(Messages::CHANGES_SAVED);
+
+            $this->redirect('/settings');
+
+        } else {
+
+            View::renderTemplate('settings/edit.html', [
+                'user' => $this->user
+            ]);
+
+        }
+    }
+
 }

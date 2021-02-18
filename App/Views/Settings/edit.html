@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Edytuj profil{% endblock %}
+
+{% block body %}
+    {% if user.errors is not empty %}
+        <p>Błędy:</p>
+        <ul>
+            {% for error in user.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" id="formEdit" action="/settings/update">
+
+        <div class="d-grid gap-1">
+            <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
+            
+            <span class="mt-3 mb-1" id="helpBlock">Zostaw poniższe pola puste, aby zachować bieżące hasło</span>
+            <input type="password" class="form-control inputBox" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" id="password" aria-label="Hasło">
+        
+            <input type="password" class="form-control inputBox" placeholder="Powtórz hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Powtórz hasło'" name="password_confirmation" aria-label="Powtórz Hasło">
+        </div>
+
+        <div class="row gap-2 mx-0 mb-2 mt-3">
+            <button class="btn btn-success col-sm" type="submit">Zapisz</button>
+            <a class="btn btn-secondary col-sm" href="/settings">Anuluj</a>
+        </div>
+
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+    <script src="/js/validation.js"></script>
+
+{% endblock %}
