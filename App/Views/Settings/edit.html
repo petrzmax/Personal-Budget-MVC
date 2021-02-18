@@ -3,9 +3,8 @@
 {% block title %}Edytuj profil{% endblock %}
 
 {% block body %}
-
     {% if user.errors is not empty %}
-        <p>Errors:</p>
+        <p>Błędy:</p>
         <ul>
             {% for error in user.errors %}
                 <li>{{ error }}</li>
@@ -13,7 +12,7 @@
         </ul>
     {% endif %}
 
-    <form method="post" id="accountForm" action="/settings/update">
+    <form method="post" id="formEdit" action="/settings/update">
 
         <div class="d-grid gap-1">
             <input type="text" class="form-control inputBox" placeholder="Imię" onfocus="this.placeholder=''" onblur="this.placeholder='Imię'" name="name" aria-label="Imię" value="{{ user.name }}" required>
@@ -34,6 +33,6 @@
 {% endblock %}
 
 {% block footer %}
-    <script src="/js/validate.js"></script>
+    <script src="/js/validation.js"></script>
 
 {% endblock %}
