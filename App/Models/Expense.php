@@ -13,7 +13,7 @@ use \App\Messages;
 class Expense extends Finance
 {
     static $financeCategoryAsignedToUserTableName = 'expenses_category_assigned_to_users';
-    protected $financeTableName = 'incomes'; 
+    protected $financeTableName = 'expenses'; 
     
     /**
      * Get expense data by id
