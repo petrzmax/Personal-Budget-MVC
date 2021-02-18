@@ -5,7 +5,7 @@
 {% block body %}
 
 {% if expense.errors is not empty %}
-<p>Errors:</p>
+<p>Błędy:</p>
 <ul>
     {% for error in expense.errors %}
         <li>{{ error }}</li>
