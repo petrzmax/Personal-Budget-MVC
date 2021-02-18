@@ -43,8 +43,8 @@ class Payment extends Finance
      */
     public function getMethodId() {
 
-        if(isset($payment->methodId)) {
-            return $payment->methodId;
+        if(isset($this->methodId)) {
+            return $this->methodId;
         }
         
         return false;
