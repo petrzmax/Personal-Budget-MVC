@@ -172,6 +172,8 @@ abstract class Finance extends \Core\Model
     /**
      * Save the finance model with the current property values
      *
+     * @param $paymentMethodId payment method id to save (optional)
+     * 
      * @return boolean True if the finance was saved, false otherwise
      */
     public function save($paymentMethodId = null)
