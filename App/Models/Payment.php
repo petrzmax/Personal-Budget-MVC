@@ -32,8 +32,9 @@ class Payment extends Finance
         if(empty($this->errors)) {
             return true;
         }
-        else {
-            return false;
+
+        return false;
+    }
         }
     }
 }
