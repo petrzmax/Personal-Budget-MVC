@@ -154,7 +154,7 @@ abstract class Finance extends \Core\Model
      *
      * @return mixed id array if found, false otherwise
      */
-    private function getCategoriesIds()
+    protected function getCategoriesIds()
     {
         $sql = "SELECT id
                 FROM ".static::$financeCategoryAsignedToUserTableName.
