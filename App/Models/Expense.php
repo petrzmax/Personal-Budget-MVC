@@ -115,25 +115,4 @@ class Expense extends Finance
 
         return false;
     }
-
-    /**
-     * Validate current property values, adding valiation error messages to the errors array property
-     *
-     * @return void
-     */
-    public function validate()
-    {
-        parent::validate();
-
-        //Check if payment method is set
-        if(isset($this->methodId)) {
-            //Check if given payment method is associated with current user
-            if(!in_array($this->methodId, static::getMethodsIds())) {
-                $this->errors[] = Messages::METHOD_INVALID; 
-            }
-        } else {
-            $this->errors[] = Messages::METHOD_REQUIRED; 
-        }
-
-    }
 }
