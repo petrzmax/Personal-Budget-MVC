@@ -250,7 +250,7 @@ class Settings extends Authenticated
      */
     public function editAction() {
         
-        View::renderTemplate('settings/edit.html', [
+        View::renderTemplate('Settings/edit.html', [
             'user' => $this->user
         ]);
     }
@@ -270,7 +270,7 @@ class Settings extends Authenticated
 
         } else {
 
-            View::renderTemplate('settings/edit.html', [
+            View::renderTemplate('Settings/edit.html', [
                 'user' => $this->user
             ]);
 
