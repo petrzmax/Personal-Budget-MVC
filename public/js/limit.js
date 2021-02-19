@@ -14,6 +14,7 @@ function radioClickHandler(clickedRadio) {
     getCategoryCurrentMonthSumById();
 }
 
+//Hides limit section
 function hideLimitSection() {
     $('#limitSection').slideUp('slow');
 }
@@ -75,12 +76,14 @@ function updateInput() {
     
 }
 
+//Set currentExpenseLimit value and set it in label
 function setCurrentExpenseLimit(value) {
     currentExpenseLimit = parseFloat(value);
 
     $("#limit").text(currentExpenseLimit.toFixed(2));
 }
 
+//Set currentMonthSum value and set it in label
 function setCurrentMonthSum(value) {
     currentMonthSum = parseFloat(value);
 
