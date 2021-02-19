@@ -17,6 +17,22 @@
 {% endif %}
 <main>
     <article>
+
+        <div class="row" id="limitSection">
+            <div class="col-3">
+                Limit:
+            </div>
+            <div class="col-3">
+                Dotychczas wydano:
+            </div>
+            <div class="col-3">
+                Różnica:
+            </div>
+            <div class="col-3">
+                Limit + wpisana kwota:
+            </div>
+        </div>
+
         <form id="expense" action="/add-expense/create" method="post">	
             <div class="row mb-1">
                 <label class="col-sm-4 col-form-label" for="valueInput">Kwota</label>
