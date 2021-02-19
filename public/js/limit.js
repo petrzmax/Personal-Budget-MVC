@@ -87,6 +87,13 @@ function setCurrentMonthSum(value) {
     $("#spent").text(currentMonthSum.toFixed(2));
 }
 
+//Calculate balance and set it in label
+function setBalance() {
+    balance = currentExpenseLimit - currentMonthSum;
+    $(".balance").text(balance.toFixed(2));
+}
+
+
 
 /*
 PLAN działania:
