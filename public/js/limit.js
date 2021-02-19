@@ -7,7 +7,9 @@ var spentAndValue = 0;
 
 function radioClickHandler(clickedRadio) {
     categoryId = clickedRadio.value;
+
     $('#limitSection').slideDown('slow');
+
     getLimitData();
     getCategoryCurrentMonthSumById();
 }
@@ -73,14 +75,10 @@ function updateInput() {
     
 }
 
-
-
 function setCurrentExpenseLimit(value) {
     currentExpenseLimit = parseFloat(value);
 
     $("#limit").text(currentExpenseLimit.toFixed(2));
-
-    //$('#spentAndValueInput').text(spentAndValue);
 }
 
 function setCurrentMonthSum(value) {
