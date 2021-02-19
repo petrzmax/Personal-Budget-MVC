@@ -106,6 +106,15 @@ function setLimitSectionStyle() {
 }
 
 
+//Run after all ajax requests finished
+$(document).ajaxStop(function() {
+    setBalance();
+    updateInput();
+    setLimitSectionStyle();
+});
+
+
+//;
 
 /*
 PLAN działania:
