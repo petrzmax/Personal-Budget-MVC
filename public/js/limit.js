@@ -97,6 +97,16 @@ function setBalance() {
 }
 
 
+function setLimitSectionStyle() {
+    if(currentExpenseLimit > spentAndValue) {
+        $('#limitSection').removeClass('alert-danger').addClass('alert-success');
+    } else {
+        $('#limitSection').removeClass('alert-success').addClass('alert-danger');
+    }
+    
+}
+
+
 
 /*
 PLAN działania:
