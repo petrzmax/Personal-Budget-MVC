@@ -70,12 +70,14 @@
                
                 {% for category in categories %}
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="{{ category.id }}" name="categoryId" id="c{{ category.id }}" aria-describedby="c{{ category.id }}Label" required>
+                        <input class="form-check-input" type="radio" value="{{ category.id }}" name="categoryId" id="c{{ category.id }}" 
+                        {% if category.limit_active == true %} onclick="radioClickHandler(this)" {% else %} onclick="hideLimitSection()" {% endif %} aria-describedby="c{{ category.id }}Label" required>
+
                         <label class="form-check-label" id="c{{ category.id }}Label" for="c{{ category.id }}">
                             {{ category.name|capitalize }}
 
                             {% if category.limit_active == true %}
-                                </br><small>(Limit: {{ category.expense_limit }} zł)</small>
+                                </br><small><strong>Limit:</strong> {{ category.expense_limit }} zł</small>
                             {% endif %}
                         </label>
                     </div>                    
