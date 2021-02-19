@@ -65,15 +65,14 @@ function getCategoryCurrentMonthSumById() {
     });
 }
 
+function updateInput(valueInputBox = 0) {
+    if(valueInputBox) {
+        valueInput = parseFloat(valueInputBox.value);
+    }
 
-$("#valueInput").change(function(){
-    alert($(this).val());
-});
-
-function updateInput() {
-
-
-    
+    spentAndValue = currentMonthSum + valueInput;
+    $('#spentAndValueInput').text(spentAndValue.toFixed(2));
+    setLimitSectionStyle();
 }
 
 //Set currentExpenseLimit value and set it in label
