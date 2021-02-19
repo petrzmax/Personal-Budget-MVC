@@ -1,8 +1,9 @@
 var categoryId;
 var currentExpenseLimit;
-var currentMonthSum;
-var valueInput;
-
+var currentMonthSum = 0;
+var balance = 0;
+var valueInput = 0;
+var spentAndValue = 0;
 
 function radioClickHandler(clickedRadio) {
     categoryId = clickedRadio.value;
