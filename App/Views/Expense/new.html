@@ -18,7 +18,12 @@
 <main>
     <article>
 
-        <div class="row small alert alert-success  p-1 mb-3" id="limitSection" style="display: none;">
+        <div class="row small alert p-1 mb-3" id="limitSection" style="display: none;">
+            <div class="mb-2">
+                <strong>Informacja o limicie:</strong> Możesz jeszcze wydać:
+                <label class="balance strong"></label>
+            </div>
+            
             <div class="col-sm d-grid">
                 <strong>Limit:</strong>
                 <label id="limit"></label>
@@ -28,11 +33,11 @@
                 <label id="spent"></label>
             </div>
             <div class="col-sm d-grid">
-                <strong>Różnica:</strong>
-                <label id="difference"></label>                
+                <strong>Bilans:</strong>
+                <label class="balance"></label>                
             </div>
             <div class="col-sm d-grid">
-                <strong>Wydatki + wpisana kwota:</strong>
+                <strong>Wydano + kwota:</strong>
                 <label id="spentAndValueInput"></label>
             </div>
         </div>
@@ -41,7 +46,7 @@
             <div class="row mb-1">
                 <label class="col-sm-4 col-form-label" for="valueInput">Kwota</label>
                 <div class="col-sm input-group">
-                    <input type="number" class="form-control inputBox" id="valueInput" name="valueInput" min="0" step="0.01" placeholder="Podaj kwotę" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj kwotę'" aria-label="Podaj kwotę" aria-describedby="valueLabel" required/>
+                    <input type="number" class="form-control inputBox" id="valueInput" name="valueInput" onchange="updateInput(this)" min="0" step="0.01" placeholder="Podaj kwotę" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj kwotę'" aria-label="Podaj kwotę" aria-describedby="valueLabel" required/>
                     <div class="input-group-append">
                         <span class="input-group-text inputBox" style="margin-left: -2px;" id="valueLabel">zł</span>
                     </div>
