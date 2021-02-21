@@ -18,7 +18,7 @@
 <main>
     <article>
 
-        <div class="small alert p-2 mb-3" id="limitSection" style="display: none;">
+        <div class="small alert" id="limitSection" style="display: none; height: 130px;">
             <div class="row">
                 <div class="d-grid mb-3">
                     <strong>Informacja o limicie:</strong>
@@ -26,20 +26,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-auto d-grid">
+                <div class="col-sm d-grid">
                     <strong>Limit:</strong>
                     <label id="limit"></label>
                 </div>
-                <div class="col-sm-auto d-grid">
+                <div class="col-sm d-grid">
                     <strong>Wydano:</strong>
                     <label id="spent"></label>
                 </div>
-                <div class="col-sm-auto d-grid">
+                <div class="col-sm d-grid">
                     <strong>Bilans:</strong>
                     <label id="balance"></label>                
                 </div>
-                <div class="col-sm-auto d-grid">
-                    <strong>Wydano + kwota:</strong>
+                <div class="col-sm d-grid">
+                    <strong>Suma:</strong>
                     <label id="spentAndValueInput"></label>
                 </div>
             </div>
@@ -65,12 +65,11 @@
             
             <fieldset class="form-group" aria-label="Sposób płatności">
                 <legend class="col-form-label"><h2>Sposób płatności</h2></legend>
+                <select class="form-select" name="methodId" aria-label="Sposób płatności" required>
                 {% for method in methods %}
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="{{ method.id }}" name="methodId" id="m{{ method.id }}" aria-describedby="m{{ method.id }}Label" required>
-                        <label class="form-check-label" id="m{{ method.id }}Label" for="m{{ method.id }}">{{ method.name|capitalize }}</label>
-                    </div>
+                    <option value="{{ method.id }}">{{ method.name|capitalize }}</option>
                 {% endfor %}
+                </select>
             </fieldset>
 
             <fieldset class="form-group" aria-label="Kategoria">

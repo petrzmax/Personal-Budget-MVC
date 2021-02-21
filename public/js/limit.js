@@ -97,7 +97,7 @@ function setBalance() {
 
 //Change limit section color & set message depending on limit & value balance
 function setLimitSectionStyle() {
-    if(currentExpenseLimit > spentAndValue) {
+    if(currentExpenseLimit >= spentAndValue) {
         $('#limitSection').removeClass('alert-danger').addClass('alert-success');
         $("#limitMessage").text(positiveMessage + balance.toFixed(2) + currency);
     } else {
