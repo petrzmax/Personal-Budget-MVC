@@ -1,5 +1,5 @@
-var categoryId;
-var currentExpenseLimit;
+var categoryId = 0;
+var currentExpenseLimit = 0;
 var currentMonthSum = 0;
 var balance = 0;
 var valueInput = 0;
