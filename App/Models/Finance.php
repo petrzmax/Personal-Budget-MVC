@@ -97,12 +97,29 @@ abstract class Finance extends \Core\Model
         if(true) {
 
             $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
-            " (name, user_id) VALUES (:name, :user_id)";
+            "(user_id, name"; 
+
+            if($limit || $categoryLimitState) {
+                $sql .= ", expense_limit, limit_active";
+            } 
+
+            $sql .= ") VALUES (:user_id, :name";
+
+            if($limit || $categoryLimitState) {
+                $sql .= ", :expense_limit, :limit_active";
+            } 
+
+            $sql .= ")";
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
             $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
+
+            if($limit || $categoryLimitState) {
+                $stmt->bindValue(':expense_limit', $limit, PDO::PARAM_INT);
+                $stmt->bindValue(':limit_active', $categoryLimitState, PDO::PARAM_BOOL);
+            }
 
             if($stmt->execute()) {
                 return $db->lastInsertId();
@@ -110,6 +127,8 @@ abstract class Finance extends \Core\Model
         }
         return false;
     } 
+
+    
 
     /**
      * Delete finance category by id

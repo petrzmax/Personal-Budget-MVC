@@ -13,34 +13,7 @@ use \App\Messages;
 class Expense extends Finance
 {
     static $financeCategoryAsignedToUserTableName = 'expenses_category_assigned_to_users';
-    protected $financeTableName = 'expenses'; 
-
-    /**
-     * Add Expense category
-     *
-     * @return mixed inserted row id if category added, false otherwise
-     */
-    public static function addCategory($name, $limit = 0, $categoryLimitState = false)
-    {
-        //Validate name
-        if(true) {
-
-            $sql = "INSERT INTO ".static::$financeCategoryAsignedToUserTableName.
-                " (name, user_id, expense_limit, limit_active) VALUES (:name, :user_id, :expense_limit, :limit_active)";
-
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR);     
-            $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-            $stmt->bindValue(':expense_limit', $limit, PDO::PARAM_INT);
-            $stmt->bindValue(':limit_active', $categoryLimitState, PDO::PARAM_BOOL);
-
-            if($stmt->execute()) {
-                return $db->lastInsertId();
-            }
-        }
-        return false;
-    } 
+    protected $financeTableName = 'expenses';
 
     /**
      * Update Expense category by id
