@@ -69,6 +69,7 @@ function getCategoryCurrentMonthSumById() {
     });
 }
 
+//Get data from value input, calculate spendAndValue & set in in label
 function updateInput(valueInputBox = 0) {
     if(valueInputBox) {
         valueInput = parseFloat(valueInputBox.value);
@@ -93,13 +94,13 @@ function setCurrentMonthSum(value) {
     $("#spent").text(currentMonthSum.toFixed(2));
 }
 
-//Calculate balance and set it in label
+//Calculate balance & set it in label
 function setBalance() {
     balance = currentExpenseLimit - currentMonthSum;
     $(".balance").text(balance.toFixed(2));
 }
 
-
+//Change limit section color & set message depending on limit & value balance
 function setLimitSectionStyle() {
     if(currentExpenseLimit > spentAndValue) {
         $('#limitSection').removeClass('alert-danger').addClass('alert-success');
