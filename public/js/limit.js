@@ -5,6 +5,10 @@ var balance = 0;
 var valueInput = 0;
 var spentAndValue = 0;
 
+const currency = ' zł';
+const positiveMessage = 'Możesz jeszcze wydać: ';
+const negativeMessage = 'Uwaga, przekroczyłeś limit!';
+
 function radioClickHandler(clickedRadio) {
     categoryId = clickedRadio.value;
 
