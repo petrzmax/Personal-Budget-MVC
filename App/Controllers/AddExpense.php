@@ -54,4 +54,40 @@ class AddExpense extends Authenticated
             ]);
         }
     }
+
+    /**
+     * AJAX - get category limit data
+     *
+     * @return void
+     */
+    public function getLimitDataAction()
+    {
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
+            $result = Expense::getCategoryById($categoryId);
+        } else {
+            $result = false;
+        }
+        
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
+    /**
+     * AJAX - get sum of expenses in category
+     *
+     * @return void
+     */
+    public function getCategoryCurrentMonthSumByIdAction()
+    {
+        if(isset($_POST['postCategoryId'])) {
+            $categoryId = $_POST['postCategoryId'];
+            $result = Expense::getCategoryCurrentMonthSumById($categoryId);
+        } else {
+            $result = false;
+        }
+        
+        header('Content-Type: application/json');
+        echo $result;
+    }
 }

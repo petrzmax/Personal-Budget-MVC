@@ -42,13 +42,13 @@ abstract class Finance extends \Core\Model
     }
 
     /**
-     * Get all the finance categories
+     * Get all the finance categories data
      *
      * @return mixed Finance object if found, false otherwise
      */
     public static function getCategories()
     {
-        $sql = "SELECT id, name
+        $sql = "SELECT *
                 FROM ".static::$financeCategoryAsignedToUserTableName.
                " WHERE user_id = :user_id";
 
