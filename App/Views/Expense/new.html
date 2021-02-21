@@ -18,27 +18,30 @@
 <main>
     <article>
 
-        <div class="row small alert p-1 mb-3" id="limitSection" style="display: none;">
-            <div class="mb-2">
-                <strong>Informacja o limicie:</strong> Możesz jeszcze wydać:
-                <label class="balance strong"></label>
+        <div class="small alert p-2 mb-3" id="limitSection" style="display: none;">
+            <div class="row">
+                <div class="d-grid mb-3">
+                    <strong>Informacja o limicie:</strong>
+                    <label id="limitMessage" class="strong"></label>
+                </div>
             </div>
-            
-            <div class="col-sm d-grid">
-                <strong>Limit:</strong>
-                <label id="limit"></label>
-            </div>
-            <div class="col-sm d-grid">
-                <strong>Wydano:</strong>
-                <label id="spent"></label>
-            </div>
-            <div class="col-sm d-grid">
-                <strong>Bilans:</strong>
-                <label class="balance"></label>                
-            </div>
-            <div class="col-sm d-grid">
-                <strong>Wydano + kwota:</strong>
-                <label id="spentAndValueInput"></label>
+            <div class="row">
+                <div class="col-sm-auto d-grid">
+                    <strong>Limit:</strong>
+                    <label id="limit"></label>
+                </div>
+                <div class="col-sm-auto d-grid">
+                    <strong>Wydano:</strong>
+                    <label id="spent"></label>
+                </div>
+                <div class="col-sm-auto d-grid">
+                    <strong>Bilans:</strong>
+                    <label id="balance"></label>                
+                </div>
+                <div class="col-sm-auto d-grid">
+                    <strong>Wydano + kwota:</strong>
+                    <label id="spentAndValueInput"></label>
+                </div>
             </div>
         </div>
 
