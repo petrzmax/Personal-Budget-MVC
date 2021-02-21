@@ -112,13 +112,12 @@ class Expense extends Finance
         $stmt->bindValue(':end_date', $endDate, PDO::PARAM_STR);
 
         $stmt->execute();
-
         $result = $stmt->fetchColumn();
 
         if(is_null($result)) {
-            return false;
+            return 0;
         }
-
+        
         return $result;
     } 
 }
