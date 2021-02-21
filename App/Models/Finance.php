@@ -156,14 +156,24 @@ abstract class Finance extends \Core\Model
     public static function updateCategoryById($name, $id, $limit = 0, $categoryLimitState = false)
     {
         $sql = "UPDATE ".static::$financeCategoryAsignedToUserTableName.
-               " SET name = :name 
-                WHERE id = :id AND user_id = :user_id";
+               " SET name = :name";
+                
+        if($limit || $categoryLimitState) {
+            $sql .=", expense_limit = :expense_limit, limit_active = :limit_active";
+        }
+
+        $sql .= " WHERE id = :id AND user_id = :user_id";
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':name', htmlspecialchars($name), PDO::PARAM_STR); 
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);     
         $stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        
+        if($limit || $categoryLimitState) {
+            $stmt->bindValue(':expense_limit', $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':limit_active', $categoryLimitState, PDO::PARAM_BOOL);
+        }
 
         return $stmt->execute();
     } 
