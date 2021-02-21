@@ -97,17 +97,18 @@ function setCurrentMonthSum(value) {
 //Calculate balance & set it in label
 function setBalance() {
     balance = currentExpenseLimit - currentMonthSum;
-    $(".balance").text(balance.toFixed(2));
+    $("#balance").text(balance.toFixed(2));
 }
 
 //Change limit section color & set message depending on limit & value balance
 function setLimitSectionStyle() {
     if(currentExpenseLimit > spentAndValue) {
         $('#limitSection').removeClass('alert-danger').addClass('alert-success');
+        $("#limitMessage").text(positiveMessage + balance.toFixed(2) + currency);
     } else {
         $('#limitSection').removeClass('alert-success').addClass('alert-danger');
-    }
-    
+        $("#limitMessage").text(negativeMessage);
+    }    
 }
 
 
