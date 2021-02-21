@@ -13,7 +13,6 @@ function radioClickHandler(clickedRadio) {
     categoryId = clickedRadio.value;
 
     $('#limitSection').slideDown('slow');
-
     getLimitData();
     getCategoryCurrentMonthSumById();
 }
@@ -27,7 +26,6 @@ function hideLimitSection() {
 //
 //Get category limit from db
 function getLimitData() {
-    
     $.ajax({
         type: 'POST',
         url: '/add-expense/get-limit-data',
@@ -50,7 +48,6 @@ function getLimitData() {
 //
 //Get category expense Sum from current month from db
 function getCategoryCurrentMonthSumById() {
-
     $.ajax({
         type: 'POST',
         url: '/add-expense/get-category-current-month-sum-by-id',
@@ -83,14 +80,12 @@ function updateInput(valueInputBox = 0) {
 //Set currentExpenseLimit value and set it in label
 function setCurrentExpenseLimit(value) {
     currentExpenseLimit = parseFloat(value);
-
     $("#limit").text(currentExpenseLimit.toFixed(2));
 }
 
 //Set currentMonthSum value and set it in label
 function setCurrentMonthSum(value) {
     currentMonthSum = parseFloat(value);
-
     $("#spent").text(currentMonthSum.toFixed(2));
 }
 
@@ -111,20 +106,9 @@ function setLimitSectionStyle() {
     }    
 }
 
-
 //Run after all ajax requests finished
 $(document).ajaxStop(function() {
     setBalance();
     updateInput();
     setLimitSectionStyle();
 });
-
-
-//;
-
-/*
-PLAN działania:
-1#. Sprawdź czy kliknięty przycisk ma włączony limit. Jeśli nie nic nie rób.
-2#. Jeśli tak pobierz wartość limitu oraz sumę wydatków danej kategorii z danego miesiąca
-3. Wyświetl te dane na ekranie w odpowiednich miejscach
-*/
