@@ -70,7 +70,7 @@ abstract class Finance extends \Core\Model
      */
     public static function getCategoryById($id)
     {
-        $sql = "SELECT id, name
+        $sql = "SELECT *
         FROM ".static::$financeCategoryAsignedToUserTableName.
         " WHERE id = :id AND user_id = :user_id";
 
