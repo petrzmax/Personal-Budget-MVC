@@ -48,7 +48,7 @@
                     {% for incomeCategory in incomeCategories %}
                         <div class="row" id="income{{ incomeCategory.id }}">
                           <div class="col">
-                            <li>{{ incomeCategory.name|capitalize }}</li>
+                            <li>{{ incomeCategory.name }}</li>
                           </div>
                           <div class="col-auto">
                             <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'income', {{ incomeCategory.id }})">
@@ -83,7 +83,7 @@
                     {% for expenseCategory in expenseCategories %}
                       <div class="row" id="expense{{ expenseCategory.id }}">
                         <div class="col">
-                          <li>{{ expenseCategory.name|capitalize }}</li>
+                          <li>{{ expenseCategory.name }}</li>
                         </div>
                         <div class="col-auto">
                           <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'expense', {{ expenseCategory.id }})">
@@ -117,7 +117,7 @@
                     {% for paymentCategory in paymentCategories %}
                       <div class="row" id="payment{{ paymentCategory.id }}">
                         <div class="col">
-                          <li>{{ paymentCategory.name|capitalize }}</li>
+                          <li>{{ paymentCategory.name }}</li>
                         </div>
                         <div class="col-auto">
                           <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'payment', {{ paymentCategory.id }})">

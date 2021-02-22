@@ -37,7 +37,7 @@
                         {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
                             {% set incomeSum = incomeSum + sumOfIncomeInCategory.categorySum %}
                             <tr>
-                                <td>{{ sumOfIncomeInCategory.name|capitalize }}</td>
+                                <td>{{ sumOfIncomeInCategory.name }}</td>
                                 <td>{{ sumOfIncomeInCategory.categorySum|number_format(2, '.', ' ') }}</td>
                             </tr> 
                         {% endfor %}
@@ -66,7 +66,7 @@
                         {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
                             {% set expenseSum = expenseSum + sumOfExpenseInCategory.categorySum %}
                             <tr>
-                                <td>{{ sumOfExpenseInCategory.name|capitalize }}</td>
+                                <td>{{ sumOfExpenseInCategory.name }}</td>
                                 <td>{{ sumOfExpenseInCategory.categorySum|number_format(2, '.', ' ') }}</td>
                             </tr>
                         {% endfor %}
@@ -152,7 +152,7 @@
     data.addColumn('number', 'Kwota');
     data.addRows([
     {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
-        ['{{ sumOfIncomeInCategory.name|capitalize }}', {{ sumOfIncomeInCategory.categorySum}}],
+        ['{{ sumOfIncomeInCategory.name }}', {{ sumOfIncomeInCategory.categorySum}}],
     {% endfor %}
 
     ]);
@@ -179,7 +179,7 @@
     data.addColumn('number', 'Kwota');
     data.addRows([
     {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
-        ['{{ sumOfExpenseInCategory.name|capitalize }}', {{ sumOfExpenseInCategory.categorySum}}],
+        ['{{ sumOfExpenseInCategory.name }}', {{ sumOfExpenseInCategory.categorySum}}],
     {% endfor %}
 
     ]);

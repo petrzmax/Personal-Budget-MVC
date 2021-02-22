@@ -37,7 +37,7 @@
 
                 <select class="form-select" name="categoryId" aria-label="Kategoria" required>
                     {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name|capitalize }}</option>         
+                        <option value="{{ category.id }}">{{ category.name }}</option>         
                     {% endfor %}
                 </select>
             </fieldset>
