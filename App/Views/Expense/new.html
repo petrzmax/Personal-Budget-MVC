@@ -67,10 +67,10 @@
                 <legend class="col-form-label"><h2>Sposób płatności</h2></legend>
                 <select class="form-select" name="methodId" aria-label="Sposób płatności" required>
                 {% for method in methods %}
-                    <option value="{{ method.id }}">{{ method.name|capitalize }}</option>
                 {% endfor %}
                 </select>
             </fieldset>
+                                <option value="{{ method.id }}">{{ method.name }}</option>
 
             <fieldset class="form-group" aria-label="Kategoria">
                 <legend class="col-form-label"><h2>Kategoria</h2></legend>
@@ -81,7 +81,7 @@
                         {% if category.limit_active == true %} onclick="radioClickHandler(this)" {% else %} onclick="hideLimitSection()" {% endif %} aria-describedby="c{{ category.id }}Label" required>
 
                         <label class="form-check-label" id="c{{ category.id }}Label" for="c{{ category.id }}">
-                            {{ category.name|capitalize }}
+                            {{ category.name }}
 
                             {% if category.limit_active == true %}
                                 </br><small><strong>Limit:</strong> {{ category.expense_limit }} zł</small>
