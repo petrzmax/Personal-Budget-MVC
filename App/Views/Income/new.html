@@ -36,9 +36,13 @@
                 <legend class="col-form-label"><h2>Kategoria</h2></legend>
 
                 <select class="form-select" name="categoryId" aria-label="Kategoria" required>
-                    {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name|capitalize }}</option>         
-                    {% endfor %}
+                    {% if categories is not empty %}
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name|capitalize }}</option>         
+                        {% endfor %}
+                    {% else %}
+                        <option value="">Brak kategorii przychodów</option>
+                    {% endif %}
                 </select>
             </fieldset>
             
