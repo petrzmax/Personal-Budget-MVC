@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use \App\Messages;
+
 /**
  * Payment model
  *

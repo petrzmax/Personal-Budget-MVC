@@ -45,7 +45,8 @@
                 
                 <div class="accordion-body">
                   <div id="incomeCategoriesBody">
-                    {% for incomeCategory in incomeCategories %}
+                    {% if incomeCategories is not empty %}
+                      {% for incomeCategory in incomeCategories %}
                         <div class="row" id="income{{ incomeCategory.id }}">
                           <div class="col">
                             <li>{{ incomeCategory.name }}</li>
@@ -61,7 +62,11 @@
                           </div>
 
                         </div>  
-                    {% endfor %}
+                      {% endfor %}
+                    {% else %}
+                      Brak kategorii przychodów
+                    {% endif %}
+                    
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
@@ -80,23 +85,28 @@
               <div id="expenseCategoriesCollapse" class="accordion-collapse collapse" aria-labelledby="expenseCategories" data-bs-parent="#mainSettingsAccordion">
                 <div class="accordion-body">
                   <div id="expenseCategoriesBody">
-                    {% for expenseCategory in expenseCategories %}
-                      <div class="row" id="expense{{ expenseCategory.id }}">
-                        <div class="col">
-                          <li>{{ expenseCategory.name }}</li>
-                        </div>
-                        <div class="col-auto">
-                          <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'expense', {{ expenseCategory.id }})">
-                            <i class="icon-pencil"></i>
-                          </button>
-                          
-                          <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'expense', {{ expenseCategory.id }})">
-                            <i class="icon-trash-empty"></i>
-                          </button>
-                        </div>
+                    {% if expenseCategories is not empty %}
+                      {% for expenseCategory in expenseCategories %}
+                        <div class="row" id="expense{{ expenseCategory.id }}">
+                          <div class="col">
+                            <li>{{ expenseCategory.name }}</li>
+                          </div>
+                          <div class="col-auto">
+                            <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'expense', {{ expenseCategory.id }})">
+                              <i class="icon-pencil"></i>
+                            </button>
+                            
+                            <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'expense', {{ expenseCategory.id }})">
+                              <i class="icon-trash-empty"></i>
+                            </button>
+                          </div>
 
-                      </div>  
-                    {% endfor %}
+                        </div>  
+                      {% endfor %}
+                    {% else %}
+                      Brak kategorii wydatków
+                    {% endif %}
+                    
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
@@ -114,23 +124,27 @@
               <div id="paymentMethodsCollapse" class="accordion-collapse collapse" aria-labelledby="paymentMethods" data-bs-parent="#mainSettingsAccordion">
                 <div class="accordion-body">
                   <div id="paymentCategoriesBody">
-                    {% for paymentCategory in paymentCategories %}
-                      <div class="row" id="payment{{ paymentCategory.id }}">
-                        <div class="col">
-                          <li>{{ paymentCategory.name }}</li>
-                        </div>
-                        <div class="col-auto">
-                          <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'payment', {{ paymentCategory.id }})">
-                            <i class="icon-pencil"></i>
-                          </button>
-                          
-                          <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'payment', {{ paymentCategory.id }})">
-                            <i class="icon-trash-empty"></i>
-                          </button>
-                        </div>
+                    {% if paymentCategories is not empty %}
+                      {% for paymentCategory in paymentCategories %}
+                        <div class="row" id="payment{{ paymentCategory.id }}">
+                          <div class="col">
+                            <li>{{ paymentCategory.name }}</li>
+                          </div>
+                          <div class="col-auto">
+                            <button class="btn btn-sm btn-primary p-0" onclick="getCategoryData('edit', 'payment', {{ paymentCategory.id }})">
+                              <i class="icon-pencil"></i>
+                            </button>
+                            
+                            <button class="btn btn-sm btn-danger p-0" onclick="getCategoryData('delete', 'payment', {{ paymentCategory.id }})">
+                              <i class="icon-trash-empty"></i>
+                            </button>
+                          </div>
 
-                      </div>  
-                    {% endfor %}
+                        </div>  
+                      {% endfor %}
+                    {% else %}
+                      Brak sposobów płatności
+                    {% endif %}
                   </div>
 
                     <div class="row gap-2 mt-3 mx-3">
