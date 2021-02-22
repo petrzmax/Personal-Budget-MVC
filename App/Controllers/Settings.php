@@ -105,7 +105,7 @@ class Settings extends Authenticated
         }
         
         if (isset($_POST['postCategoryLimitState'])) {
-            $categoryLimitState = $_POST['postCategoryLimitState'];
+            $categoryLimitState = filter_var($_POST['postCategoryLimitState'], FILTER_VALIDATE_BOOLEAN);
         }
         
 
