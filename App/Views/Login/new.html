@@ -10,8 +10,13 @@
                 <input type="email" class="form-control inputBox" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder='Email'" name="email" aria-label="Email" required>
             
                 <input type="password" class="form-control inputBox" id="firstPassword" placeholder="Hasło" onfocus="this.placeholder=''" onblur="this.placeholder='Hasło'" name="password" aria-label="Hasło" required>
-            
-                <input type="submit" class="btn btn-lg btn-success mt-3" value="Zaloguj">
+                
+                <div class="form-check mt-1">
+                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me" aria-label="Pamiętaj mnie">
+                    <label class="form-check-label" for="remember_me">Pamiętaj mnie</label>
+                </div>
+
+                <input type="submit" class="btn btn-lg btn-success mt-2" value="Zaloguj">
             </div>
         </form>
         <h5 class="text-center">Nie masz jeszcze konta? Zarejestruj się <a href="/signup/new">tutaj</a></h5>
