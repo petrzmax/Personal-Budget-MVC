@@ -39,7 +39,7 @@ class AddExpense extends Authenticated
         $expense = new Expense($_POST);
         $payment = new Payment($_POST);
 
-        if($expense->save($payment->getMethodId()) && $payment->validate()) {
+        if($payment->validate() && $expense->save($payment->getMethodId())) {
             Flash::addMessage(Messages::EXPENSE_ADD_SUCCESS);
             $this->redirect('/add-expense');
             
