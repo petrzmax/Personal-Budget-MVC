@@ -1,4 +1,12 @@
 var sumOfIncomeInCategories = [[], []];
+var sumOfIncome = 0;
+
+const tableRowTemplate = ({ categoryName, categorySum}) => `
+    <tr>
+        <td>${categoryName}</td>
+        <td>${categorySum}</td>
+    </tr>
+`;
 
 // Load google charts
 google.charts.load('current', {'packages':['corechart']});
