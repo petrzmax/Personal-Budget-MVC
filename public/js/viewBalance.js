@@ -21,3 +21,11 @@ function getSumOfIncomeInCategories(timePeriod) {
         }
     });
 }
+
+//Populate array with data from AJAX request in format ready for google chart 
+function setIncomeSumArray(result) {
+    $.each(result, function( key, value ) {
+        sumOfIncomeInCategories[key] = [value.name, parseFloat(value.categorySum)];
+    });
+    console.log(sumOfIncomeInCategories);
+}
