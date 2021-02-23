@@ -32,20 +32,11 @@
                             <th scope="col">Kwota</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% set incomeSum = 0 %}
-                        {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
-                            {% set incomeSum = incomeSum + sumOfIncomeInCategory.categorySum %}
-                            <tr>
-                                <td>{{ sumOfIncomeInCategory.name }}</td>
-                                <td>{{ sumOfIncomeInCategory.categorySum|number_format(2, '.', ' ') }}</td>
-                            </tr> 
-                        {% endfor %}
-                    </tbody>
+                    <tbody id="incomeTable"></tbody>
                     <tfoot>
                         <tr>
                             <td scope="col">Suma:</td>
-                            <td scope="col">{{ incomeSum|number_format(2, '.', ' ') }}</td>
+                            <td scope="col" id="sumOfIncome"></td>
                         </tr>
                     </tfoot>
                 </table>	
