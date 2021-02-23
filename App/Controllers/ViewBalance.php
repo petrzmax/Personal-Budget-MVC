@@ -36,4 +36,22 @@ class ViewBalance extends Authenticated
         ]);
         
     }
+
+    /**
+     * AJAX
+     *
+     * @return void
+     */
+    public function getSumOfIncomeInCategoriesAction()
+    {
+        $balance = new Balance($_POST);
+
+        if(!$balance->prepare()) {
+            Flash::AddMessage(Messages::BALANCE_BAD_DATA, Flash::ERROR);
+            $this->redirect('/view-balance');
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($balance->getSumOfIncomeInCategories());        
+    }
 }
