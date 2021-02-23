@@ -139,7 +139,11 @@
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/js/viewBalance.js"></script>
 <script>
+
+    getSumOfIncomeInCategories('lastMonth');
+
     // Load google charts
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawIncomeChart);
@@ -150,12 +154,7 @@
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Kategoria');
     data.addColumn('number', 'Kwota');
-    data.addRows([
-    {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
-        ['{{ sumOfIncomeInCategory.name }}', {{ sumOfIncomeInCategory.categorySum}}],
-    {% endfor %}
-
-    ]);
+    data.addRows(sumOfIncomeInCategories);
 
     var options = {
         title: 'Przychody z wybranego okresu',
