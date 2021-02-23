@@ -94,6 +94,13 @@ function getSumOfIncomeInCategories(timePeriod) {
 function setIncomeSumArray(result) {
     $.each(result, function( key, value ) {
         sumOfIncomeInCategories[key] = [value.name, parseFloat(value.categorySum)];
+function populateTable() {
+    $('#incomeTable').text('');
+    
+    $.each(sumOfIncomeInCategories, function(key, value) {
+        $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
+        ].map(tableRowTemplate).join('')).appendTo('#incomeTable');
     });
-    console.log(sumOfIncomeInCategories);
+    $('#sumOfIncome').text(sumOfIncome.toFixed(2));
+    
 }
