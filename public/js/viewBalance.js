@@ -99,6 +99,13 @@ function populateTable() {
     
 }
 
+
+//Run after all ajax requests finished
+$(document).ajaxStop(function() {
+    populateTable();
+    drawIncomeChart();
+});
+
 //AJAX
 //Get Categories & finance Sum in them - array
 function getSumOfFinanceInCategories(timePeriod, financeType) {
