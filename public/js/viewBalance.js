@@ -77,8 +77,13 @@ $(window).resize(function(){
 
 //Populate array with data from AJAX request in format ready for google chart 
 function setIncomeSumArray(result) {
+    sumOfIncome = 0;
+
     $.each(result, function( key, value ) {
         sumOfIncomeInCategories[key] = [value.name, parseFloat(value.categorySum)];
+        sumOfIncome += parseFloat(value.categorySum);
+    });
+}
 
 function getData(timePeriod, button) {
     //Clear data array
