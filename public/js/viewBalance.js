@@ -1,5 +1,7 @@
 var sumOfIncomeInCategories = [[], []];
 var sumOfIncome = 0;
+const negativeMessage = 'Uwaga! Wpadasz w długi!';
+const positiveMessage = 'Brawo! Wspaniale zarządzasz finansami!';
 
 const tableRowTemplate = ({ categoryName, categorySum}) => `
     <tr>
