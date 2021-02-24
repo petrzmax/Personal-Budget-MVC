@@ -76,6 +76,18 @@ $(window).resize(function(){
 function setIncomeSumArray(result) {
     $.each(result, function( key, value ) {
         sumOfIncomeInCategories[key] = [value.name, parseFloat(value.categorySum)];
+
+function getData(timePeriod, button) {
+    //Clear data array
+    sumOfIncomeInCategories = [[], []];
+    sumOfExpenseInCategories = [[], []];
+
+    getSumOfFinanceInCategories(timePeriod, 'income');
+    getSumOfFinanceInCategories(timePeriod, 'expense');
+
+    setDropdownActive(button);
+}
+
 function populateTable() {
     $('#incomeTable').text('');
     
