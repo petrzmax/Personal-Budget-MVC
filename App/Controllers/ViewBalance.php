@@ -42,7 +42,7 @@ class ViewBalance extends Authenticated
      *
      * @return void
      */
-    public function getSumOfIncomeInCategoriesAction()
+    public function getSumOfFinanceInCategoriesAction()
     {
         $balance = new Balance($_POST);
 
@@ -52,6 +52,11 @@ class ViewBalance extends Authenticated
         }
 
         header('Content-Type: application/json');
-        echo json_encode($balance->getSumOfIncomeInCategories());        
+        if($_POST['postFinanceType'] == 'income') {
+            echo json_encode($balance->getSumOfIncomeInCategories());
+        } else if($_POST['postFinanceType'] == 'expense'){
+            echo json_encode($balance->getSumOfExpenseInCategories());
+        }
+                
     }
 }
