@@ -1,5 +1,8 @@
 var sumOfIncomeInCategories = [[], []];
+var sumOfExpenseInCategories = [[], []];
 var sumOfIncome = 0;
+var balance = 0;
+
 const negativeMessage = 'Uwaga! Wpadasz w długi!';
 const positiveMessage = 'Brawo! Wspaniale zarządzasz finansami!';
 
