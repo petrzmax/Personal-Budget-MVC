@@ -11,11 +11,11 @@ const tableRowTemplate = ({ categoryName, categorySum}) => `
 // Load google charts
 google.charts.load('current', {'packages':['corechart']});
 
-
-google.charts.setOnLoadCallback(function () {drawIncomeChart();});
-google.charts.setOnLoadCallback(function () {drawExpenseChart();});
-
-getData();
+$(document).ready(function () {
+    google.charts.setOnLoadCallback(function () {drawIncomeChart();});
+    google.charts.setOnLoadCallback(function () {drawExpenseChart();});
+    getData();
+});
 
 
 
