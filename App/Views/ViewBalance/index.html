@@ -11,12 +11,12 @@
                     Przedział czasu
                 </button>
 
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentMonth' %}active{% endif %}" href='?activeTimePeriod=currentMonth'>Bieżący miesiąc</a></li>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'lastMonth' %}active{% endif %}" href='?activeTimePeriod=lastMonth'>Poprzedni miesiąc</a></li>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentYear' %}active{% endif %}" href='?activeTimePeriod=currentYear'>Bieżący rok</a></li>
+                <ul id="dropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
+                    <li><button id="test" class="dropdown-item active" onclick="javascript:getData('currentMonth', this)">Bieżący miesiąc</button></li>
+                    <li><button class="dropdown-item" onclick="javascript:getData('lastMonth', this)">Poprzedni miesiąc</button></li>
+                    <li><button class="dropdown-item" onclick="javascript:getData('currentYear', this)">Bieżący rok</button></li>
                     <div class="dropdown-divider"></div>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'customPeriod' %}active{% endif %}" href='#' data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</a></li>
+                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</button></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +36,7 @@
                     <tfoot>
                         <tr>
                             <td scope="col">Suma:</td>
-                            <td scope="col" id="sumOfIncome"></td>
+                            <td scope="col" id="incomeSum"></td>
                         </tr>
                     </tfoot>
                 </table>	
@@ -52,20 +52,11 @@
                             <th scope="col">Kwota</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% set expenseSum = 0 %}
-                        {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
-                            {% set expenseSum = expenseSum + sumOfExpenseInCategory.categorySum %}
-                            <tr>
-                                <td>{{ sumOfExpenseInCategory.name }}</td>
-                                <td>{{ sumOfExpenseInCategory.categorySum|number_format(2, '.', ' ') }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
+                    <tbody id="expenseTable"></tbody>
                     <tfoot>
                         <tr>
-                            <td>Suma:</td>
-                            <td>{{ expenseSum|number_format(2, '.', ' ') }}</td>
+                            <td scope="col">Suma:</td>
+                            <td scope="col" id="expenseSum"></td>
                         </tr>
                     </tfoot>
                 </table>
