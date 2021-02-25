@@ -12,8 +12,10 @@ class finance {
     }
 }
 
-const negativeMessage = 'Uwaga! Wpadasz w długi!';
-const positiveMessage = 'Brawo! Wspaniale zarządzasz finansami!';
+const negativeMessage = '<h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>';
+const positiveMessage = '<h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>';
+const balanceMessageStart = '<h2>Twój bilans z wybranego przedziału czasu: ';
+const balanceMessageEnd = ' złotych</h2>';
 
 const tableRowTemplate = ({ categoryName, categorySum}) => `
     <tr>
