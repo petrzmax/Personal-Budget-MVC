@@ -112,14 +112,18 @@ function getData(timePeriod, button) {
     setDropdownActive(button);
 }
 
-function populateTable() {
-    $('#incomeTable').text('');
+//Populate table with finance data
+function populateTable(financeObject) {
     
-    $.each(sumOfIncomeInCategories, function(key, value) {
+    currentFinanceType = financeObject.financeType;
+
+    $('#' + currentFinanceType + 'Table').text('');
+
+    $.each(financeObject.sumOfFinanceInCategories, function(key, value) {
         $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
-        ].map(tableRowTemplate).join('')).appendTo('#incomeTable');
+        ].map(tableRowTemplate).join('')).appendTo('#' + currentFinanceType + 'Table');
     });
-    $('#sumOfIncome').text(sumOfIncome.toFixed(2));
+    $('#' + currentFinanceType + 'Sum').text(financeObject.sumOfFinance.toFixed(2));
     
 }
 
