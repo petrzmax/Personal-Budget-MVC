@@ -1,18 +1,3 @@
-var sumOfIncomeInCategories = [[], []];
-var sumOfExpenseInCategories = [[], []];
-var sumOfIncome = 0;
-var balance = 0;
-
-const negativeMessage = 'Uwaga! Wpadasz w długi!';
-const positiveMessage = 'Brawo! Wspaniale zarządzasz finansami!';
-
-const tableRowTemplate = ({ categoryName, categorySum}) => `
-    <tr>
-        <td>${categoryName}</td>
-        <td>${categorySum}</td>
-    </tr>
-`;
-
 class finance {
     constructor(type) {
         this.financeType = type;
@@ -27,9 +12,19 @@ class finance {
     }
 }
 
+const negativeMessage = 'Uwaga! Wpadasz w długi!';
+const positiveMessage = 'Brawo! Wspaniale zarządzasz finansami!';
+
+const tableRowTemplate = ({ categoryName, categorySum}) => `
+    <tr>
+        <td>${categoryName}</td>
+        <td>${categorySum}</td>
+    </tr>
+`;
+
 var income = new finance('income');
 var expense = new finance('expense');
-
+var balance = 0;
 
 // Load google charts
 google.charts.load('current', {'packages':['corechart']});
