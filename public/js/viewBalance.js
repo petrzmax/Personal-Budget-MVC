@@ -98,6 +98,19 @@ function setFinanceSumArray(result, financeObject) {
     });
 }
 
+//Calculate and display balance & balance message
+function setBalance() {
+    balance = income.sumOfFinance - expense.sumOfFinance;
+
+    $('#financeSummary').replaceWith(balanceMessageStart + balance.toFixed(2) + balanceMessageEnd);
+
+    if(balance < 0) {
+        $('#message').replaceWith(negativeMessage);
+    } else if (balance > 0) {
+        $('#message').replaceWith(positiveMessage);
+    }
+}
+
 function getData(timePeriod, button) {
     //Clear data array
     income.clear();
