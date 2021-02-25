@@ -115,15 +115,6 @@ class Balance extends \Core\Model
         return $stmt->fetchAll();
     }
 
-    /**
-     * Get activeTimePeriod
-     *
-     * @return string
-     */
-    public function getActiveTimePeriod() {
-        return $this->activeTimePeriod;
-    }
-
     public function validateDate($date, $format = 'Y-m-d'){
         $d = \DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) === $date;

@@ -29,12 +29,7 @@ class ViewBalance extends Authenticated
             $this->redirect('/view-balance');
         }
 
-        View::renderTemplate('ViewBalance/index.html', [
-            'activeTimePeriod' => $balance->getActiveTimePeriod(),
-            'sumOfIncomeInCategories' => $balance->getSumOfIncomeInCategories(),
-            'sumOfExpenseInCategories' => $balance->getSumOfExpenseInCategories()
-        ]);
-        
+        View::renderTemplate('ViewBalance/index.html');
     }
 
     /**
