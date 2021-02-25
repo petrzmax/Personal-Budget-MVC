@@ -93,13 +93,11 @@ $(window).resize(function(){
 
 
 
-//Populate array with data from AJAX request in format ready for google chart 
-function setIncomeSumArray(result) {
-    sumOfIncome = 0;
-
+//Populate array with data from AJAX request in format ready for google chart & calculate sum of finance 
+function setFinanceSumArray(result, financeObject) {
     $.each(result, function( key, value ) {
-        sumOfIncomeInCategories[key] = [value.name, parseFloat(value.categorySum)];
-        sumOfIncome += parseFloat(value.categorySum);
+        financeObject.sumOfFinanceInCategories[key] = [value.name, parseFloat(value.categorySum)];
+        financeObject.sumOfFinance += parseFloat(value.categorySum);
     });
 }
 
