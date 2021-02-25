@@ -106,8 +106,8 @@ function getData(timePeriod, button) {
     income.clear();
     expense.clear();
 
-    getSumOfFinanceInCategories(timePeriod, 'income');
-    getSumOfFinanceInCategories(timePeriod, 'expense');
+    getSumOfFinanceInCategories(timePeriod, income);
+    getSumOfFinanceInCategories(timePeriod, expense);
 
     setDropdownActive(button);
 }
@@ -137,7 +137,7 @@ $(document).ajaxStop(function() {
 
 //AJAX
 //Get Categories & finance Sum in them - array
-function getSumOfFinanceInCategories(timePeriod, financeType) {
+function getSumOfFinanceInCategories(timePeriod, financeObject) {
 
     $.ajax({
         type: 'POST',
@@ -145,16 +145,11 @@ function getSumOfFinanceInCategories(timePeriod, financeType) {
         dataType: 'json',
         data: {
             activeTimePeriod: timePeriod,
-            postFinanceType: financeType
+            postFinanceType: financeObject.financeType
         },
 
         success: function(result) {
-            if(financeType == 'income') {
-                setIncomeSumArray(result);
-            } else if (financeType == 'expense') {
-                //setExpenseSumArray(result);
-            }
-                
+            setFinanceSumArray(result, financeObject);    
         },
 
         error: function(xhr){
