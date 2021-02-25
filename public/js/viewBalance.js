@@ -13,6 +13,24 @@ const tableRowTemplate = ({ categoryName, categorySum}) => `
     </tr>
 `;
 
+class finance {
+    constructor(type) {
+        this.financeType = type;
+    }
+    sumOfFinanceInCategories = [[], []];
+    sumOfFinance = 0;
+    financeType = '';
+
+    clear() {
+        this.sumOfFinanceInCategories = [[], []];
+        this.sumOfFinance = 0;
+    }
+}
+
+var income = new finance('income');
+var expense = new finance('expense');
+
+
 // Load google charts
 google.charts.load('current', {'packages':['corechart']});
 
