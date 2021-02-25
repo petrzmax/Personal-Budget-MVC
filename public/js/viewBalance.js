@@ -103,8 +103,8 @@ function setFinanceSumArray(result, financeObject) {
 
 function getData(timePeriod, button) {
     //Clear data array
-    sumOfIncomeInCategories = [[], []];
-    sumOfExpenseInCategories = [[], []];
+    income.clear();
+    expense.clear();
 
     getSumOfFinanceInCategories(timePeriod, 'income');
     getSumOfFinanceInCategories(timePeriod, 'expense');
