@@ -130,8 +130,9 @@ function populateTable(financeObject) {
 
 //Run after all ajax requests finished
 $(document).ajaxStop(function() {
-    populateTable();
     drawIncomeChart();
+    populateTable(income);
+    populateTable(expense);
 });
 
 //AJAX
