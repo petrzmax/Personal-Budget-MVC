@@ -122,6 +122,28 @@ function getData(timePeriod, button) {
     setDropdownActive(button);
 }
 
+function getCustomPeriodData() {
+
+    timePeriod = 'customPeriod';
+
+    //Clear data array
+    income.clear();
+    expense.clear();
+
+    var customPeriodDates = $('#customDate').serializeArray();
+
+    var startDate = customPeriodDates[0].value;
+    var endDate = customPeriodDates[1].value;
+
+    getSumOfFinanceInCategories(timePeriod, income, startDate, endDate);
+    getSumOfFinanceInCategories(timePeriod, expense, startDate, endDate);
+
+    $('#choseTimePeriod').modal('hide');
+    $('#dropdownMenu .active').removeClass('active');
+
+    $('#customPeriodButton').addClass('active');
+}
+
 //Populate table with finance data
 function populateTable(financeObject) {
     
@@ -147,7 +169,7 @@ $(document).ajaxStop(function() {
 
 //AJAX
 //Get Categories & finance Sum in them - array
-function getSumOfFinanceInCategories(timePeriod, financeObject) {
+function getSumOfFinanceInCategories(timePeriod, financeObject, startDate = null, endDate = null) {
 
     $.ajax({
         type: 'POST',
@@ -155,7 +177,9 @@ function getSumOfFinanceInCategories(timePeriod, financeObject) {
         dataType: 'json',
         data: {
             activeTimePeriod: timePeriod,
-            postFinanceType: financeObject.financeType
+            postFinanceType: financeObject.financeType,
+            postStartDate: startDate,
+            postEndDate: endDate
         },
 
         success: function(result) {

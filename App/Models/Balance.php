@@ -56,8 +56,8 @@ class Balance extends \Core\Model
                 break;
         
             case 'customPeriod':
-                $this->startDate = $_GET['startDate'];
-                $this->endDate =  $_GET['endDate'];
+                $this->startDate = $_POST['postStartDate'];
+                $this->endDate =  $_POST['postEndDate'];
 
                 //Validate input date
                 if(!$this->validateDate($this->endDate) || !$this->validateDate($this->startDate)) {

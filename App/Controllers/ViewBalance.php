@@ -22,7 +22,7 @@ class ViewBalance extends Authenticated
      */
     public function indexAction()
     {
-        $balance = new Balance($_GET);
+        $balance = new Balance($_POST);
 
         if(!$balance->prepare()) {
             Flash::AddMessage(Messages::BALANCE_BAD_DATA, Flash::ERROR);

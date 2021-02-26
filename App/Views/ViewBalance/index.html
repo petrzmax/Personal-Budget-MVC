@@ -94,8 +94,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="customDate" method="get">
-                    <input type="hidden" name="activeTimePeriod" value="customPeriod">
+                <form id="customDate" action="javascript:getCustomPeriodData('customPeriod')">
                     <div class="row">
                         <div class="form-group col-6">
                             <label class="col-form-label" for="startDateInput" id="startDateLabel">Od</label>
