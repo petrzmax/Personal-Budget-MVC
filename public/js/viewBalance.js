@@ -159,6 +159,11 @@ function populateTable(financeObject) {
     
 }
 
+function setDropdownActive(button) {
+    $('#dropdownMenu .active').removeClass('active');
+
+    $(button).addClass('active');
+}
 
 //Run after all ajax requests finished
 $(document).ajaxStop(function() {

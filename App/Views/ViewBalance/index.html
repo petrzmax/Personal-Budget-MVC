@@ -12,11 +12,11 @@
                 </button>
 
                 <ul id="dropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
-                    <li><button id="test" class="dropdown-item active" onclick="javascript:getData('currentMonth', this)">Bieżący miesiąc</button></li>
+                    <li><button id="currentMonthButton" class="dropdown-item" onclick="javascript:getData('currentMonth', this)">Bieżący miesiąc</button></li>
                     <li><button class="dropdown-item" onclick="javascript:getData('lastMonth', this)">Poprzedni miesiąc</button></li>
                     <li><button class="dropdown-item" onclick="javascript:getData('currentYear', this)">Bieżący rok</button></li>
                     <div class="dropdown-divider"></div>
-                    <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</button></li>
+                    <li><button id="customPeriodButton" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</button></li>
                 </ul>
             </div>
         </div>
