@@ -62,15 +62,9 @@
                 </table>
             </div>
         </div>
-        {% set balance = incomeSum - expenseSum %}
         <div class="row text-center mt-2" style="max-width: 800px;">
-            <h2>Twój bilans z wybranego przedziału czasu:  {{ balance }} złotych</h2>
-            {% if balance < 0 %} 
-             <h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>
-            {% elseif balance > 0 %}
-                <h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>
-            {% endif %}
-
+            <div id="financeSummary"></div>
+            <div id="message"></div>
             <div id="incomePiechart"></div>
             <div id="expensePiechart" class="mt-3"></div>
         </div>
