@@ -38,7 +38,6 @@ $(document).ready(function () {
 });
 
 
-
 // Draw the chart and set the chart values
 function drawIncomeChart() {
     var data = new google.visualization.DataTable();
@@ -87,8 +86,6 @@ $(window).resize(function(){
     drawIncomeChart();
     drawExpenseChart();
 });
-
-
 
 //Populate array with data from AJAX request in format ready for google chart & calculate sum of finance 
 function setFinanceSumArray(result, financeObject) {
