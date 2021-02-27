@@ -10,6 +10,14 @@ class finance {
         this.sumOfFinanceInCategories = [];
         this.sumOfFinance = 0;
     }
+
+    isEmpty() {
+        if(this.sumOfFinanceInCategories.length > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 const negativeMessage = '<h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>';
