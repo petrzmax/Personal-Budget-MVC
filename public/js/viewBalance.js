@@ -87,12 +87,12 @@ function setFinanceSumArray(result, financeObject) {
 function setBalance() {
     balance = income.sumOfFinance - expense.sumOfFinance;
 
-    $('#financeSummary').replaceWith(balanceMessageStart + balance.toFixed(2) + balanceMessageEnd);
+    $('#financeSummary').html(balanceMessageStart + balance.toFixed(2) + balanceMessageEnd);
 
     if(balance < 0) {
-        $('#message').replaceWith(negativeMessage);
-    } else if (balance > 0) {
-        $('#message').replaceWith(positiveMessage);
+        $('#message').html(negativeMessage);
+    } else {
+        $('#message').html(positiveMessage);
     }
 }
 
