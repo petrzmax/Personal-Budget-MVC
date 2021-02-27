@@ -1,10 +1,12 @@
 class finance {
-    constructor(type) {
+    constructor(type, chartTitle) {
         this.financeType = type;
+        this.chartTitle = chartTitle;
     }
     sumOfFinanceInCategories = [];
     sumOfFinance = 0;
     financeType = '';
+    chartTitle = '';
 
     clear() {
         this.sumOfFinanceInCategories = [];
@@ -17,6 +19,30 @@ class finance {
         } else {
             return true;
         }
+    }
+
+    // Draw the chart and set the chart values
+    drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Kategoria');
+        data.addColumn('number', 'Kwota');
+
+        if(!income.isEmpty()) {
+            data.addRows(this.sumOfFinanceInCategories);
+        }
+
+        var options = {
+            title: this.chartTitle + ' z wybranego okresu',
+            width: '100%',
+            height: '100%',
+                chartArea:{left:0,top:30,width:'100%',height:'100%'},
+                fontSize: 16,
+                fontName: 'Lato',
+                is3D: true,
+        };
+        // Display the chart inside the <div> element with id="incomePiechart"
+        var chart = new google.visualization.PieChart(document.getElementById(this.financeType + 'Piechart'));
+        chart.draw(data, options);
     }
 }
 
@@ -32,8 +58,8 @@ const tableRowTemplate = ({ categoryName, categorySum}) => `
     </tr>
 `;
 
-var income = new finance('income');
-var expense = new finance('expense');
+var income = new finance('income', 'Przychody');
+var expense = new finance('expense', 'Wydatki');
 var balance = 0;
 
 $(document).ready(function () {
@@ -43,60 +69,10 @@ $(document).ready(function () {
     }});
 });
 
-
-// Draw the chart and set the chart values
-function drawIncomeChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Kategoria');
-    data.addColumn('number', 'Kwota');
-    if(!income.isEmpty()) {
-        data.addRows(income.sumOfFinanceInCategories);
-    }
-    
-
-    var options = {
-        title: 'Przychody z wybranego okresu',
-        width: '100%',
-        height: '100%',
-            chartArea:{left:0,top:30,width:'100%',height:'100%'},
-            fontSize: 16,
-            fontName: 'Lato',
-            is3D: true,
-    };
-
-    // Display the chart inside the <div> element with id="incomePiechart"
-    var chart = new google.visualization.PieChart(document.getElementById('incomePiechart'));
-    chart.draw(data, options);
-}
-
-// Draw the chart and set the chart values
-function drawExpenseChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Kategoria');
-    data.addColumn('number', 'Kwota');
-
-    if(!income.isEmpty()) {
-        data.addRows(expense.sumOfFinanceInCategories);
-    }
-
-    var options = {
-        title: 'Wydatki z wybranego okresu',
-        width: '100%',
-        height: '100%',
-            chartArea:{left:0,top:30,width:'100%',height:'100%'},
-            fontSize: 16,
-            fontName: 'Lato',
-            is3D: true,
-    };
-    // Display the chart inside the <div> element with id="incomePiechart"
-    var chart = new google.visualization.PieChart(document.getElementById('expensePiechart'));
-    chart.draw(data, options);
-}
-
 // Redraw chart when window is resized
 $(window).resize(function(){
-    drawIncomeChart();
-    drawExpenseChart();
+    income.drawChart();
+    expense.drawChart();
 });
 
 //Populate array with data from AJAX request in format ready for google chart & calculate sum of finance 
@@ -182,8 +158,8 @@ $(document).ajaxStop(function() {
     populateTable(income);
     populateTable(expense);
     setBalance();
-    drawIncomeChart();
-    drawExpenseChart();
+    income.drawChart();
+    expense.drawChart();
 });
 
 //AJAX
