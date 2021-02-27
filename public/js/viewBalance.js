@@ -69,12 +69,6 @@ $(document).ready(function () {
     }});
 });
 
-// Redraw chart when window is resized
-$(window).resize(function(){
-    income.drawChart();
-    expense.drawChart();
-});
-
 //Populate array with data from AJAX request in format ready for google chart & calculate sum of finance 
 function setFinanceSumArray(result, financeObject) {
     $.each(result, function( key, value ) {
@@ -162,6 +156,14 @@ $(document).ajaxStop(function() {
     setBalance();
     income.drawChart();
     expense.drawChart();
+    drawColumnChart();
+});
+
+// Redraw chart when window is resized
+$(window).resize(function(){
+    income.drawChart();
+    expense.drawChart();
+    drawColumnChart();
 });
 
 //AJAX
