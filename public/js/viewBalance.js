@@ -36,13 +36,11 @@ var income = new finance('income');
 var expense = new finance('expense');
 var balance = 0;
 
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-
 $(document).ready(function () {
-    google.charts.setOnLoadCallback(function () {drawIncomeChart();});
-    google.charts.setOnLoadCallback(function () {drawExpenseChart();});
-    getData();
+    // Load google charts
+    google.charts.load('current', {'packages':['corechart'], 'callback': function () {
+        getData('currentMonth', $('#currentMonthButton'));
+    }});
 });
 
 
