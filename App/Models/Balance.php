@@ -56,8 +56,8 @@ class Balance extends \Core\Model
                 break;
         
             case 'customPeriod':
-                $this->startDate = $_GET['startDate'];
-                $this->endDate =  $_GET['endDate'];
+                $this->startDate = $_POST['postStartDate'];
+                $this->endDate =  $_POST['postEndDate'];
 
                 //Validate input date
                 if(!$this->validateDate($this->endDate) || !$this->validateDate($this->startDate)) {
@@ -113,15 +113,6 @@ class Balance extends \Core\Model
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $stmt->execute();
         return $stmt->fetchAll();
-    }
-
-    /**
-     * Get activeTimePeriod
-     *
-     * @return string
-     */
-    public function getActiveTimePeriod() {
-        return $this->activeTimePeriod;
     }
 
     public function validateDate($date, $format = 'Y-m-d'){

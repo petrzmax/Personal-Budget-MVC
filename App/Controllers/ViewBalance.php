@@ -22,18 +22,36 @@ class ViewBalance extends Authenticated
      */
     public function indexAction()
     {
-        $balance = new Balance($_GET);
+        $balance = new Balance($_POST);
 
         if(!$balance->prepare()) {
             Flash::AddMessage(Messages::BALANCE_BAD_DATA, Flash::ERROR);
             $this->redirect('/view-balance');
         }
 
-        View::renderTemplate('ViewBalance/index.html', [
-            'activeTimePeriod' => $balance->getActiveTimePeriod(),
-            'sumOfIncomeInCategories' => $balance->getSumOfIncomeInCategories(),
-            'sumOfExpenseInCategories' => $balance->getSumOfExpenseInCategories()
-        ]);
-        
+        View::renderTemplate('ViewBalance/index.html');
+    }
+
+    /**
+     * AJAX
+     *
+     * @return void
+     */
+    public function getSumOfFinanceInCategoriesAction()
+    {
+        $balance = new Balance($_POST);
+
+        if(!$balance->prepare()) {
+            Flash::AddMessage(Messages::BALANCE_BAD_DATA, Flash::ERROR);
+            $this->redirect('/view-balance');
+        }
+
+        header('Content-Type: application/json');
+        if($_POST['postFinanceType'] == 'income') {
+            echo json_encode($balance->getSumOfIncomeInCategories());
+        } else if($_POST['postFinanceType'] == 'expense'){
+            echo json_encode($balance->getSumOfExpenseInCategories());
+        }
+                
     }
 }

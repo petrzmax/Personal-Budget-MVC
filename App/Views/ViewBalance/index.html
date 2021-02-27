@@ -11,12 +11,12 @@
                     Przedział czasu
                 </button>
 
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentMonth' %}active{% endif %}" href='?activeTimePeriod=currentMonth'>Bieżący miesiąc</a></li>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'lastMonth' %}active{% endif %}" href='?activeTimePeriod=lastMonth'>Poprzedni miesiąc</a></li>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'currentYear' %}active{% endif %}" href='?activeTimePeriod=currentYear'>Bieżący rok</a></li>
+                <ul id="dropdownMenu" class="dropdown-menu dropdown-menu-end" aria-labelledby="timePeriodDropdown">
+                    <li><button id="currentMonthButton" class="dropdown-item" onclick="javascript:getData('currentMonth', this)">Bieżący miesiąc</button></li>
+                    <li><button class="dropdown-item" onclick="javascript:getData('lastMonth', this)">Poprzedni miesiąc</button></li>
+                    <li><button class="dropdown-item" onclick="javascript:getData('currentYear', this)">Bieżący rok</button></li>
                     <div class="dropdown-divider"></div>
-                    <li><a class="dropdown-item {% if activeTimePeriod == 'customPeriod' %}active{% endif %}" href='#' data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</a></li>
+                    <li><button id="customPeriodButton" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#choseTimePeriod">Niestandardowy</button></li>
                 </ul>
             </div>
         </div>
@@ -32,20 +32,11 @@
                             <th scope="col">Kwota</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% set incomeSum = 0 %}
-                        {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
-                            {% set incomeSum = incomeSum + sumOfIncomeInCategory.categorySum %}
-                            <tr>
-                                <td>{{ sumOfIncomeInCategory.name }}</td>
-                                <td>{{ sumOfIncomeInCategory.categorySum|number_format(2, '.', ' ') }}</td>
-                            </tr> 
-                        {% endfor %}
-                    </tbody>
+                    <tbody id="incomeTable"></tbody>
                     <tfoot>
                         <tr>
                             <td scope="col">Suma:</td>
-                            <td scope="col">{{ incomeSum|number_format(2, '.', ' ') }}</td>
+                            <td scope="col" id="incomeSum"></td>
                         </tr>
                     </tfoot>
                 </table>	
@@ -61,34 +52,19 @@
                             <th scope="col">Kwota</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% set expenseSum = 0 %}
-                        {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
-                            {% set expenseSum = expenseSum + sumOfExpenseInCategory.categorySum %}
-                            <tr>
-                                <td>{{ sumOfExpenseInCategory.name }}</td>
-                                <td>{{ sumOfExpenseInCategory.categorySum|number_format(2, '.', ' ') }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
+                    <tbody id="expenseTable"></tbody>
                     <tfoot>
                         <tr>
-                            <td>Suma:</td>
-                            <td>{{ expenseSum|number_format(2, '.', ' ') }}</td>
+                            <td scope="col">Suma:</td>
+                            <td scope="col" id="expenseSum"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
-        {% set balance = incomeSum - expenseSum %}
         <div class="row text-center mt-2" style="max-width: 800px;">
-            <h2>Twój bilans z wybranego przedziału czasu:  {{ balance }} złotych</h2>
-            {% if balance < 0 %} 
-             <h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>
-            {% elseif balance > 0 %}
-                <h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>
-            {% endif %}
-
+            <div id="financeSummary"></div>
+            <div id="message"></div>
             <div id="incomePiechart"></div>
             <div id="expensePiechart" class="mt-3"></div>
         </div>
@@ -112,8 +88,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="customDate" method="get">
-                    <input type="hidden" name="activeTimePeriod" value="customPeriod">
+                <form id="customDate" action="javascript:getCustomPeriodData('customPeriod')">
                     <div class="row">
                         <div class="form-group col-6">
                             <label class="col-form-label" for="startDateInput" id="startDateLabel">Od</label>
@@ -139,70 +114,5 @@
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-    // Load google charts
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawIncomeChart);
-    google.charts.setOnLoadCallback(drawExpenseChart);
-
-    // Draw the chart and set the chart values
-    function drawIncomeChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Kategoria');
-    data.addColumn('number', 'Kwota');
-    data.addRows([
-    {% for sumOfIncomeInCategory in sumOfIncomeInCategories %}
-        ['{{ sumOfIncomeInCategory.name }}', {{ sumOfIncomeInCategory.categorySum}}],
-    {% endfor %}
-
-    ]);
-
-    var options = {
-        title: 'Przychody z wybranego okresu',
-        width: '100%',
-        height: '100%',
-            chartArea:{left:0,top:30,width:'100%',height:'100%'},
-            fontSize: 16,
-            fontName: 'Lato',
-            is3D: true,
-    };
-
-    // Display the chart inside the <div> element with id="incomePiechart"
-    var chart = new google.visualization.PieChart(document.getElementById('incomePiechart'));
-    chart.draw(data, options);
-    }
-
-    // Draw the chart and set the chart values
-    function drawExpenseChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Kategoria');
-    data.addColumn('number', 'Kwota');
-    data.addRows([
-    {% for sumOfExpenseInCategory in sumOfExpenseInCategories %}
-        ['{{ sumOfExpenseInCategory.name }}', {{ sumOfExpenseInCategory.categorySum}}],
-    {% endfor %}
-
-    ]);
-
-    var options = {
-        title: 'Wydatki z wybranego okresu',
-        width: '100%',
-        height: '100%',
-            chartArea:{left:0,top:30,width:'100%',height:'100%'},
-            fontSize: 16,
-            fontName: 'Lato',
-            is3D: true,
-    };
-
-    // Display the chart inside the <div> element with id="incomePiechart"
-    var chart = new google.visualization.PieChart(document.getElementById('expensePiechart'));
-    chart.draw(data, options);
-    }
-
-    // Redraw chart when window is resized
-    $(window).resize(function(){
-    drawIncomeChart();
-    drawExpenseChart();
-    });
-</script>
+<script src="/js/viewBalance.js"></script>
 {% endblock %}
