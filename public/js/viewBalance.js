@@ -96,6 +96,7 @@ function setBalance() {
     }
 }
 
+//Gets data from currently set time period
 function getData(timePeriod, button) {
     //Clear data array
     income.clear();
@@ -107,6 +108,7 @@ function getData(timePeriod, button) {
     setDropdownActive(button);
 }
 
+//Get data from custom time period
 function getCustomPeriodData() {
 
     timePeriod = 'customPeriod';
