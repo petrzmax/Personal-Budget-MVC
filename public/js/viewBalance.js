@@ -2,12 +2,12 @@ class finance {
     constructor(type) {
         this.financeType = type;
     }
-    sumOfFinanceInCategories = [[], []];
+    sumOfFinanceInCategories = [];
     sumOfFinance = 0;
     financeType = '';
 
     clear() {
-        this.sumOfFinanceInCategories = [[], []];
+        this.sumOfFinanceInCategories = [];
         this.sumOfFinance = 0;
     }
 }
