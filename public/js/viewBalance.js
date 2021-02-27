@@ -179,9 +179,11 @@ function setDropdownActive(button) {
 
 //Run after all ajax requests finished
 $(document).ajaxStop(function() {
-    drawIncomeChart();
     populateTable(income);
     populateTable(expense);
+    setBalance();
+    drawIncomeChart();
+    drawExpenseChart();
 });
 
 //AJAX
