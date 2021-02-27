@@ -51,7 +51,10 @@ function drawIncomeChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Kategoria');
     data.addColumn('number', 'Kwota');
-    data.addRows(sumOfIncomeInCategories);
+    if(!income.isEmpty()) {
+        data.addRows(income.sumOfFinanceInCategories);
+    }
+    
 
     var options = {
         title: 'Przychody z wybranego okresu',
@@ -73,7 +76,10 @@ function drawExpenseChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Kategoria');
     data.addColumn('number', 'Kwota');
-    data.addRows(sumOfIncomeInCategories);
+
+    if(!income.isEmpty()) {
+        data.addRows(expense.sumOfFinanceInCategories);
+    }
 
     var options = {
         title: 'Wydatki z wybranego okresu',
@@ -156,10 +162,13 @@ function populateTable(financeObject) {
 
     $('#' + currentFinanceType + 'Table').text('');
 
-    $.each(financeObject.sumOfFinanceInCategories, function(key, value) {
-        $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
-        ].map(tableRowTemplate).join('')).appendTo('#' + currentFinanceType + 'Table');
-    });
+    if(!financeObject.isEmpty()) {
+        $.each(financeObject.sumOfFinanceInCategories, function(key, value) {
+            $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
+            ].map(tableRowTemplate).join('')).appendTo('#' + currentFinanceType + 'Table');
+        });
+    }
+
     $('#' + currentFinanceType + 'Sum').text(financeObject.sumOfFinance.toFixed(2));
     
 }
