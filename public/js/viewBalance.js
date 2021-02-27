@@ -188,3 +188,28 @@ function getSumOfFinanceInCategories(timePeriod, financeObject, startDate = null
         }
     });
 }
+
+function drawColumnChart() {
+    var data = new google.visualization.arrayToDataTable([
+        ['Kategoria', 'Kwota', { role: 'style' }],
+        ["Przychody", income.sumOfFinance, '#36b03c'],
+        ["Wydatki", expense.sumOfFinance, 'dc3545']
+      ]);
+
+    var view = new google.visualization.DataView(data);
+
+    var options = {
+        title: 'Balans przychodów i wydatków',
+        width: '100%',
+        height: '100%',
+        bar: {groupWidth: "40%"},
+        legend: { position: "none" },
+        fontSize: 16,
+        fontName: 'Lato',
+        vAxis: { gridlines: { count: 3 } , minValue: 0},
+        animation: { startup: true, duration: 1000, easing: 'out'}
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById("balanceColumnChart"));
+    chart.draw(view, options);
+}
