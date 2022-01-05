@@ -9,7 +9,7 @@ class Messages {
     }
 
     static getBalanceMessage(balance) {
-        return `<h2>Twój bilans z wybranego przedziału czasu: ${balance} złotych</h2>`
+        return `<h2>Twój bilans z wybranego przedziału czasu: ${balance} złotych</h2>`;
     }
 
     static getTableRow({ categoryName, categorySum}) {
@@ -18,5 +18,13 @@ class Messages {
             <td>${categoryName}</td>
             <td>${categorySum}</td>
         </tr>`
+    }
+
+    static getLimitPositiveMessage(value) {
+        return `Możesz jeszcze wydać: ${value} zł`;
+    }
+
+    static get limitNegativeMessage() {
+        return 'Uwaga, przekroczyłeś limit!';
     }
 }
