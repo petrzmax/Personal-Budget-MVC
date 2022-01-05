@@ -2,11 +2,22 @@ class Finance {
     constructor(type, chartTitle) {
         this.financeType = type;
         this.chartTitle = chartTitle;
+        this.chartElement = document.getElementById(this.financeType + 'Piechart');
     }
     sumOfFinanceInCategories = [];
     sumOfFinance = 0;
     financeType = '';
     chartTitle = '';
+
+    options = {
+        title: this.chartTitle + ' z wybranego okresu',
+        width: '100%',
+        height: '100%',
+        chartArea: { left: 0, top: 30, width: '100%', height: '100%' },
+        fontSize: 16,
+        fontName: 'Lato',
+        is3D: true,
+    };
 
     clear() {
         this.sumOfFinanceInCategories = [];
@@ -50,19 +61,12 @@ class Finance {
 
         if (!income.isEmpty()) {
             data.addRows(this.sumOfFinanceInCategories);
+            // Display the chart inside the <div> element with id="incomePiechart"
+            let chart = new google.visualization.PieChart(this.chartElement);
+            chart.draw(data, this.options);
+        } else {
+            this.chartElement.innerHTML = '';
         }
 
-        const options = {
-            title: this.chartTitle + ' z wybranego okresu',
-            width: '100%',
-            height: '100%',
-            chartArea: { left: 0, top: 30, width: '100%', height: '100%' },
-            fontSize: 16,
-            fontName: 'Lato',
-            is3D: true,
-        };
-        // Display the chart inside the <div> element with id="incomePiechart"
-        let chart = new google.visualization.PieChart(document.getElementById(this.financeType + 'Piechart'));
-        chart.draw(data, options);
     }
 }
