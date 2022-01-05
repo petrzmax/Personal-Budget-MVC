@@ -6,8 +6,8 @@ let balance = 0;
 
 $(document).ready(() => {
     // Load google charts
-    google.charts.load(50 , {
-        'packages': ['corechart'], 
+    google.charts.load(50, {
+        'packages': ['corechart'],
         'callback': () => getData('currentMonth', $('#currentMonthButton'))
     });
 });
@@ -18,9 +18,9 @@ const setBalance = () => {
 
     $('#financeSummary').html(Messages.getBalanceMessage(balance.toFixed(2)));
 
-    if(balance > 0) {
+    if (balance > 0) {
         $('#message').html(Messages.positive);
-    } else if(balance < 0) {
+    } else if (balance < 0) {
         $('#message').html(Messages.negative);
     } else {
         $('#message').html('');
@@ -56,16 +56,16 @@ const getCustomPeriodData = () => {
 
 //Populate table with finance data
 const populateTable = (financeObject) => {
-    
+
     currentFinanceType = financeObject.financeType;
 
     $('#' + currentFinanceType + 'Table').text('');
 
-    if(!financeObject.isEmpty()) {
+    if (!financeObject.isEmpty()) {
         $.each(financeObject.sumOfFinanceInCategories, (key, value) => {
-                $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
-                ].map(Messages.getTableRow).join('')).appendTo('#' + currentFinanceType + 'Table');
-            });
+            $([{ categoryName: value[0], categorySum: value[1].toFixed(2) }
+            ].map(Messages.getTableRow).join('')).appendTo('#' + currentFinanceType + 'Table');
+        });
     }
 
     $('#' + currentFinanceType + 'Sum').text(financeObject.sumOfFinance.toFixed(2));
@@ -96,7 +96,7 @@ const drawColumnChart = () => {
         ['Kategoria', 'Kwota', { role: 'style' }],
         ["Przychody", income.sumOfFinance, '#36b03c'],
         ["Wydatki", expense.sumOfFinance, 'dc3545']
-      ]);
+    ]);
 
     const view = new google.visualization.DataView(data);
 
@@ -104,12 +104,12 @@ const drawColumnChart = () => {
         title: 'Balans przychodów i wydatków',
         width: '100%',
         height: '100%',
-        bar: {groupWidth: "40%"},
+        bar: { groupWidth: "40%" },
         legend: { position: "none" },
         fontSize: 16,
         fontName: 'Lato',
-        vAxis: { gridlines: { count: 3 } , minValue: 0},
-        animation: { startup: true, duration: 1000, easing: 'out'}
+        vAxis: { gridlines: { count: 3 }, minValue: 0 },
+        animation: { startup: true, duration: 1000, easing: 'out' }
     };
 
     const chart = new google.visualization.ColumnChart(document.getElementById("balanceColumnChart"));

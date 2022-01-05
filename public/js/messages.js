@@ -12,7 +12,7 @@ class Messages {
         return `<h2>Twój bilans z wybranego przedziału czasu: ${balance} złotych</h2>`;
     }
 
-    static getTableRow({ categoryName, categorySum}) {
+    static getTableRow({ categoryName, categorySum }) {
         return `
         <tr>
             <td>${categoryName}</td>

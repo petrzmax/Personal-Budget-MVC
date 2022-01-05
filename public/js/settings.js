@@ -32,7 +32,7 @@ const addCategoryHandler = (newCategoryType) => {
     //Reset category name & limit input
     $('#categoryName').val('');
     $('#limit').val(parseFloat(0).toFixed(2));
-    $('#limitCheck').prop( "checked", false );
+    $('#limitCheck').prop("checked", false);
     //Set proper button function
     $('#editForm').attr('action', "javascript:addCategory()");
 
@@ -43,7 +43,7 @@ const addCategoryHandler = (newCategoryType) => {
 
 //Show limit form only for expense categories
 const switchLimitForm = () => {
-    if(categoryType == 'expense') {
+    if (categoryType === 'expense') {
         $('#limitForm').show();
     }
     else {
@@ -61,11 +61,11 @@ const showProperModal = result => {
             $('#editModalLabel').text(editCategoryModalTitle);
             //Set proper button function
             $('#editForm').attr('action', "javascript:updateCategory()");
-            
+
             $('#categoryName').val(result.name);
             $('#limit').val(result.expense_limit);
 
-            $('#limitCheck').prop( "checked", result.limit_active == 1 ? true : false);
+            $('#limitCheck').prop("checked", result.limit_active == 1 ? true : false);
             $('#editModal').modal('show');
             break;
         case 'delete':
@@ -85,10 +85,10 @@ const removeCategoryRow = () => {
 //Append new category row to proper div & hide modal
 const addCategoryRow = (categoryName, returnedCategoryId) => {
     $('#editModal').modal('hide');
-    
+
     var currentCategoryRow = $([
         { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
-    ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
+    ].map(categoryTemplate).join('')).appendTo('#' + categoryType + 'CategoriesBody');
 
     currentCategoryRow.slideDown('slow');
 };
@@ -96,7 +96,7 @@ const addCategoryRow = (categoryName, returnedCategoryId) => {
 //Update edited category row & hide modal
 const updateCategoryRow = categoryName => {
     $('#editModal').modal('hide');
-    
+
     $('#' + categoryType + categoryId).slideUp('medium', () => {
         $("li", this).text(categoryName);
         $(this).slideDown('medium');
