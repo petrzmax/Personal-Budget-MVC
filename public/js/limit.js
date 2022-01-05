@@ -1,31 +1,27 @@
-var categoryId = 0;
-var currentExpenseLimit = 0;
-var currentMonthSum = 0;
-var balance = 0;
-var valueInput = 0;
-var spentAndValue = 0;
+let categoryId = 0;
+let currentExpenseLimit = 0;
+let currentMonthSum = 0;
+let balance = 0;
+let valueInput = 0;
+let spentAndValue = 0;
 
-const currency = ' zł';
-const positiveMessage = 'Możesz jeszcze wydać: ';
-const negativeMessage = 'Uwaga, przekroczyłeś limit!';
-
-function radioClickHandler(clickedRadio) {
+const radioClickHandler = clickedRadio => {
     categoryId = clickedRadio.value;
 
     $('#limitSection').slideDown('slow');
     getLimitData();
     getCategoryCurrentMonthSumById();
-}
+};
 
 //Hides limit section
-function hideLimitSection() {
+const hideLimitSection = () => {
     $('#limitSection').slideUp('slow');
-}
+};
 
 //AJAX
 //
 //Get category limit from db
-function getLimitData() {
+const getLimitData = () => {
     $.ajax({
         type: 'POST',
         url: '/add-expense/get-limit-data',
@@ -34,20 +30,15 @@ function getLimitData() {
             postCategoryId: categoryId
         },
 
-        success: function(result) {
-            setCurrentExpenseLimit(result.expense_limit);
-        },
-
-        error: function(xhr){
-            alert(xhr.status);
-        }
+        success: (result) => setCurrentExpenseLimit(result.expense_limit),
+        error: (xhr) => alert(xhr.status)
     });
-}
+};
 
 //AJAX
 //
 //Get category expense Sum from current month from db
-function getCategoryCurrentMonthSumById() {
+const getCategoryCurrentMonthSumById = () => {
     $.ajax({
         type: 'POST',
         url: '/add-expense/get-category-current-month-sum-by-id',
@@ -56,58 +47,53 @@ function getCategoryCurrentMonthSumById() {
             postCategoryId: categoryId
         },
 
-        success: function(result) {
-            setCurrentMonthSum(result);
-        },
-
-        error: function(xhr){
-            alert(xhr.status);
-        }
+        success: (result) => setCurrentMonthSum(result),
+        error: (xhr) => alert(xhr.status)
     });
-}
+};
 
 //Get data from value input, calculate spendAndValue & set in in label
-function updateInput(valueInputBox = 0) {
-    if(valueInputBox) {
+const updateInput = (valueInputBox = 0) => {
+    if (valueInputBox) {
         valueInput = parseFloat(valueInputBox.value);
     }
 
     spentAndValue = currentMonthSum + valueInput;
     $('#spentAndValueInput').text(spentAndValue.toFixed(2));
     setLimitSectionStyle();
-}
+};
 
 //Set currentExpenseLimit value and set it in label
-function setCurrentExpenseLimit(value) {
+const setCurrentExpenseLimit = value => {
     currentExpenseLimit = parseFloat(value);
     $("#limit").text(currentExpenseLimit.toFixed(2));
-}
+};
 
 //Set currentMonthSum value and set it in label
-function setCurrentMonthSum(value) {
+const setCurrentMonthSum = value => {
     currentMonthSum = parseFloat(value);
     $("#spent").text(currentMonthSum.toFixed(2));
-}
+};
 
 //Calculate balance & set it in label
-function setBalance() {
+const setBalance = () => {
     balance = currentExpenseLimit - currentMonthSum;
     $("#balance").text(balance.toFixed(2));
-}
+};
 
 //Change limit section color & set message depending on limit & value balance
-function setLimitSectionStyle() {
-    if(currentExpenseLimit >= spentAndValue) {
+const setLimitSectionStyle = () => {
+    if (currentExpenseLimit >= spentAndValue) {
         $('#limitSection').removeClass('alert-danger').addClass('alert-success');
-        $("#limitMessage").text(positiveMessage + balance.toFixed(2) + currency);
+        $("#limitMessage").text(Messages.getLimitPositiveMessage(balance.toFixed(2)));
     } else {
         $('#limitSection').removeClass('alert-success').addClass('alert-danger');
-        $("#limitMessage").text(negativeMessage);
-    }    
-}
+        $("#limitMessage").text(Messages.limitNegativeMessage());
+    }
+};
 
 //Run after all ajax requests finished
-$(document).ajaxStop(function() {
+$(document).ajaxStop(function () {
     setBalance();
     updateInput();
     setLimitSectionStyle();

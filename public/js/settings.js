@@ -2,9 +2,9 @@ const deleteModalText = "Czy na pewno chcesz usunąć kategorię \"";
 const addCategoryModalTitle = "Dodaj nową kategorię";
 const editCategoryModalTitle = "Edytuj kategorię";
 
-var categoryId;
-var categoryType;
-var buttonType;
+let categoryId;
+let categoryType;
+let buttonType;
 
 const categoryTemplate = ({ newCategoryName, newCategoryId, newCategoryType }) => `
     <div class="row" style="display: none;" id="${newCategoryType}${newCategoryId}">
@@ -24,7 +24,7 @@ const categoryTemplate = ({ newCategoryName, newCategoryId, newCategoryType }) =
 `;
 
 //Add button handler
-function addCategoryHandler(newCategoryType) {
+const addCategoryHandler = (newCategoryType) => {
     categoryType = newCategoryType;
 
     //Set proper modal title
@@ -32,7 +32,7 @@ function addCategoryHandler(newCategoryType) {
     //Reset category name & limit input
     $('#categoryName').val('');
     $('#limit').val(parseFloat(0).toFixed(2));
-    $('#limitCheck').prop( "checked", false );
+    $('#limitCheck').prop("checked", false);
     //Set proper button function
     $('#editForm').attr('action', "javascript:addCategory()");
 
@@ -42,16 +42,16 @@ function addCategoryHandler(newCategoryType) {
 }
 
 //Show limit form only for expense categories
-function switchLimitForm() {
-    if(categoryType == 'expense') {
+const switchLimitForm = () => {
+    if (categoryType === 'expense') {
         $('#limitForm').show();
     }
     else {
         $('#limitForm').hide();
     }
-}
+};
 
-function showProperModal(result) {
+const showProperModal = result => {
     //Show proper modal
     switch (buttonType) {
         case 'edit':
@@ -61,11 +61,11 @@ function showProperModal(result) {
             $('#editModalLabel').text(editCategoryModalTitle);
             //Set proper button function
             $('#editForm').attr('action', "javascript:updateCategory()");
-            
+
             $('#categoryName').val(result.name);
             $('#limit').val(result.expense_limit);
 
-            $('#limitCheck').prop( "checked", result.limit_active == 1 ? true : false);
+            $('#limitCheck').prop("checked", result.limit_active == 1 ? true : false);
             $('#editModal').modal('show');
             break;
         case 'delete':
@@ -74,42 +74,39 @@ function showProperModal(result) {
             $('#deleteModalText').text(deleteModalText + result.name + "\"?"); //Replace and set the text back
             break;
     }
-}
+};
 
 //Remove deleted category row from proper div & hide modal
-function removeCategoryRow() {
+const removeCategoryRow = () => {
     $('#deleteModal').modal('hide');
-    $('#' + categoryType + categoryId).slideUp('medium', function() {this.remove();});
-}
+    $('#' + categoryType + categoryId).slideUp('medium', () => this.remove());
+};
 
 //Append new category row to proper div & hide modal
-function addCategoryRow(categoryName, returnedCategoryId) {
+const addCategoryRow = (categoryName, returnedCategoryId) => {
     $('#editModal').modal('hide');
-    
+
     var currentCategoryRow = $([
         { newCategoryName: categoryName, newCategoryId: returnedCategoryId, newCategoryType: categoryType }
-    ].map(categoryTemplate).join('')).appendTo('#'+categoryType+'CategoriesBody');
+    ].map(categoryTemplate).join('')).appendTo('#' + categoryType + 'CategoriesBody');
 
     currentCategoryRow.slideDown('slow');
-}
+};
 
 //Update edited category row & hide modal
-function updateCategoryRow(categoryName) {
+const updateCategoryRow = categoryName => {
     $('#editModal').modal('hide');
-    
-    $('#' + categoryType + categoryId).slideUp('medium', function() {
 
+    $('#' + categoryType + categoryId).slideUp('medium', () => {
         $("li", this).text(categoryName);
         $(this).slideDown('medium');
     });
-
-    
-}
+};
 
 //AJAX
 // Also edit & delete button action handler
 //Get category data from db
-function getCategoryData(clickedButtonType, clickedCategoryType, clickedCategoryId) {
+const getCategoryData = (clickedButtonType, clickedCategoryType, clickedCategoryId) => {
 
     buttonType = clickedButtonType;
     categoryId = clickedCategoryId;
@@ -124,19 +121,14 @@ function getCategoryData(clickedButtonType, clickedCategoryType, clickedCategory
             postCategoryType: categoryType
         },
 
-        success: function(result) {
-            showProperModal(result);
-        },
-
-        error: function(data){
-            alert('fail');
-        }
+        success: (result) => showProperModal(result),
+        error: () => alert('fail')
     });
 
-}
+};
 
 //Delete selected category
-function deleteCategory() {
+const deleteCategory = () => {
     $.ajax({
         type: 'POST',
         url: '/settings/deleteCategory',
@@ -146,15 +138,12 @@ function deleteCategory() {
             postCategoryType: categoryType
         },
         success: removeCategoryRow(),
-
-        error: function(data){
-            alert('fail');
-        }
+        error: () => alert('fail')
     });
-}
+};
 
 //Add new category to db
-function addCategory() {
+const addCategory = () => {
 
     categoryName = $('#categoryName').val();
     categoryLimit = $('#limit').val();
@@ -171,21 +160,15 @@ function addCategory() {
             postCategoryLimit: categoryLimit
         },
 
-        success: function(result) {
-            addCategoryRow(categoryName, result);
-        },
-
-        error: function(xhr){
-            alert(xhr.status);
-        }
+        success: (result) => addCategoryRow(categoryName, result),
+        error: (xhr) => alert(xhr.status)
     });
-}
+};
 
 //Update category in db
-function updateCategory() {
+const updateCategory = () => {
 
     categoryName = $('#categoryName').val();
-
     categoryLimit = $('#limit').val();
     categoryLimitState = $('#limitCheck').is(':checked');
 
@@ -201,12 +184,7 @@ function updateCategory() {
             postCategoryLimit: categoryLimit
         },
 
-        success: function() {
-            updateCategoryRow(categoryName);
-        },
-
-        error: function(xhr){
-            alert(xhr.status);
-        }
+        success: () => updateCategoryRow(categoryName),
+        error: (xhr) => alert(xhr.status)
     });
-}
+};

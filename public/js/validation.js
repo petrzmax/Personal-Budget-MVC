@@ -4,8 +4,7 @@
  * Valid passwords contain at least one letter and one number.
  */
 $.validator.addMethod('validPassword',
-    function(value, element, param) {
-
+    (value) => {
         if (value != '') {
             if (value.match(/.*[a-z]+.*/i) == null) {
                 return false;
@@ -14,19 +13,18 @@ $.validator.addMethod('validPassword',
                 return false;
             }
         }
-
         return true;
     },
     'Password must contain at least one letter and number'
 );
 
 /*
- * Add jQuery Validation plugin method for a valid name
- *
- * Valid name has no special characters
- */
+* Add jQuery Validation plugin method for a valid name
+*
+* Valid name has no special characters
+*/
 $.validator.addMethod('noSpecialChars',
-    function(value, element, param) {
+    (value) => {
         if (value.match(/[^a-ząćęłńóśźżĄĘŁŃÓŚŹŻ\s]+/i)) {
             return false;
         }
@@ -36,12 +34,12 @@ $.validator.addMethod('noSpecialChars',
 );
 
 /*
- * Add jQuery Validation plugin method for a valid name
- *
- * Valid name has no white characters
- */
+* Add jQuery Validation plugin method for a valid name
+*
+* Valid name has no white characters
+*/
 $.validator.addMethod('noSpaces',
-    function(value, element, param) {
+    (value) => {
         if (value.match(/\s/)) {
             return false;
         }
@@ -51,32 +49,32 @@ $.validator.addMethod('noSpaces',
 );
 
 /**
- * Set jQuery Validation plugin default settings
- * 
- * Add bootstrap classes depending on validation state
- */
+* Set jQuery Validation plugin default settings
+* 
+* Add bootstrap classes depending on validation state
+*/
 $.validator.setDefaults({
-    highlight: function(element) {
+    highlight: (element) => {
         $(element).closest('.form-control').addClass('is-invalid');
     },
-    unhighlight: function(element) {
+    unhighlight: (element) => {
         $(element).closest('.form-control').removeClass('is-invalid').addClass('is-valid')
     },
     errorElement: 'div',
     errorClass: 'invalid-feedback mt-0 mb-2',
-    errorPlacement: function(error, element) {
-        if(element.parent('.input-group').length) {
+    errorPlacement: (error, element) => {
+        if (element.parent('.input-group').length) {
             error.insertAfter(element.parent());
         } else {
             error.insertAfter(element);
         }
     }
-});        
+});
 
 /**
- * Run signup form validation when page was fully loaded
- */
-$(document).ready(function() {
+* Run signup form validation when page was fully loaded
+*/
+$(document).ready(() => {
 
     /**
      * Validate the form
@@ -130,12 +128,10 @@ $(document).ready(function() {
     });
 });
 
-
 /**
- * Run edit account validation when page was fully loaded
- */
-$(document).ready(function() {
-
+* Run edit account validation when page was fully loaded
+*/
+$(document).ready(() => {
     /**
      * Validate the form
      */
