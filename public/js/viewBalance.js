@@ -19,9 +19,9 @@ const setBalance = () => {
     $('#financeSummary').html(Messages.getBalanceMessage(balance.toFixed(2)));
 
     if (balance > 0) {
-        $('#message').html(Messages.positive);
+        $('#message').html(Messages.getBalancePositiveMessage());
     } else if (balance < 0) {
-        $('#message').html(Messages.negative);
+        $('#message').html(Messages.getBalanceNegativeMessage());
     } else {
         $('#message').html('');
     }
