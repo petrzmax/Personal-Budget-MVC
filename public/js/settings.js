@@ -79,7 +79,7 @@ const showProperModal = result => {
 //Remove deleted category row from proper div & hide modal
 const removeCategoryRow = () => {
     $('#deleteModal').modal('hide');
-    $('#' + categoryType + categoryId).slideUp('medium', () => this.remove());
+    $('#' + categoryType + categoryId).slideUp('medium', () => $(this).remove());
 };
 
 //Append new category row to proper div & hide modal
