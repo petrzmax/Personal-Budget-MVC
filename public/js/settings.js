@@ -96,10 +96,11 @@ const addCategoryRow = (categoryName, returnedCategoryId) => {
 //Update edited category row & hide modal
 const updateCategoryRow = categoryName => {
     $('#editModal').modal('hide');
+    const categoryRowId = `#${categoryType}${categoryId}`;
 
-    $(`#${categoryType}${categoryId}`).slideUp('medium', function() {
-        $("li", this).text(categoryName);
-        $(this).slideDown('medium');
+    $(categoryRowId).slideUp('medium', function() {
+        $("li", categoryRowId).text(categoryName);
+        $(categoryRowId).slideDown('medium');
     });
 };
 
