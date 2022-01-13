@@ -59,7 +59,7 @@ class Finance {
         data.addColumn('string', 'Kategoria');
         data.addColumn('number', 'Kwota');
 
-        if (!income.isEmpty()) {
+        if (!this.isEmpty()) {
             data.addRows(this.sumOfFinanceInCategories);
             // Display the chart inside the <div> element with id="incomePiechart"
             let chart = new google.visualization.PieChart(this.chartElement);

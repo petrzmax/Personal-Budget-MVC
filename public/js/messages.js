@@ -1,10 +1,10 @@
 class Messages {
 
-    static get negative() {
+    static getBalanceNegativeMessage() {
         return '<h2 class="text-danger my-2">Uwaga! Wpadasz w długi!</h2>';
     }
 
-    static get positive() {
+    static getBalancePositiveMessage() {
         return '<h2 class="text-success my-2">Brawo! Wspaniale zarządzasz finansami!</h2>';
     }
 
@@ -24,7 +24,7 @@ class Messages {
         return `Możesz jeszcze wydać: ${value} zł`;
     }
 
-    static get limitNegativeMessage() {
+    static getLimitNegativeMessage() {
         return 'Uwaga, przekroczyłeś limit!';
     }
 }
