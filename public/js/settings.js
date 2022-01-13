@@ -97,7 +97,7 @@ const addCategoryRow = (categoryName, returnedCategoryId) => {
 const updateCategoryRow = categoryName => {
     $('#editModal').modal('hide');
 
-    $('#' + categoryType + categoryId).slideUp('medium', () => {
+    $(`#${categoryType}${categoryId}`).slideUp('medium', function() {
         $("li", this).text(categoryName);
         $(this).slideDown('medium');
     });
