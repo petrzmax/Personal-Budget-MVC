@@ -8,6 +8,7 @@
 -- Wersja PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -32,7 +33,7 @@ CREATE TABLE `expenses` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `expense_category_assigned_to_user_id` int(11) UNSIGNED NOT NULL,
   `payment_method_assigned_to_user_id` int(11) UNSIGNED NOT NULL,
-  `amount` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(8,2) NOT NULL DEFAULT '0.00',
   `date_of_expense` date NOT NULL,
   `expense_comment` varchar(100) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
@@ -47,8 +48,8 @@ CREATE TABLE `expenses_category_assigned_to_users` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8_polish_ci NOT NULL,
-  `expense_limit` decimal(8,2) NOT NULL DEFAULT 0.00,
-  `limit_active` tinyint(1) NOT NULL DEFAULT 0
+  `expense_limit` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `limit_active` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
@@ -95,7 +96,7 @@ CREATE TABLE `incomes` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `income_category_assigned_to_user_id` int(11) UNSIGNED NOT NULL,
-  `amount` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `amount` decimal(8,2) NOT NULL DEFAULT '0.00',
   `date_of_income` date NOT NULL,
   `income_comment` varchar(100) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
@@ -189,7 +190,7 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8_polish_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8_polish_ci NOT NULL,
   `activation_hash` varchar(64) COLLATE utf8_polish_ci DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 0
+  `is_active` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -256,8 +257,8 @@ ALTER TABLE `payment_methods_default`
 -- Indeksy dla tabeli `remembered_logins`
 --
 ALTER TABLE `remembered_logins`
-  ADD PRIMARY KEY (`token_hash`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`token_hash`) USING BTREE,
+  ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Indeksy dla tabeli `users`
