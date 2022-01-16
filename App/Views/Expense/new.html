@@ -49,7 +49,7 @@
             <div class="row mb-1">
                 <label class="col-sm-4 col-form-label" for="valueInput">Kwota</label>
                 <div class="col-sm input-group">
-                    <input type="number" class="form-control inputBox" id="valueInput" name="valueInput" onchange="updateInput(this)" min="0" step="0.01" placeholder="Podaj kwotę" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj kwotę'" aria-label="Podaj kwotę" aria-describedby="valueLabel" required/>
+                    <input type="number" class="form-control inputBox" id="valueInput" name="valueInput" oninput="updateInput()" min="0" step="0.01" placeholder="Podaj kwotę" onfocus="this.placeholder=''" onblur="this.placeholder='Podaj kwotę'" aria-label="Podaj kwotę" aria-describedby="valueLabel" required/>
                     <div class="input-group-append">
                         <span class="input-group-text inputBox" style="margin-left: -2px;" id="valueLabel">zł</span>
                     </div>

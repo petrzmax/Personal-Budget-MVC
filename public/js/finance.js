@@ -1,13 +1,11 @@
 class Finance {
-    constructor(type, chartTitle) {
-        this.financeType = type;
+    constructor(financeType, chartTitle) {
+        this.financeType = financeType;
         this.chartTitle = chartTitle;
         this.chartElement = document.getElementById(this.financeType + 'Piechart');
     }
     sumOfFinanceInCategories = [];
     sumOfFinance = 0;
-    financeType = '';
-    chartTitle = '';
 
     options = {
         title: this.chartTitle + ' z wybranego okresu',

@@ -53,14 +53,16 @@ const getCategoryCurrentMonthSumById = () => {
 };
 
 //Get data from value input, calculate spendAndValue & set in in label
-const updateInput = (valueInputBox = 0) => {
-    if (valueInputBox) {
-        valueInput = parseFloat(valueInputBox.value);
-    }
+const updateInput = () => {  
+    valueInput = $('#valueInput').val();
+    valueInput = valueInput ? parseFloat(valueInput) : 0;
 
     spentAndValue = currentMonthSum + valueInput;
     $('#spentAndValueInput').text(spentAndValue.toFixed(2));
-    setLimitSectionStyle();
+
+    if($('#limitSection').is(':visible')) {
+        setLimitSectionStyle();
+    }
 };
 
 //Set currentExpenseLimit value and set it in label
@@ -88,7 +90,7 @@ const setLimitSectionStyle = () => {
         $("#limitMessage").text(Messages.getLimitPositiveMessage(balance.toFixed(2)));
     } else {
         $('#limitSection').removeClass('alert-success').addClass('alert-danger');
-        $("#limitMessage").text(Messages.getlimitNegativeMessage());
+        $("#limitMessage").text(Messages.getLimitNegativeMessage());
     }
 };
 
