@@ -53,8 +53,9 @@ const getCategoryCurrentMonthSumById = () => {
 };
 
 //Get data from value input, calculate spendAndValue & set in in label
-const updateInput = (valueInputBox = 0) => {   
-    valueInput = valueInputBox.value ? parseFloat(valueInputBox.value) : 0;
+const updateInput = () => {  
+    valueInput = $('#valueInput').val();
+    valueInput = valueInput ? parseFloat(valueInput) : 0;
 
     spentAndValue = currentMonthSum + valueInput;
     $('#spentAndValueInput').text(spentAndValue.toFixed(2));
