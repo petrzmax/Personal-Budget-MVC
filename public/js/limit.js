@@ -60,7 +60,10 @@ const updateInput = (valueInputBox = 0) => {
 
     spentAndValue = currentMonthSum + valueInput;
     $('#spentAndValueInput').text(spentAndValue.toFixed(2));
-    setLimitSectionStyle();
+
+    if($('#limitSection').is(':visible')) {
+        setLimitSectionStyle();
+    }
 };
 
 //Set currentExpenseLimit value and set it in label
