@@ -88,7 +88,7 @@ const setLimitSectionStyle = () => {
         $("#limitMessage").text(Messages.getLimitPositiveMessage(balance.toFixed(2)));
     } else {
         $('#limitSection').removeClass('alert-success').addClass('alert-danger');
-        $("#limitMessage").text(Messages.getlimitNegativeMessage());
+        $("#limitMessage").text(Messages.getLimitNegativeMessage());
     }
 };
 
